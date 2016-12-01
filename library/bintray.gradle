@@ -26,7 +26,7 @@ install {
                 developers {
                     developer {
                         id 'qwwuyu'                         //your user id (you can write your nickname)
-                        name 'wei.qi'                       //your name
+                        name 'qiwei'                       //your name
                         email 'qiweiwuyu@gmail.com'         //your email
                     }
                 }
@@ -61,18 +61,17 @@ artifacts {
 }
 
 Properties properties = new Properties()
-boolean isHasFile = false
-if (project.rootProject.findProject('local.properties') != null) {
-    isHasFile = true
+if (project.rootProject.file('local.properties') != null) {
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
 }
 bintray {
-    user = isHasFile ? properties.getProperty("bintray.user") : System.getenv("BINTRAY_USER")
-    key = isHasFile ? properties.getProperty("bintray.apikey") : System.getenv("BINTRAY_KEY")
+    user = properties.getProperty("bintray.user") != null ? properties.getProperty("bintray.user") : System.getenv("BINTRAY_USER")
+    key = properties.getProperty("bintray.apikey") != null ? properties.getProperty("bintray.apikey") : System.getenv("BINTRAY_KEY")
     configurations = ['archives']
     pkg {
         repo = "maven"
         name = "library"    // project name in jcenter
+        userOrg = 'qwwuyu'
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         licenses = ["Apache-2.0"]
