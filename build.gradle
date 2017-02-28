@@ -13,6 +13,9 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        maven {
+            url  "http://qiwei.bintray.com/maven"
+        }
     }
 }
 

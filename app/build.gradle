@@ -35,6 +35,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
-//    compile 'com.qwwuyu.library:library:latest.release'
-    compile project(':library')
+    compile 'com.qwwuyu.lib:qw-lib:latest.release'
+//    compile project(':qw-lib')
 }
