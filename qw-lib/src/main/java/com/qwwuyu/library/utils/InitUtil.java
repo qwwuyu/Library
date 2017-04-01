@@ -22,7 +22,7 @@ public class InitUtil {
 
         public Configuration(Context context) {
             if (context == null) throw new NullPointerException("context == null");
-            this.context = context;
+            this.context = context.getApplicationContext();
         }
 
         public Configuration toastUtil(IToastUtil toastUtil) {
