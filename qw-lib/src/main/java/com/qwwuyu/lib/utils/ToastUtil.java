@@ -1,4 +1,4 @@
-package com.qwwuyu.library.utils;
+package com.qwwuyu.lib.utils;
 
 import android.content.Context;
 
@@ -23,7 +23,6 @@ public final class ToastUtil {
      * @param text 将要显示的对象,默认显示的时间{@link android.widget.Toast#LENGTH_SHORT}
      */
     public static void show(Object text) {
-        check();
         toastUtil.show(text);
     }
 
@@ -31,7 +30,6 @@ public final class ToastUtil {
      * @param id 将要显示的String资源id,默认显示的时间{@link android.widget.Toast#LENGTH_SHORT}
      */
     public static void show(int id) {
-        check();
         toastUtil.show(id);
     }
 
@@ -40,7 +38,6 @@ public final class ToastUtil {
      * @param duration 显示的时间{@link android.widget.Toast#LENGTH_SHORT}{@link android.widget.Toast#LENGTH_LONG}
      */
     public static void show(Object text, int duration) {
-        check();
         toastUtil.show(text, duration);
     }
 
@@ -49,11 +46,6 @@ public final class ToastUtil {
      * @param duration 显示的时间{@link android.widget.Toast#LENGTH_SHORT}{@link android.widget.Toast#LENGTH_LONG}
      */
     public static void show(int id, int duration) {
-        check();
         toastUtil.show(id, duration);
-    }
-
-    private static void check() {
-        if (toastUtil == null) throw new IllegalStateException("ToastUtil must be init before using");
     }
 }

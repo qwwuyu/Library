@@ -1,4 +1,4 @@
-package com.qwwuyu.library.utils;
+package com.qwwuyu.lib.utils;
 
 import android.content.Context;
 import android.os.Handler;
@@ -19,9 +19,13 @@ class ToastUtilImpl implements IToastUtil {
     private Context appContext;
     private static ToastUtilImpl instance;
 
-    public synchronized static ToastUtilImpl getInstance() {
+    static ToastUtilImpl getInstance() {
         if (instance == null) {
-            instance = new ToastUtilImpl();
+            synchronized (ToastUtilImpl.class) {
+                if (instance == null) {
+                    instance = new ToastUtilImpl();
+                }
+            }
         }
         return instance;
     }

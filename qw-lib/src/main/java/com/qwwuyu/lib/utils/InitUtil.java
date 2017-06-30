@@ -1,4 +1,4 @@
-package com.qwwuyu.library.utils;
+package com.qwwuyu.lib.utils;
 
 import android.content.Context;
 
@@ -9,11 +9,16 @@ import android.content.Context;
 public class InitUtil {
     public static boolean isInit = false;
 
+    private InitUtil() {
+        throw new UnsupportedOperationException("can't instantiate");
+    }
+
     /** 初始化工具 */
-    public static void init(Configuration config) {
+    public synchronized static void init(Configuration config) {
         if (isInit) return;
-        Context context = config.context;
+        Context context = config.context.getApplicationContext();
         ToastUtil.init(context, config.toastUtil == null ? ToastUtilImpl.getInstance() : config.toastUtil);
+        DisplayUtil.init(context);
     }
 
     public static class Configuration {

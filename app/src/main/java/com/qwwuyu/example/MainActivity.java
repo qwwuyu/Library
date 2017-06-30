@@ -1,12 +1,11 @@
 package com.qwwuyu.example;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.qwwuyu.library.utils.InitUtil;
-import com.qwwuyu.library.utils.ToastUtil;
+import com.qwwuyu.lib.utils.InitUtil;
+import com.qwwuyu.lib.utils.ToastUtil;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     @Override

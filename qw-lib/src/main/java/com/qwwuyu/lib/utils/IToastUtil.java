@@ -1,4 +1,4 @@
-package com.qwwuyu.library.utils;
+package com.qwwuyu.lib.utils;
 
 import android.content.Context;
 
