@@ -1,0 +1,23 @@
+ext {
+    int major = 0, minor = 0, revision = 0;
+    android = [
+            compileSdkVersion: 25,
+            buildToolsVersion: "25.0.2",
+            minSdkVersion    : 15,
+            targetSdkVersion : 23,
+            versionCode      : major * 1000 + minor * 100 + revision,
+            versionName      : major + "." + minor + "." + revision
+    ]
+
+    version = [
+            junit      : "4.12",
+            support    : "25.3.1",
+            leakcanary : "1.5.1",
+            butterknife: "8.6.0",
+            dagger2    : "2.10",
+            eventbus   : "3.0.0",
+            gson       : "2.8.0",
+            rxjava2    : "2.1.0", rxandroid2: "2.0.1", rxlifecycle2: "2.0.1",
+            okhttp3    : "3.8.0", retrofit: "2.3.0", glide: "3.8.0",
+    ]
+}

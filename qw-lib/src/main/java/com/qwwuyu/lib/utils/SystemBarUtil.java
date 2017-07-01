@@ -1,11 +1,17 @@
 package com.qwwuyu.lib.utils;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Build;
+import android.support.v4.view.ViewCompat;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -22,30 +28,97 @@ public class SystemBarUtil {
     }
 
     public static void translucentStatusBar(Activity activity, boolean hideShelter) {
-        if (tint != null) tint.translucentStatusBar(activity, hideShelter);
+        if (tint != null) tint.translucentStatusBar(activity, hideShelter); 
     }
 
-    static class LollipopTint implements ITint {
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private static class LollipopTint implements ITint {
         @Override
         public void setStatusBarColor(Activity activity, int color) {
-
+            Window window = activity.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(color);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+            keepChildView(window);
         }
 
         @Override
         public void translucentStatusBar(Activity activity, boolean hideShelter) {
+            Window window = activity.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            if (hideShelter) {
+                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                window.setStatusBarColor(Color.TRANSPARENT);
+                window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+            } else {
+                window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+            }
+            keepChildView(window);
+        }
 
+        private void keepChildView(Window window) {
+            View childView = ((ViewGroup) window.findViewById(Window.ID_ANDROID_CONTENT)).getChildAt(0);
+            if (childView != null) {
+                ViewCompat.setFitsSystemWindows(childView, false);
+                ViewCompat.requestApplyInsets(childView);
+            }
         }
     }
 
-    static class KitKatTint implements ITint {
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    private static class KitKatTint implements ITint {
+        private static final String TAG_FAKE_STATUS_BAR_VIEW = "StatusBarView";
+
         @Override
         public void setStatusBarColor(Activity activity, int color) {
-
+            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            addFakeStatusBarView(activity, color, DisplayUtil.getStatusBarHeight());
         }
 
         @Override
         public void translucentStatusBar(Activity activity, boolean hideShelter) {
+            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            rmFakeStatusBarView(activity);
+        }
 
+        private void addFakeStatusBarView(Activity activity, int statusBarColor, int statusBarHeight) {
+            ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
+            View contentChild = ((ViewGroup) decorView.findViewById(Window.ID_ANDROID_CONTENT)).getChildAt(0);
+            if (contentChild == null) return;
+            View fakeView = decorView.findViewWithTag(TAG_FAKE_STATUS_BAR_VIEW);
+            if (fakeView != null) {
+                fakeView.setBackgroundColor(statusBarColor);
+            } else {
+                View statusBarView = new View(activity);
+                FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, statusBarHeight);
+                layoutParams.gravity = Gravity.TOP;
+                statusBarView.setLayoutParams(layoutParams);
+                statusBarView.setBackgroundColor(statusBarColor);
+                statusBarView.setTag(TAG_FAKE_STATUS_BAR_VIEW);
+                decorView.addView(statusBarView);
+                FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) contentChild.getLayoutParams();
+                lp.topMargin = statusBarHeight;
+                contentChild.setLayoutParams(lp);
+            }
+            contentChild.setFitsSystemWindows(false);
+            ((ViewGroup) contentChild).setClipToPadding(true);
+        }
+
+        private void rmFakeStatusBarView(Activity activity) {
+            ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
+            View contentChild = ((ViewGroup) decorView.findViewById(Window.ID_ANDROID_CONTENT)).getChildAt(0);
+            if (contentChild == null) return;
+            View fakeView = decorView.findViewWithTag(TAG_FAKE_STATUS_BAR_VIEW);
+            if (fakeView != null) {
+                decorView.removeView(fakeView);
+                FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) contentChild.getLayoutParams();
+                lp.topMargin = 0;
+                contentChild.setLayoutParams(lp);
+            }
+            contentChild.setFitsSystemWindows(false);
+            ((ViewGroup) contentChild).setClipToPadding(true);
         }
     }
 

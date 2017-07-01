@@ -5,25 +5,25 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.qwwuyu.lib.utils.InitUtil;
-import com.qwwuyu.lib.utils.ToastUtil;
+import com.qwwuyu.lib.utils.SystemBarUtil;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        findViewById(R.id.test).setOnClickListener(this);
         InitUtil.init(new InitUtil.Configuration(this));
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.test:
-                ToastUtil.show("123");
-                break;
-            default:
-                break;
-        }
+    public void onClick1(View v) {
+        SystemBarUtil.setStatusBarColor(this, 0xffff0000);
+    }
+
+    public void onClick2(View v) {
+        SystemBarUtil.translucentStatusBar(this, true);
+    }
+
+    public void onClick3(View v) {
+        SystemBarUtil.translucentStatusBar(this, false);
     }
 }
