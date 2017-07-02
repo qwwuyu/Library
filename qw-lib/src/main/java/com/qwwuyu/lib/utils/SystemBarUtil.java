@@ -28,7 +28,7 @@ public class SystemBarUtil {
     }
 
     public static void translucentStatusBar(Activity activity, boolean hideShelter) {
-        if (tint != null) tint.translucentStatusBar(activity, hideShelter); 
+        if (tint != null) tint.translucentStatusBar(activity, hideShelter);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -111,12 +111,10 @@ public class SystemBarUtil {
             View contentChild = ((ViewGroup) decorView.findViewById(Window.ID_ANDROID_CONTENT)).getChildAt(0);
             if (contentChild == null) return;
             View fakeView = decorView.findViewWithTag(TAG_FAKE_STATUS_BAR_VIEW);
-            if (fakeView != null) {
-                decorView.removeView(fakeView);
-                FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) contentChild.getLayoutParams();
-                lp.topMargin = 0;
-                contentChild.setLayoutParams(lp);
-            }
+            if (fakeView != null) decorView.removeView(fakeView);
+            FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) contentChild.getLayoutParams();
+            lp.topMargin = 0;
+            contentChild.setLayoutParams(lp);
             contentChild.setFitsSystemWindows(false);
             ((ViewGroup) contentChild).setClipToPadding(true);
         }

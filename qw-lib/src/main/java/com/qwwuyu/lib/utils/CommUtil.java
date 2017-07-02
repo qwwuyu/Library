@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.provider.Settings;
 
 import java.util.List;
 
@@ -45,6 +46,15 @@ public class CommUtil {
         intent.setAction(Intent.ACTION_VIEW);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setDataAndType(apkPath, "application/vnd.android.package-archive");
+        context.startActivity(intent);
+    }
+
+    /** 打开设置 */
+    public static void openSetting(Context context) {
+        Intent intent = new Intent();
+        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package", context.getPackageName(), null);
+        intent.setData(uri);
         context.startActivity(intent);
     }
 }
