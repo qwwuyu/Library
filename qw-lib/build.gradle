@@ -1,15 +1,28 @@
 apply plugin: 'com.android.library'
+apply plugin: 'me.tatarka.retrolambda'
 
 def config = rootProject.ext.android;
 def version = rootProject.ext.version;
 
 android {
+    publishNonDefault true
     compileSdkVersion config.compileSdkVersion
     buildToolsVersion config.buildToolsVersion
+
     defaultConfig {
         minSdkVersion config.minSdkVersion
         targetSdkVersion config.targetSdkVersion
+        consumerProguardFiles 'proguard-rules.pro'
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+retrolambda {
+    javaVersion JavaVersion.VERSION_1_7
 }
 
 dependencies {
@@ -18,5 +31,64 @@ dependencies {
     compile "com.android.support:appcompat-v7:$version.support"
     compile "com.android.support:support-v4:$version.support"
     compile "com.android.support:support-annotations:$version.support"
+    //leakcanary
+    debugCompile "com.squareup.leakcanary:leakcanary-android:$version.leakcanary"
+    releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$version.leakcanary"
+    testCompile "com.squareup.leakcanary:leakcanary-android-no-op:$version.leakcanary"
+    //blockcanary
+    debugCompile "com.github.markzhai:blockcanary-android:$version.blockcanary"
+    releaseCompile "com.github.markzhai:blockcanary-no-op:$version.blockcanary"
+    //butterknife
+    compile("com.jakewharton:butterknife:$version.butterknife") {
+        exclude module: 'support-annotations'
+    }
+    annotationProcessor("com.jakewharton:butterknife-compiler:$version.butterknife") {
+        exclude module: 'support-annotations'
+        exclude module: 'butterknife-annotations'
+    }
+    //dagger2
+    compile "com.google.dagger:dagger:$version.dagger2"
+    annotationProcessor("com.google.dagger:dagger-compiler:$version.dagger2") {
+        exclude module: 'dagger'
+    }
+    //eventbus
+    compile "org.greenrobot:eventbus:$version.eventbus"
+    //gson
+    compile "com.google.code.gson:gson:$version.gson"
+    //rx
+    compile "io.reactivex.rxjava2:rxjava:$version.rxjava2"
+    compile("io.reactivex.rxjava2:rxandroid:$version.rxandroid2") {
+        exclude module: 'rxjava'
+    }
+    compile("com.trello.rxlifecycle2:rxlifecycle:$version.rxlifecycle2") {
+        exclude module: 'rxjava'
+    }
+    compile("com.trello.rxlifecycle2:rxlifecycle-components:$version.rxlifecycle2") {
+        exclude module: 'support-v4'
+        exclude module: 'appcompat-v7'
+        exclude module: 'support-annotations'
+        exclude module: 'rxjava'
+        exclude module: 'rxandroid'
+        exclude module: 'rxlifecycle'
+    }
+    //network
+    compile "com.squareup.okhttp3:okhttp:$version.okhttp3"
+    compile("com.squareup.retrofit2:retrofit:$version.retrofit") {
+        exclude module: 'okhttp'
+        exclude module: 'okio'
+    }
+    compile("com.squareup.retrofit2:converter-gson:$version.retrofit") {
+        exclude module: 'gson'
+        exclude module: 'okhttp'
+        exclude module: 'okio'
+        exclude module: 'retrofit'
+    }
+    compile("com.squareup.retrofit2:adapter-rxjava2:$version.retrofit") {
+        exclude module: 'rxjava'
+        exclude module: 'okhttp'
+        exclude module: 'okio'
+        exclude module: 'retrofit'
+    }
+    compile "com.github.bumptech.glide:glide:$version.glide"
 }
 //apply from: 'bintray.gradle'
