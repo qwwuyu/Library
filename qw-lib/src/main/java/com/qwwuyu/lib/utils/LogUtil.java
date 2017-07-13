@@ -9,14 +9,13 @@ import com.qwwuyu.library.BuildConfig;
  */
 public class LogUtil {
     private static boolean IS_LOG = BuildConfig.DEBUG;
-    private static String DEFAULT_TAG = "qw_tag";
+    private static String DEFAULT_TAG = "defaultTag";
 
-    public static void setConfig(boolean enable) {
+    public static void setEnable(boolean enable) {
         IS_LOG = enable;
     }
 
-    public static void setConfig(boolean enable, String defaultTag) {
-        IS_LOG = enable;
+    public static void setDefaultTag(String defaultTag) {
         DEFAULT_TAG = defaultTag;
     }
 

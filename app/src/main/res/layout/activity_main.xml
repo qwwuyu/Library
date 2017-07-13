@@ -27,4 +27,11 @@
         android:layout_height="wrap_content"
         android:onClick="onClick3"
         android:text="Test"/>
+
+    <Button
+        android:id="@+id/btn4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClick4"
+        android:text="Test"/>
 </LinearLayout>
