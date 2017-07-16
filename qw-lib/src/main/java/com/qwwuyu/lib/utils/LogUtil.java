@@ -45,22 +45,22 @@ public class LogUtil {
     private @interface TYPE {
     }
 
-    private static boolean log = BuildConfig.DEBUG;
-    private static String logTag = null;
-    private static boolean logHead = true;
+    private static boolean log       = BuildConfig.DEBUG;
+    private static String  logTag    = null;
+    private static boolean logHead   = true;
     private static boolean logBorder = true;
-    private static int logFilter = V;
+    private static int     logFilter = V;
     private static ExecutorService executor;
     private static String dir = null;
 
-    private static final String LINE_SEP = System.getProperty("line.separator");
-    private static final String TOP_BORDER = "╔═══════════════════════════════════════════════════════════════════════════════════════════════════";
-    private static final String LEFT_BORDER = "║ ";
+    private static final String LINE_SEP      = System.getProperty("line.separator");
+    private static final String TOP_BORDER    = "╔═══════════════════════════════════════════════════════════════════════════════════════════════════";
+    private static final String LEFT_BORDER   = "║ ";
     private static final String BOTTOM_BORDER = "╚═══════════════════════════════════════════════════════════════════════════════════════════════════";
-    private static final int MAX_LEN = 4000;
-    private static final Format FORMAT = new SimpleDateFormat("MM-dd HH:mm:ss.SSS ", Locale.getDefault());
-    private static final String NULL = "null";
-    private static final String ARGS = "args[%d] = %s" + LINE_SEP;
+    private static final int    MAX_LEN       = 4000;
+    private static final Format FORMAT        = new SimpleDateFormat("MM-dd HH:mm:ss.SSS ", Locale.getDefault());
+    private static final String NULL          = "null";
+    private static final String ARGS          = "args[%d] = %s" + LINE_SEP;
 
     /** ======================== 使用Log工具 ======================== */
     public static class Builder {
@@ -69,6 +69,11 @@ public class LogUtil {
 
         public Builder enableLog(boolean enable) {
             LogUtil.log = enable;
+            return this;
+        }
+
+        public Builder setLogDir(String dir) {
+            LogUtil.dir = dir;
             return this;
         }
 
