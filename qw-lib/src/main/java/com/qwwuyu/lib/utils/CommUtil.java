@@ -5,8 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Process;
 import android.provider.Settings;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.List;
 
 /**
@@ -38,6 +41,38 @@ public class CommUtil {
         } catch (Exception e) {//TransactionTooLargeException
             return true;
         }
+    }
+
+    /** 是否是主线程 */
+    public static boolean isInMainProcess(Context context) {
+        String processName = getProcessName(context, Process.myPid());
+        String packageName = context.getPackageName();
+        return processName == null || processName.length() == 0 || processName.equals(packageName);
+    }
+
+    /** 获取进程号对应的进程名 */
+    private static String getProcessName(Context context, int pid) {
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader("/proc/" + pid + "/cmdline"));
+            return reader.readLine().trim();
+        } catch (Throwable ignored) {
+        } finally {
+            try {
+                reader.close();
+            } catch (Exception ignored) {
+            }
+        }
+        try {
+            List<ActivityManager.RunningAppProcessInfo> runningApps = ((ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE)).getRunningAppProcesses();
+            if (runningApps != null) {
+                for (ActivityManager.RunningAppProcessInfo procInfo : runningApps) {
+                    if (procInfo.pid == pid) return procInfo.processName;
+                }
+            }
+        } catch (Throwable ignored) {
+        }
+        return null;
     }
 
     /** 安装apk */

@@ -5,8 +5,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.qwwuyu.lib.utils.LogUtil;
 import com.qwwuyu.lib.utils.SystemBarUtil;
 import com.qwwuyu.lib.utils.ToastUtil;
+import com.tencent.bugly.crashreport.CrashReport;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -29,5 +31,19 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClick4(View v) {
         ToastUtil.show("123");
+    }
+
+    public void onClick5(View v) {
+        LogUtil.i(null);
+    }
+
+    public void onClick6(View v) {
+        try {
+            CrashReport.setUserSceneTag(this, 9527);
+            CrashReport.setUserId("9527");
+            CrashReport.testJavaCrash();
+        } catch (Throwable thr) {
+            CrashReport.postCatchedException(thr);
+        }
     }
 }

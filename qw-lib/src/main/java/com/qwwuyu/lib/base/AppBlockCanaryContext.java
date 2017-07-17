@@ -78,7 +78,7 @@ public class AppBlockCanaryContext extends BlockCanaryContext {
      * @return path of log files
      */
     public String providePath() {
-        return "/blockcanary/";
+        return "/BackHome/blockcanary/";
     }
 
     /**

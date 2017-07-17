@@ -92,4 +92,6 @@
 }
 -keepattributes InnerClasses -dontoptimize
 ################### 以上固定 package:com.qwwuyu.example
-#qw-lib
+#bugly
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}
