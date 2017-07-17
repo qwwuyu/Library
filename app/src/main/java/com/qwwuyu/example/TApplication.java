@@ -1,8 +1,11 @@
 package com.qwwuyu.example;
 
+import android.os.Environment;
+
 import com.qwwuyu.lib.base.BaseApplication;
 import com.qwwuyu.lib.utils.CommUtil;
 import com.qwwuyu.lib.utils.InitUtil;
+import com.qwwuyu.lib.utils.LogUtil;
 import com.tencent.bugly.crashreport.CrashReport;
 
 /**
@@ -15,10 +18,11 @@ public class TApplication extends BaseApplication {
         if (!CommUtil.isInMainProcess(getApplicationContext())) return;
         CrashReport.initCrashReport(getApplicationContext(), "99095bbe1c", false);
         CrashReport.setIsDevelopmentDevice(getApplicationContext(), BuildConfig.DEBUG);
+        LogUtil.i("file:" + Environment.getRootDirectory());
     }
 
     @Override
     protected void modifyConfig(InitUtil.Configuration config) {
-        config.setLeakCanary(true).setBlockCanary(true);
+        config.enableLeakCanary();
     }
 }

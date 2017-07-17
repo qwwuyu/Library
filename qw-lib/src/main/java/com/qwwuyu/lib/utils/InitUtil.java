@@ -36,13 +36,13 @@ public class InitUtil {
             return this;
         }
 
-        public Configuration setLeakCanary(boolean enable) {
-            this.leakCanary = enable;
+        public Configuration enableLeakCanary() {
+            this.leakCanary = true;
             return this;
         }
 
-        public Configuration setBlockCanary(boolean enable) {
-            this.blockCanary = enable;
+        public Configuration enableBlockCanary() {
+            this.blockCanary = true;
             return this;
         }
     }
