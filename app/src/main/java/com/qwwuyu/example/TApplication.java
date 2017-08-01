@@ -20,7 +20,7 @@ public class TApplication extends BaseApplication {
         CrashReport.setIsDevelopmentDevice(getApplicationContext(), BuildConfig.DEBUG);
         LogUtil.i("file:" + Environment.getRootDirectory());
     }
-
+    
     @Override
     protected void modifyConfig(InitUtil.Configuration config) {
         config.enableLeakCanary();

@@ -10,7 +10,7 @@ import com.squareup.leakcanary.LeakCanary;
 /**
  * Created by qiwei on 2017/7/12
  */
-public class BaseApplication extends Application {
+public abstract class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
@@ -23,6 +23,5 @@ public class BaseApplication extends Application {
         InitUtil.init(config);
     }
 
-    protected void modifyConfig(InitUtil.Configuration config) {
-    }
+    protected abstract void modifyConfig(InitUtil.Configuration config);
 }

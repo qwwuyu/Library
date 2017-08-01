@@ -28,8 +28,8 @@ retrolambda {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     //support
-    compile "com.android.support:appcompat-v7:$version.support"
     compile "com.android.support:support-v4:$version.support"
+    compile "com.android.support:appcompat-v7:$version.support"
     compile "com.android.support:support-annotations:$version.support"
     //leakcanary
     debugCompile "com.squareup.leakcanary:leakcanary-android:$version.leakcanary"
@@ -41,6 +41,7 @@ dependencies {
     //butterknife
     compile("com.jakewharton:butterknife:$version.butterknife") {
         exclude module: 'support-annotations'
+        exclude module: 'support-compat'
     }
     annotationProcessor("com.jakewharton:butterknife-compiler:$version.butterknife") {
         exclude module: 'support-annotations'
@@ -48,9 +49,7 @@ dependencies {
     }
     //dagger2
     compile "com.google.dagger:dagger:$version.dagger2"
-    annotationProcessor("com.google.dagger:dagger-compiler:$version.dagger2") {
-        exclude module: 'dagger'
-    }
+    annotationProcessor "com.google.dagger:dagger-compiler:$version.dagger2"
     //eventbus
     compile "org.greenrobot:eventbus:$version.eventbus"
     //gson
@@ -79,14 +78,10 @@ dependencies {
     }
     compile("com.squareup.retrofit2:converter-gson:$version.retrofit") {
         exclude module: 'gson'
-        exclude module: 'okhttp'
-        exclude module: 'okio'
         exclude module: 'retrofit'
     }
     compile("com.squareup.retrofit2:adapter-rxjava2:$version.retrofit") {
         exclude module: 'rxjava'
-        exclude module: 'okhttp'
-        exclude module: 'okio'
         exclude module: 'retrofit'
     }
     compile "com.github.bumptech.glide:glide:$version.glide"
