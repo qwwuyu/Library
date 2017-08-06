@@ -19,14 +19,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onClick2"
-        android:text="状态栏"/>
+        android:text="Test2"/>
 
     <Button
         android:id="@+id/btn3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onClick3"
-        android:text="状态栏"/>
+        android:text="ELM权限"/>
 
     <Button
         android:id="@+id/btn4"

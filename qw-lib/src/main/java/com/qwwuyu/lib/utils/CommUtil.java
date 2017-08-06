@@ -85,12 +85,12 @@ public class CommUtil {
     }
 
     /** 打开设置 */
-    public static void openSetting(Context context) {
+    public static void openSetting(Context context, boolean newTask) {
         Intent intent = new Intent();
         intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
         Uri uri = Uri.fromParts("package", context.getPackageName(), null);
         intent.setData(uri);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (newTask) intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 }

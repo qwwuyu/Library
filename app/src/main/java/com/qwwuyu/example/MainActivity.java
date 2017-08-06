@@ -1,5 +1,6 @@
 package com.qwwuyu.example;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
@@ -14,19 +15,22 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.a_main);
     }
 
     public void onClick1(View v) {
         SystemBarUtil.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
-    }
-
-    public void onClick2(View v) {
+        SystemBarUtil.translucentStatusBar(this, false);
         SystemBarUtil.translucentStatusBar(this, true);
     }
 
+    public void onClick2(View v) {
+    }
+
     public void onClick3(View v) {
-        SystemBarUtil.translucentStatusBar(this, false);
+        Intent intent = new Intent(this, ELMActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     public void onClick4(View v) {
