@@ -1,7 +1,6 @@
 package com.qwwuyu.lib.utils.glide;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Registry;
@@ -17,6 +16,5 @@ public final class OkHttpLibraryGlideModule extends LibraryGlideModule {
     @Override
     public void registerComponents(Context context, Glide glide, Registry registry) {
         registry.replace(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory());
-        Log.i("asdasd", "registerComponents");
     }
 }

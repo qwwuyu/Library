@@ -1,7 +1,6 @@
 package com.qwwuyu.lib.utils.glide;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
@@ -13,6 +12,7 @@ import com.bumptech.glide.load.engine.cache.DiskLruCacheFactory;
 import com.bumptech.glide.load.engine.cache.LruResourceCache;
 import com.bumptech.glide.module.AppGlideModule;
 import com.bumptech.glide.request.RequestOptions;
+import com.qwwuyu.lib.utils.LogUtil;
 
 import java.io.File;
 
@@ -34,18 +34,16 @@ public final class GiphyGlideModule extends AppGlideModule {
         RequestOptions options = new RequestOptions()
                 .format(DecodeFormat.PREFER_ARGB_8888);
         builder.setDefaultRequestOptions(options);
-        Log.i("asdasd", "applyOptions");
+        LogUtil.i("applyOptions");
     }
 
     @Override
     public void registerComponents(Context context, Glide glide, Registry registry) {
         super.registerComponents(context, glide, registry);
-        Log.i("asdasd", "registerComponents");
     }
 
     @Override
     public boolean isManifestParsingEnabled() {
-        Log.i("asdasd", "isManifestParsingEnabled");
         return false;
     }
 }
