@@ -19,6 +19,6 @@ ext {
             eventbus   : "3.0.0",
             gson       : "2.8.0",
             rxjava2    : "2.1.0", rxandroid2: "2.0.1", rxlifecycle2: "2.0.1",
-            okhttp3    : "3.8.0", retrofit: "2.3.0", glide: "3.8.0",
+            okhttp3    : "3.8.0", retrofit: "2.3.0", glide: "4.0.0", glidetrans: "2.0.2",
     ]
 }

@@ -1,13 +1,14 @@
-package com.qwwuyu.example;
+package com.qwwuyu.example.activity;
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 
+import com.qwwuyu.example.MainActivity;
+import com.qwwuyu.example.R;
 import com.qwwuyu.lib.utils.ToastUtil;
 import com.qwwuyu.lib.utils.permit.PermitActivity;
 import com.qwwuyu.lib.utils.permit.ProceedCallback;
@@ -39,12 +40,7 @@ public class ELMActivity extends PermitActivity {
         new AlertDialog.Builder(ELMActivity.this)
                 .setCancelable(false)
                 .setTitle("开启").setMessage(message.toString())
-                .setPositiveButton("下一步", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        proceedListener.proceed();
-                    }
-                }).create().show();
+                .setPositiveButton("下一步", (dialog, which) -> proceedListener.proceed()).create().show();
         return true;
     }
 
@@ -53,16 +49,8 @@ public class ELMActivity extends PermitActivity {
         new AlertDialog.Builder(ELMActivity.this)
                 .setCancelable(false)
                 .setTitle("请允许使用").setMessage(request)
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        proceedListener.proceed();
-                    }
-                })
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                }).create().show();
+                .setPositiveButton("确定", (dialog, which) -> proceedListener.proceed())
+                .setNegativeButton("取消", (dialog, which) -> finish()).create().show();
         return true;
     }
 
@@ -74,16 +62,8 @@ public class ELMActivity extends PermitActivity {
         }
         new AlertDialog.Builder(ELMActivity.this)
                 .setTitle("请在设置中打开").setMessage(message.toString())
-                .setPositiveButton("去设置", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        proceedListener.proceed();
-                    }
-                })
-                .setNegativeButton("拒绝", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                }).create().show();
+                .setPositiveButton("去设置", (dialog, which) -> proceedListener.proceed())
+                .setNegativeButton("拒绝", (dialog, which) -> finish()).create().show();
     }
 
     @Override

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 
+import com.qwwuyu.example.activity.ELMActivity;
+import com.qwwuyu.example.activity.GlideActivity;
 import com.qwwuyu.lib.base.BaseActivity;
 import com.qwwuyu.lib.utils.LogUtil;
 import com.qwwuyu.lib.utils.SystemBarUtil;
@@ -25,6 +27,8 @@ public class MainActivity extends BaseActivity {
     }
 
     public void onClick2(View v) {
+        Intent intent = new Intent(this, GlideActivity.class);
+        startActivity(intent);
     }
 
     public void onClick3(View v) {
