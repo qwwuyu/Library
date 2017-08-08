@@ -8,7 +8,6 @@ import android.view.View;
 import com.qwwuyu.example.activity.ELMActivity;
 import com.qwwuyu.example.activity.GlideActivity;
 import com.qwwuyu.lib.base.BaseActivity;
-import com.qwwuyu.lib.utils.LogUtil;
 import com.qwwuyu.lib.utils.SystemBarUtil;
 import com.qwwuyu.lib.utils.ToastUtil;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -42,7 +41,6 @@ public class MainActivity extends BaseActivity {
     }
 
     public void onClick5(View v) {
-        LogUtil.i(null);
     }
 
     public void onClick6(View v) {

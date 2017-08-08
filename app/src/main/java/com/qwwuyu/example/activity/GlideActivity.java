@@ -8,18 +8,22 @@ import com.bumptech.glide.Glide;
 import com.qwwuyu.example.R;
 import com.qwwuyu.lib.base.BaseActivity;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by qiwei on 2017/8/7
  */
 public class GlideActivity extends BaseActivity {
-    private ImageView img;
+    @BindView(R.id.img)
+    ImageView img;
     private String url = "https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a_glide);
-        img = (ImageView) findViewById(R.id.img);
+        ButterKnife.bind(this);
         Glide.with(this).load(url).into(img);
     }
 }

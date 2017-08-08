@@ -52,4 +52,16 @@ dependencies {
     releaseCompile project(path: ':qw-lib', configuration: "release")
     compile "com.tencent.bugly:crashreport:2.5.0"
     compile "com.tencent.bugly:nativecrashreport:3.1.2"
+    //butterknife
+    compile("com.jakewharton:butterknife:$version.butterknife") {
+        exclude module: 'support-annotations'
+        exclude module: 'support-compat'
+    }
+    annotationProcessor("com.jakewharton:butterknife-compiler:$version.butterknife") {
+        exclude module: 'support-annotations'
+        exclude module: 'butterknife-annotations'
+    }
+    //dagger2
+    compile "com.google.dagger:dagger:$version.dagger2"
+    annotationProcessor "com.google.dagger:dagger-compiler:$version.dagger2"
 }
