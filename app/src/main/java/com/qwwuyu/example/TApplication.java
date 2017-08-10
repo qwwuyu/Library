@@ -17,8 +17,7 @@ public class TApplication extends BaseApplication {
     public void onCreate() {
         super.onCreate();
         if (!CommUtil.isInMainProcess(getApplicationContext())) return;
-        CrashReport.initCrashReport(getApplicationContext(), "99095bbe1c", false);
-        CrashReport.setIsDevelopmentDevice(getApplicationContext(), BuildConfig.DEBUG);
+        if (!BuildConfig.DEBUG) CrashReport.initCrashReport(getApplicationContext(), "99095bbe1c", false);
         DefaultGlideModule.setGlideConfig(new GlideConfig.Builder()
                 .options(new RequestOptions().format(DecodeFormat.PREFER_ARGB_8888)//图片格式
                         .placeholder(0)//加载中图片

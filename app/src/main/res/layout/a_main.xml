@@ -5,21 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.qwwuyu.example.MainActivity">
+    tools:context=".MainActivity">
 
     <Button
         android:id="@+id/btn1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onClick1"
-        android:text="状态栏"/>
+        android:text="Test"/>
 
     <Button
         android:id="@+id/btn2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onClick2"
-        android:text="Test2"/>
+        android:text="状态栏"/>
 
     <Button
         android:id="@+id/btn3"
