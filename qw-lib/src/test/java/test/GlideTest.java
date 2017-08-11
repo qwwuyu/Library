@@ -4,8 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -25,18 +23,15 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import java.io.File;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
-@RunWith(AndroidJUnit4.class)
 public class GlideTest {
     @Test
     public void useAppContext() throws Exception {
-        // Context of the app under test.
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = null;
         ImageView imageView = new ImageView(null);
         Glide.with(context);// 绑定Context Activity FragmentActivity Fragment
         Glide.with(context).load("imageUrl").into(imageView);

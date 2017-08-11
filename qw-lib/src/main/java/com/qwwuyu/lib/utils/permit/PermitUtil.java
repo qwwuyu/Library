@@ -22,7 +22,7 @@ public class PermitUtil {
      * @param permissions 请求的权限
      * @param ctrl        请求操作
      */
-    public static void request(final @NonNull Activity activity, final @NonNull String[] permissions, final @NonNull PermitCtrl ctrl) {
+    public static void request(@NonNull final Activity activity, @NonNull final String[] permissions, @NonNull final PermitCtrl ctrl) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             ctrl.onGranted();
             return;

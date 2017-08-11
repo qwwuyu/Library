@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * Created by qiwei on 2017/8/6
- * 仿造饿了么的请求权限
+ * 仿造饿了么的首次请求权限
  */
 public abstract class PermitActivity extends AppCompatActivity {
     private boolean isGranted = false;
@@ -109,6 +109,7 @@ public abstract class PermitActivity extends AppCompatActivity {
 
     /**
      * 第一次请求权限
+     *
      * @param showRationales  需要提醒的权限
      * @param request         需求请求的权限
      * @param proceedListener 继续请求
