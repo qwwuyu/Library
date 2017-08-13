@@ -65,6 +65,7 @@ dependencies {
     }
     //network
     compile "com.squareup.okhttp3:okhttp:$version.okhttp3"
+    compile "com.squareup.okhttp3:logging-interceptor:$version.okhttp3"
     compile("com.squareup.retrofit2:retrofit:$version.retrofit") {
         exclude module: 'okhttp'
         exclude module: 'okio'

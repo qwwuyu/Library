@@ -45,22 +45,22 @@ public class LogUtil {
     private @interface TYPE {
     }
 
-    private static boolean log       = BuildConfig.DEBUG;
-    private static String  logTag    = null;
-    private static boolean logHead   = true;
+    private static boolean log = BuildConfig.DEBUG;
+    private static String logTag = null;
+    private static boolean logHead = true;
     private static boolean logBorder = true;
-    private static int     logFilter = V;
+    private static int logFilter = V;
     private static ExecutorService executor;
     private static String dir = null;
 
-    private static final String LINE_SEP      = System.getProperty("line.separator");
-    private static final String TOP_BORDER    = "╔═══════════════════════════════════════════════════════════════════════════════════════════════════";
-    private static final String LEFT_BORDER   = "║ ";
+    private static final String LINE_SEP = System.getProperty("line.separator");
+    private static final String TOP_BORDER = "╔═══════════════════════════════════════════════════════════════════════════════════════════════════";
+    private static final String LEFT_BORDER = "║ ";
     private static final String BOTTOM_BORDER = "╚═══════════════════════════════════════════════════════════════════════════════════════════════════";
-    private static final int    MAX_LEN       = 4000;
-    private static final Format FORMAT        = new SimpleDateFormat("MM-dd HH:mm:ss.SSS ", Locale.getDefault());
-    private static final String NULL          = "null";
-    private static final String ARGS          = "args[%d] = %s" + LINE_SEP;
+    private static final int MAX_LEN = 4000;
+    private static final Format FORMAT = new SimpleDateFormat("MM-dd HH:mm:ss.SSS ", Locale.getDefault());
+    private static final String NULL = "null";
+    private static final String ARGS = "args[%d] = %s" + LINE_SEP;
 
     /** ======================== 使用Log工具 ======================== */
     public static class Builder {
@@ -167,9 +167,8 @@ public class LogUtil {
 
     /** 处理TAG和位子 */
     private static String[] processTagAndHead(String tag) {
-        if (logTag != null && !logHead) {
-            tag = logTag;
-        } else {
+        if (tag == null) tag = logTag;
+        if (logHead || tag == null) {
             StackTraceElement targetElement = new Throwable().getStackTrace()[3];
             String className = targetElement.getClassName();
             String[] classNameInfo = className.split("\\.");
@@ -179,9 +178,7 @@ public class LogUtil {
             if (className.contains("$")) {
                 className = className.split("\\$")[0];
             }
-            if (logTag == null) {
-                tag = isSpace(tag) ? className : tag;
-            }
+            if (tag == null) tag = className;
             if (logHead) {
                 String head = String.format(Locale.getDefault(), "%s, %s(%s.java:%d)",
                         Thread.currentThread().getName(), targetElement.getMethodName(), className, targetElement.getLineNumber());
@@ -306,13 +303,5 @@ public class LogUtil {
             sb.append(LEFT_BORDER).append(line).append(LINE_SEP);
         }
         return sb.toString();
-    }
-
-    private static boolean isSpace(final String s) {
-        if (s == null) return true;
-        for (int i = 0, len = s.length(); i < len; ++i) {
-            if (!Character.isWhitespace(s.charAt(i))) return false;
-        }
-        return true;
     }
 }

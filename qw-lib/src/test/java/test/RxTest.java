@@ -79,6 +79,28 @@ public class RxTest {
         ;
     }
 
+    /** j8特性 */
+    public void java8() throws Exception {
+        Observable.empty().subscribe(System.out::println);
+        Observable.empty().subscribe(i -> System.out.println(String.valueOf(i)));
+    }
+
+    /** 提供多种Scheduler */
+    private void schedulers() throws Exception {
+        /** Android主线程 */
+        Scheduler mainScheduler = AndroidSchedulers.mainThread();
+        /** 多线程,无上线,可复用 */
+        Scheduler ioScheduler = Schedulers.io();
+        /** 新的线程,不建议使用 */
+        Scheduler newScheduler = Schedulers.newThread();
+        /** 根据CPU的核数量Scheduler(密集型操作,不要用等待操作) */
+        Scheduler computationScheduler = Schedulers.computation();
+        /** 单线程 */
+        Scheduler singleScheduler = Schedulers.single();
+        /** 根据线程池创建Scheduler */
+        Scheduler customize = Schedulers.from(Executors.newSingleThreadExecutor());
+    }
+
     @Test
     public void observable() throws Exception {
         Observable.empty().subscribe(new SObserver<>("empty"));
@@ -314,28 +336,6 @@ public class RxTest {
             Thread.sleep(time);
         } catch (InterruptedException ignored) {
         }
-    }
-
-    /** j8特性 */
-    public void java8() throws Exception {
-        Observable.empty().subscribe(System.out::println);
-        Observable.empty().subscribe(i -> System.out.println(String.valueOf(i)));
-    }
-
-    /** 提供多种Scheduler */
-    private void schedulers() throws Exception {
-        /** Android主线程 */
-        Scheduler mainScheduler = AndroidSchedulers.mainThread();
-        /** 多线程,无上线,可复用 */
-        Scheduler ioScheduler = Schedulers.io();
-        /** 新的线程,不建议使用 */
-        Scheduler newScheduler = Schedulers.newThread();
-        /** 根据CPU的核数量Scheduler(密集型操作,不要用等待操作) */
-        Scheduler computationScheduler = Schedulers.computation();
-        /** 单线程 */
-        Scheduler singleScheduler = Schedulers.single();
-        /** 根据线程池创建Scheduler */
-        Scheduler customize = Schedulers.from(Executors.newSingleThreadExecutor());
     }
 
     /** 更改线程名字 */
