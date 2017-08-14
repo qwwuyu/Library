@@ -2,6 +2,8 @@ package com.qwwuyu.example.activity;
 
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 
@@ -12,22 +14,28 @@ import com.qwwuyu.lib.base.BaseActivity;
 import com.qwwuyu.lib.http.body.ProgressResponseBody;
 import com.qwwuyu.lib.http.interceptor.HttpLoggingInterceptor;
 import com.qwwuyu.lib.utils.LogUtil;
+import com.qwwuyu.library.BuildConfig;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.Cache;
+import okhttp3.CookieJar;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -47,6 +55,7 @@ public class HttpActivity extends BaseActivity {
     private Api api;
     private Gson gson = new Gson();
     private NumberProgressBar bar;
+    private OkHttpClient okHttpClient;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -109,7 +118,41 @@ public class HttpActivity extends BaseActivity {
     }
 
     public void onClick6(View DOWNLOAD) {
+        LogUtil.i("download:main" + Looper.getMainLooper().getThread().getId());
+//        api.download().enqueue(new Callback<ResponseBody>() {
+//            @Override
+//            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+//                LogUtil.i("download:onResponse" + Thread.currentThread().getId());
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+//                LogUtil.i("download:onFailure" + Thread.currentThread().getId() + t.getMessage());
+//            }
+//        });
+        Request request = new Request.Builder()
+                .url("http://192.168.1.218/test/download2")
+                .build();
+        okHttpClient.newCall(request).enqueue(new okhttp3.Callback() {
+            @Override
+            public void onFailure(@NonNull okhttp3.Call call, @NonNull IOException e) {
+                LogUtil.i("download:onFailure" + Thread.currentThread().getId() + e.getMessage());
+            }
 
+            @Override
+            public void onResponse(@NonNull okhttp3.Call call, @NonNull okhttp3.Response response) throws IOException {
+                InputStream is = response.body().byteStream();
+                final long length = response.body().contentLength();
+                byte[] buf = new byte[1024 * 100];
+                int len;
+                long read = 0;
+                while ((len = is.read(buf)) != -1) {
+                    read += len;
+                    LogUtil.i("download:read:" + read + " length" + length);
+                }
+                response.body().close();
+            }
+        });
     }
 
     private class SObserver<T> implements Observer<T> {
@@ -120,17 +163,17 @@ public class HttpActivity extends BaseActivity {
         }
 
         @Override
-        public void onSubscribe(@NonNull Disposable d) {
+        public void onSubscribe(Disposable d) {
             LogUtil.i(tag, "onSubscribe");
         }
 
         @Override
-        public void onNext(@NonNull T t) {
+        public void onNext(T t) {
             LogUtil.i(tag, "onNext:" + gson.toJson(t));
         }
 
         @Override
-        public void onError(@NonNull Throwable e) {
+        public void onError(Throwable e) {
             LogUtil.i(tag, "onError:" + e.getMessage());
         }
 
@@ -141,16 +184,20 @@ public class HttpActivity extends BaseActivity {
     }
 
     private void initHttp() {
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(message -> LogUtil.i("http", message));
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+        OkHttpClient.Builder okBuilder = new OkHttpClient.Builder()
                 .cache(new Cache(new File(getCacheDir().getAbsolutePath() + File.separator + "http"), 30L * 1024 * 1024))
-                .addInterceptor(loggingInterceptor)
                 .connectTimeout(5, TimeUnit.SECONDS)
                 .writeTimeout(5, TimeUnit.SECONDS)
-                .readTimeout(5, TimeUnit.SECONDS)
-                .retryOnConnectionFailure(true)
-                .build();
+                .readTimeout(5, TimeUnit.SECONDS);
+        if (BuildConfig.DEBUG) {
+            okBuilder.addInterceptor(new HttpLoggingInterceptor(message -> LogUtil.i("http", message)).setLevel(HttpLoggingInterceptor.Level.BASIC));
+        }
+        if (false) {
+            okBuilder.retryOnConnectionFailure(true)
+                    .sslSocketFactory(null, null)
+                    .cookieJar(CookieJar.NO_COOKIES);
+        }
+        okHttpClient = okBuilder.build();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://192.168.1.218/")
                 .client(okHttpClient)
@@ -180,6 +227,9 @@ public class HttpActivity extends BaseActivity {
         @Multipart
         @POST("test/upload")
         Observable<ResponseBean> upload(@Part MultipartBody.Part file, @Part("fileName") RequestBody fileName);
+
+        @GET("test/download")
+        Call<ResponseBody> download();
     }
 
     public class ResponseBean {
