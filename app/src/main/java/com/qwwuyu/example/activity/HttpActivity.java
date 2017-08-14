@@ -9,7 +9,8 @@ import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.google.gson.Gson;
 import com.qwwuyu.example.R;
 import com.qwwuyu.lib.base.BaseActivity;
-import com.qwwuyu.lib.http.ProgressResponseBody;
+import com.qwwuyu.lib.http.body.ProgressResponseBody;
+import com.qwwuyu.lib.http.interceptor.HttpLoggingInterceptor;
 import com.qwwuyu.lib.utils.LogUtil;
 
 import java.io.File;
@@ -27,7 +28,6 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -82,25 +82,25 @@ public class HttpActivity extends BaseActivity {
     }
 
     public void onClick5(View UPLOAD) {
-        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/BackHome/1.xx");
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/BackHome/1.jpg");
         RequestBody fileBody = RequestBody.create(MediaType.parse("application/octet-stream"), file);
-        ProgressResponseBody progressFileBody = new ProgressResponseBody(fileBody, new ProgressResponseBody.ProgressListener() {
+        ProgressResponseBody progressFileBody = new ProgressResponseBody(fileBody, new ProgressResponseBody.MainProgressListener() {
             @Override
-            public void onProgressUpdate(long read, long length) {
+            public void onMainProgressUpdate(long read, long length) {
                 LogUtil.i("upload", "read:" + read + " length:" + length);
-                bar.post(() -> bar.setProgress((int) (read * 100 / length) / 100));
+                bar.setProgress((int) (read * 100 / length) / 100);
             }
 
             @Override
-            public void onError() {
+            public void onMainError() {
                 LogUtil.i("upload", "onError");
-                bar.post(() -> bar.setProgress(0));
+                bar.setProgress(0);
             }
 
             @Override
-            public void onFinish(long length) {
+            public void onMainFinish(long length) {
                 LogUtil.i("upload", "onFinish:" + length);
-                bar.post(() -> bar.setProgress(100));
+                bar.setProgress(100);
             }
         });
         MultipartBody.Part picturePart = MultipartBody.Part.createFormData("pName", file.getName(), progressFileBody);
@@ -152,7 +152,7 @@ public class HttpActivity extends BaseActivity {
                 .retryOnConnectionFailure(true)
                 .build();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.109/")
+                .baseUrl("http://192.168.1.218/")
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

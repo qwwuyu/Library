@@ -1,4 +1,7 @@
-package com.qwwuyu.lib.http;
+package com.qwwuyu.lib.http.body;
+
+import android.os.Handler;
+import android.os.Looper;
 
 import java.io.IOException;
 
@@ -67,5 +70,49 @@ public class ProgressResponseBody extends RequestBody {
         void onError();
 
         void onFinish(long length);
+    }
+
+    public static abstract class MainProgressListener implements ProgressListener {
+        private long lastCallTime = 0;
+        private final long differTime;
+        private final Handler handler;
+
+        public MainProgressListener() {
+            this(20);
+        }
+
+        public MainProgressListener(long differTime) {
+            this(differTime, new Handler(Looper.getMainLooper()));
+        }
+
+        public MainProgressListener(long differTime, Handler handler) {
+            this.differTime = differTime;
+            this.handler = handler;
+        }
+
+        @Override
+        public final void onProgressUpdate(long read, long length) {
+            long nowTime = System.currentTimeMillis();
+            if (nowTime - lastCallTime >= differTime) {
+                lastCallTime = nowTime;
+                handler.post(() -> onMainProgressUpdate(read, length));
+            }
+        }
+
+        @Override
+        public final void onError() {
+            handler.post(this::onMainError);
+        }
+
+        @Override
+        public final void onFinish(long length) {
+            handler.post(() -> onMainFinish(length));
+        }
+
+        public abstract void onMainProgressUpdate(long read, long length);
+
+        public abstract void onMainError();
+
+        public abstract void onMainFinish(long length);
     }
 }
