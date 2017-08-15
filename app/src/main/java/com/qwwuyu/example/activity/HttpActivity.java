@@ -131,7 +131,7 @@ public class HttpActivity extends BaseActivity {
 //            }
 //        });
         Request request = new Request.Builder()
-                .url("http://192.168.1.218/test/download2")
+                .url("http://192.168.1.218/test/download?name=1.file")
                 .build();
         okHttpClient.newCall(request).enqueue(new okhttp3.Callback() {
             @Override
