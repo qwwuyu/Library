@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.View;
 
+
 /**
  * Created by qiwei on 2017/8/21
  */
@@ -63,19 +64,18 @@ public class ColorPickerView extends View {
         return Bitmap.createBitmap(colors, radiusPx, radiusPx, Bitmap.Config.ARGB_8888);
     }
 
+
     private static float hueForPos(float x, float y, float radiusPx) {
-        final double r = radiusPx - 1; // gives values 0...1 inclusive
-        final double dx = (r - x) / r;
-        final double dy = (r - y) / r;
-        final double angle = Math.atan2(dy, dx);
-        final double hue = 360 * angle / (Math.PI / 2);
+        final double r = radiusPx / 2;
+        double hue = Math.toDegrees((Math.atan2(y - r, x - r)));
+        if (hue < 0) hue += 360;
         return (float) hue;
     }
 
     private static float satForPos(float x, float y, float radiusPx) {
-        final double r = radiusPx - 1; // gives values 0...1 inclusive
-        final double dx = (r - x) / r;
-        final double dy = (r - y) / r;
+        final double r = radiusPx / 2; // gives values 0...1 inclusive
+        final double dx = (x - r) / r;
+        final double dy = (y - r) / r;
         final double sat = dx * dx + dy * dy; // leave it squared -- exaggerates pale colors
         return (float) sat;
     }
