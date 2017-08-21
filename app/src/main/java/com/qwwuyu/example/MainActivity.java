@@ -2,19 +2,16 @@ package com.qwwuyu.example;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 
 import com.qwwuyu.example.activity.ELMActivity;
-import com.qwwuyu.example.activity.HttpActivity;
+import com.qwwuyu.example.activity.TestActivity;
 import com.qwwuyu.lib.base.BaseActivity;
 import com.qwwuyu.lib.utils.LogUtil;
 import com.qwwuyu.lib.utils.SystemBarUtil;
 import com.qwwuyu.lib.utils.ToastUtil;
 import com.tencent.bugly.crashreport.CrashReport;
-
-import java.io.File;
 
 public class MainActivity extends BaseActivity {
     private static int[] flag = new int[10];
@@ -26,7 +23,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public void onClick1(View v) {
-        Intent intent = new Intent(this, HttpActivity.class);
+        Intent intent = new Intent(this, TestActivity.class);
         startActivity(intent);
     }
 

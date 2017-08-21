@@ -13,4 +13,8 @@
         android:layout_height="wrap_content"
         android:onClick="onClick1"
         android:text="Test"/>
+
+    <com.qwwuyu.lib.view.ColorPickerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>
