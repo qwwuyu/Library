@@ -31,6 +31,7 @@
         <activity android:name=".activity.ELMActivity"/>
         <activity android:name=".activity.GlideActivity"/>
         <activity android:name=".activity.HttpActivity"/>
+        <activity android:name=".activity.ColorActivity"/>
         <activity android:name=".activity.TestActivity"/>
         <activity android:name=".activity.Test2Activity"/>
     </application>

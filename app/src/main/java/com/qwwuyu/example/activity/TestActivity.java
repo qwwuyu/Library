@@ -11,6 +11,7 @@ import com.qwwuyu.lib.base.BaseActivity;
  * Created by qiwei on 2017/8/10
  */
 public class TestActivity extends BaseActivity {
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,6 +19,5 @@ public class TestActivity extends BaseActivity {
     }
 
     public void onClick1(View view) {
-
     }
 }

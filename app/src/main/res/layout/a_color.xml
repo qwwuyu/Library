@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onClick1"
-        android:text="Test"/>
+        android:text="#88ff0000"/>
 
     <com.qwwuyu.lib.view.color.ColorPickerView
         android:id="@+id/pickerView"
