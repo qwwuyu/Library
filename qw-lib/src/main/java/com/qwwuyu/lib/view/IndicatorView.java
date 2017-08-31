@@ -1,7 +1,7 @@
 package com.qwwuyu.lib.view;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
@@ -9,17 +9,18 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 
 /**
  * Created by qiwei on 2017/8/26
  */
 public class IndicatorView extends View {
-    private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private float mSize;
     private final RectF rectF = new RectF();
-    private int startValue = 0xfff3f3f3, endValue = 0x80f3f3f3;
-    private float size = 0;
-    private Bitmap bitmap;
-    private long beginTime = 0;
+
+    private int mAnimateValue = 0;
+    private ValueAnimator mAnimator;
 
     public IndicatorView(Context context) {
         super(context);
@@ -37,6 +38,7 @@ public class IndicatorView extends View {
     }
 
     private void init() {
+        mPaint.setColor(0xfff3f3f3);
     }
 
     @Override
@@ -60,63 +62,80 @@ public class IndicatorView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        if (size != w) {
-            size = w;
-            float part = size / 20, rectH = part * 5, rectW = rectH / 3;
-            rectF.set(-rectW / 2, part - size / 2, rectW / 2, part + rectH - size / 2);
-            bitmap = Bitmap.createBitmap((int) size, (int) size, Bitmap.Config.ARGB_8888);
-            Canvas canvas = new Canvas(bitmap);
-            canvas.translate(size / 2, size / 2);
-            for (int i = 0; i < 12; i++) {
-                float fraction = (float) i / 6 > 1 ? 1 : (float) i / 6;
-                paint.setColor(evaluate(fraction, startValue, endValue));
-                canvas.drawRoundRect(rectF, rectW / 2, rectW / 2, paint);
-                canvas.rotate(-30);
-            }
-            canvas.save();
+        if (mSize != w) {
+            mSize = w;
+            float part = mSize / 20, rectH = part * 5, rectW = rectH / 3;
+            rectF.set(-rectW / 2, part - mSize / 2, rectW / 2, part + rectH - mSize / 2);
         }
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.translate(size / 2, size / 2);
-        canvas.rotate((int) (rate(beginTime, 1000) * 12) * 30);
-        canvas.drawBitmap(bitmap, -size / 2, -size / 2, null);
-        invalidate();
-    }
-
-    private float rate(long beginTime, long diff) {
-        return (float) ((System.currentTimeMillis() - beginTime) % diff) / diff;
-    }
-
-    @Override
-    protected void onVisibilityChanged(@NonNull View changedView, int visibility) {
-        super.onVisibilityChanged(changedView, visibility);
-        beginTime = System.currentTimeMillis();
+        canvas.save();
+        canvas.translate(mSize / 2, mSize / 2);
+        canvas.rotate(mAnimateValue * 30);
+        for (int i = 0; i < 12; i++) {
+            mPaint.setAlpha(Math.min(255, 127 + 128 * i / 6));
+            canvas.drawRoundRect(rectF, rectF.width() / 2, rectF.width() / 2, mPaint);
+            canvas.rotate(30);
+        }
+        canvas.restore();
     }
 
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        beginTime = System.currentTimeMillis();
+        start();
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
+        stop();
     }
 
-    private int evaluate(float fraction, int startValue, int endValue) {
-        int startA = startValue >>> 24;
-        int startR = (startValue >> 16) & 0xff;
-        int startG = (startValue >> 8) & 0xff;
-        int startB = startValue & 0xff;
-        int endA = endValue >>> 24;
-        int endR = (endValue >> 16) & 0xff;
-        int endG = (endValue >> 8) & 0xff;
-        int endB = endValue & 0xff;
-        return ((startA + (int) (fraction * (endA - startA))) << 24) | ((startR + (int) (fraction * (endR - startR))) << 16) |
-                ((startG + (int) (fraction * (endG - startG))) << 8) | ((startB + (int) (fraction * (endB - startB))));
+    @Override
+    protected void onVisibilityChanged(@NonNull View changedView, int visibility) {
+        super.onVisibilityChanged(changedView, visibility);
+        if (visibility == VISIBLE) {
+            start();
+        } else {
+            stop();
+        }
+    }
+
+    private ValueAnimator.AnimatorUpdateListener mUpdateListener = new ValueAnimator.AnimatorUpdateListener() {
+        @Override
+        public void onAnimationUpdate(ValueAnimator animation) {
+            int value = (int) animation.getAnimatedValue();
+            if (value != mAnimateValue) {
+                mAnimateValue = value;
+                invalidate();
+            }
+        }
+    };
+
+    public void start() {
+        if (mAnimator == null) {
+            mAnimator = ValueAnimator.ofInt(0, 12);
+            mAnimator.addUpdateListener(mUpdateListener);
+            mAnimator.setDuration(1000);
+            mAnimator.setRepeatMode(ValueAnimator.RESTART);
+            mAnimator.setRepeatCount(ValueAnimator.INFINITE);
+            mAnimator.setInterpolator(new LinearInterpolator());
+            mAnimator.start();
+        } else if (!mAnimator.isStarted()) {
+            mAnimator.start();
+        }
+    }
+
+    public void stop() {
+        if (mAnimator != null) {
+            mAnimator.removeUpdateListener(mUpdateListener);
+            mAnimator.removeAllUpdateListeners();
+            mAnimator.cancel();
+            mAnimator = null;
+        }
     }
 }
