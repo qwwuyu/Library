@@ -9,10 +9,10 @@ import android.widget.ImageView;
 import com.qwwuyu.example.R;
 import com.qwwuyu.lib.base.BaseActivity;
 import com.qwwuyu.lib.utils.ToastUtil;
-import com.qwwuyu.lib.view.color.AlphaView;
-import com.qwwuyu.lib.view.color.ColorPickerView;
-import com.qwwuyu.lib.view.color.ObservableColor;
-import com.qwwuyu.lib.view.color.ValueView;
+import com.rarepebble.colorpicker.AlphaView;
+import com.rarepebble.colorpicker.ColorPickerView;
+import com.rarepebble.colorpicker.ObservableColor;
+import com.rarepebble.colorpicker.ValueView;
 
 /**
  * Created by qiwei on 2017/8/10

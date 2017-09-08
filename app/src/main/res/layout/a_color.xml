@@ -16,19 +16,19 @@
         android:onClick="onClick1"
         android:text="#88ff0000"/>
 
-    <com.qwwuyu.lib.view.color.ColorPickerView
+    <com.rarepebble.colorpicker.ColorPickerView
         android:id="@+id/pickerView"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_marginTop="15dp"/>
 
-    <com.qwwuyu.lib.view.color.ValueView
+    <com.rarepebble.colorpicker.ValueView
         android:id="@+id/valueView"
         android:layout_width="match_parent"
         android:layout_height="36dp"
         android:layout_marginTop="15dp"/>
 
-    <com.qwwuyu.lib.view.color.AlphaView
+    <com.rarepebble.colorpicker.AlphaView
         android:id="@+id/alphaView"
         android:layout_width="match_parent"
         android:layout_height="36dp"
