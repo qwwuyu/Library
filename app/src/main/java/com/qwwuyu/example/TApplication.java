@@ -27,6 +27,7 @@ public class TApplication extends BaseApplication {
         new LogUtil.Builder()
                 .enableLogBorder(false)
                 .enableLogHead(false)
+                .enableLog(true)
                 .setLogTag("qwwuyu");
     }
 

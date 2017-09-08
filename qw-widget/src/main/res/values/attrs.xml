@@ -1,0 +1,13 @@
+<resources>
+    <!-- 自定义渐变布局 -->
+    <declare-styleable name="GrdtView">
+        <attr name="grl_type">
+            <flag name="type_lt4rb" value="0x0"/>
+            <flag name="type_rt4lb" value="0x1"/>
+            <flag name="type_t4b" value="0x2"/>
+            <flag name="type_l4r" value="0x3"/>
+        </attr>
+        <attr name="grl_color0" format="reference|color"/>
+        <attr name="grl_color1" format="reference|color"/>
+    </declare-styleable>
+</resources>

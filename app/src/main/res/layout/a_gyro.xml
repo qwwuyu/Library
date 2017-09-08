@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.GyroActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <com.qwwuyu.widget.GrdtView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:grl_color0="#ff3d62ca"
+            app:grl_color1="#ff30b6d9"
+            app:grl_type="type_lt4rb"/>
+
+        <com.qwwuyu.widget.gyro.GyroView
+            android:id="@+id/gyro_gyroView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <com.qwwuyu.widget.gyro.GyroMarkView
+            android:id="@+id/gyro_markView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </RelativeLayout>
+
+    <com.qwwuyu.widget.IndicatorView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/colorPrimary"/>
+</LinearLayout>

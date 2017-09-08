@@ -9,8 +9,13 @@ import android.os.Process;
 import android.provider.Settings;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.Closeable;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
+import java.util.zip.GZIPInputStream;
 
 /**
  * 通用的工具类
@@ -92,5 +97,45 @@ public class CommUtil {
         intent.setData(uri);
         if (newTask) intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
+    }
+
+    /** Gzip解压 */
+    public static byte[] gzipUnCompress(byte[] bt) {
+        ByteArrayOutputStream byteAos = null;
+        ByteArrayInputStream byteArrayIn = null;
+        GZIPInputStream gzipIn = null;
+        try {
+            byteArrayIn = new ByteArrayInputStream(bt);
+            gzipIn = new GZIPInputStream(byteArrayIn);
+            byteAos = new ByteArrayOutputStream();
+            byte[] b = new byte[4096];
+            int temp;
+            while ((temp = gzipIn.read(b)) > 0) {
+                byteAos.write(b, 0, temp);
+            }
+        } catch (Exception e) {
+            return null;
+        } finally {
+            closeStream(byteAos, gzipIn, byteArrayIn);
+        }
+        return byteAos.toByteArray();
+    }
+
+    /** close */
+    public static void closeStream(Closeable... streams) {
+        for (Closeable stream : streams) {
+            try {
+                if (null != stream) stream.close();
+            } catch (IOException ignored) {
+            }
+        }
+    }
+
+    /** sleep */
+    public static void sleep(long millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException ignored) {
+        }
     }
 }

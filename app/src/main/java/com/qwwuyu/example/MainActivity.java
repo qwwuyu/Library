@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 
-import com.qwwuyu.example.activity.ColorActivity;
 import com.qwwuyu.example.activity.ELMActivity;
+import com.qwwuyu.example.activity.GyroActivity;
 import com.qwwuyu.lib.base.BaseActivity;
 import com.qwwuyu.lib.utils.LogUtil;
 import com.qwwuyu.lib.utils.SystemBarUtil;
@@ -23,7 +23,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public void onClick1(View v) {
-        Intent intent = new Intent(this, ColorActivity.class);
+        Intent intent = new Intent(this, GyroActivity.class);
         startActivity(intent);
     }
 
