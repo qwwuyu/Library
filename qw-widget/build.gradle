@@ -16,5 +16,6 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':other-lib')
+    debugCompile project(path: ':other-lib', configuration: "debug")
+    releaseCompile project(path: ':other-lib', configuration: "release")
 }
