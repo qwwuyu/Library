@@ -247,6 +247,9 @@ public class PhotoViewAttacher implements View.OnTouchListener, View.OnLayoutCha
         } else {
             mScrollEdge = EDGE_NONE;
         }
+        float leftEdge = mLeftEdge * width, rightEdge = mRightEdge * width;
+        float topEdge = mTopEdge * height, bottomEdge = mBottomEdge * height;
+
         // Finally actually translate the matrix
         mSuppMatrix.postTranslate(deltaX, deltaY);
         return true;
@@ -707,7 +710,6 @@ public class PhotoViewAttacher implements View.OnTouchListener, View.OnLayoutCha
 
     /**
      * Get the display matrix
-     *
      * @param matrix target matrix to copy to
      */
     public void getDisplayMatrix(Matrix matrix) {
