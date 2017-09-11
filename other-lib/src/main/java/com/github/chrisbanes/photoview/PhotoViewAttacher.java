@@ -728,4 +728,13 @@ public class PhotoViewAttacher implements View.OnTouchListener, View.OnLayoutCha
     public void setZoomTransitionDuration(int milliseconds) {
         this.mZoomDuration = milliseconds;
     }
+
+    private float mLeftEdge = 0, mTopEdge = 0, mRightEdge = 1, mBottomEdge = 1;
+
+    public void setEdge(float leftEdge, float topEdge, float rightEdge, float bottomEdge) {
+        mLeftEdge = leftEdge;
+        mTopEdge = topEdge;
+        mRightEdge = rightEdge;
+        mBottomEdge = bottomEdge;
+    }
 }
