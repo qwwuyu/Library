@@ -15,10 +15,14 @@
  *******************************************************************************/
 package com.github.chrisbanes.photoview;
 
+/** 处理移动、滑动、缩放事件 */
 interface OnGestureListener {
+    /** 移动 */
     void onDrag(float dx, float dy);
 
+    /** 滑动 */
     void onFling(float startX, float startY, float velocityX, float velocityY);
 
+    /** 缩放 */
     void onScale(float scaleFactor, float focusX, float focusY);
 }

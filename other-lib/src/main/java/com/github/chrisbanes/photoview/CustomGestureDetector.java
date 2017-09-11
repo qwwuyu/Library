@@ -21,84 +21,60 @@ import android.view.ScaleGestureDetector;
 import android.view.VelocityTracker;
 import android.view.ViewConfiguration;
 
-/**
- * Does a whole lot of gesture detecting.
- */
+/** 手势监听,处理移动、滑动、缩放事件 */
 class CustomGestureDetector {
     private static final int INVALID_POINTER_ID = -1;
-    private float mMinimumVelocity;
-    private float mTouchSlop;
-
+    /** 处理移动、滑动、缩放事件 */
     private OnGestureListener mListener;
+    /** 最小滑动速度 */
+    private float mMinimumVelocity;
+    /** 最小拖动距离 */
+    private float mTouchSlop;
+    /** 缩放手势监听 */
     private final ScaleGestureDetector mDetector;
+    /** 活跃指针id */
     private int mActivePointerId = INVALID_POINTER_ID;
+    /** 活跃指针index */
     private int mActivePointerIndex = 0;
-
+    /** 速度追踪器 */
     private VelocityTracker mVelocityTracker;
-    private float mLastTouchX, mLastTouchY;
+    /** 正在拖动 */
     private boolean mIsDragging;
 
     CustomGestureDetector(Context context, OnGestureListener listener) {
+        mListener = listener;
         final ViewConfiguration configuration = ViewConfiguration.get(context);
         mMinimumVelocity = configuration.getScaledMinimumFlingVelocity();
         mTouchSlop = configuration.getScaledTouchSlop();
-
-        mListener = listener;
-        ScaleGestureDetector.OnScaleGestureListener mScaleListener = new ScaleGestureDetector.OnScaleGestureListener() {
-            @Override
-            public boolean onScale(ScaleGestureDetector detector) {
-                float scaleFactor = detector.getScaleFactor();
-                if (Float.isNaN(scaleFactor) || Float.isInfinite(scaleFactor))
-                    return false;
-                mListener.onScale(scaleFactor, detector.getFocusX(), detector.getFocusY());
-                return true;
-            }
-
-            @Override
-            public boolean onScaleBegin(ScaleGestureDetector detector) {
-                return true;
-            }
-
-            @Override
-            public void onScaleEnd(ScaleGestureDetector detector) {// NO-OP
-            }
-        };
         mDetector = new ScaleGestureDetector(context, mScaleListener);
     }
 
-    private float getActiveX(MotionEvent ev) {
-        try {
-            return ev.getX(mActivePointerIndex);
-        } catch (Exception e) {
-            return ev.getX();
-        }
+    /** 清除最小拖动距离 */
+    public void clearTouchSlop() {
+        mTouchSlop = 0;
     }
 
-    private float getActiveY(MotionEvent ev) {
-        try {
-            return ev.getY(mActivePointerIndex);
-        } catch (Exception e) {
-            return ev.getY();
-        }
-    }
-
+    /** 正在缩放 */
     public boolean isScaling() {
         return mDetector.isInProgress();
     }
 
+    /** 正在移动 */
     public boolean isDragging() {
         return mIsDragging;
     }
 
+    /** 处理事件 */
     public boolean onTouchEvent(MotionEvent ev) {
         try {
             mDetector.onTouchEvent(ev);
             return processTouchEvent(ev);
-        } catch (IllegalArgumentException e) {
-            // Fix for support lib bug, happening when onDestroy is called
+        } catch (IllegalArgumentException e) {// Fix for support lib bug, happening when onDestroy is called
             return true;
         }
     }
+
+    private float mLastTouchX, mLastTouchY;
 
     private boolean processTouchEvent(MotionEvent ev) {
         final int action = ev.getAction();
@@ -176,7 +152,41 @@ class CustomGestureDetector {
         return true;
     }
 
-    public void clearTouchSlop() {
-        mTouchSlop = 0;
+    private float getActiveX(MotionEvent ev) {
+        try {
+            return ev.getX(mActivePointerIndex);
+        } catch (Exception e) {
+            return ev.getX();
+        }
     }
+
+    private float getActiveY(MotionEvent ev) {
+        try {
+            return ev.getY(mActivePointerIndex);
+        } catch (Exception e) {
+            return ev.getY();
+        }
+    }
+
+    /** 缩放手势回调 */
+    private ScaleGestureDetector.OnScaleGestureListener mScaleListener = new ScaleGestureDetector.OnScaleGestureListener() {
+        @Override
+        public boolean onScale(ScaleGestureDetector detector) {
+            float scaleFactor = detector.getScaleFactor();
+            if (Float.isNaN(scaleFactor) || Float.isInfinite(scaleFactor)) {
+                return false;
+            }
+            mListener.onScale(scaleFactor, detector.getFocusX(), detector.getFocusY());
+            return true;
+        }
+
+        @Override
+        public boolean onScaleBegin(ScaleGestureDetector detector) {
+            return true;
+        }
+
+        @Override
+        public void onScaleEnd(ScaleGestureDetector detector) {// NO-OP
+        }
+    };
 }
