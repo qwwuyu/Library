@@ -201,7 +201,7 @@ public class PhotoViewAttacher implements View.OnTouchListener, View.OnLayoutCha
     private boolean checkMatrixBounds() {
         final RectF rect = getDisplayRect(getDrawMatrix());
         if (rect == null) {
-            return true;
+            return false;
         }
         final float height = rect.height(), width = rect.width();
         float deltaX = 0, deltaY = 0;
