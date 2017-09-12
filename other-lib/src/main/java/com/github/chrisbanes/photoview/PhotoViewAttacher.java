@@ -775,5 +775,6 @@ public class PhotoViewAttacher implements View.OnTouchListener, View.OnLayoutCha
         mTopEdge = topEdge;
         mRightEdge = rightEdge;
         mBottomEdge = bottomEdge;
+        checkAndDisplayMatrix();
     }
 }
