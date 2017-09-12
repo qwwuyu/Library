@@ -41,6 +41,7 @@ public class PhotoViewAttacher implements View.OnTouchListener, View.OnLayoutCha
     private static float DEFAULT_MID_SCALE = 1.75f;
     private static float DEFAULT_MIN_SCALE = 1.0f;
     private static int DEFAULT_ZOOM_DURATION = 200;
+    private static final float NOT_DEFINED = Float.POSITIVE_INFINITY;
 
     private static final int EDGE_NONE = -1;
     private static final int EDGE_LEFT = 0;
@@ -160,7 +161,7 @@ public class PhotoViewAttacher implements View.OnTouchListener, View.OnLayoutCha
     }
 
     public RectF getDisplayRect() {
-        checkMatrixBounds();
+        checkMatrixBounds(NOT_DEFINED, NOT_DEFINED);
         return getDisplayRect(getDrawMatrix());
     }
 
@@ -183,7 +184,11 @@ public class PhotoViewAttacher implements View.OnTouchListener, View.OnLayoutCha
 
     /** Helper method that simply checks the Matrix, and then displays the result */
     private void checkAndDisplayMatrix() {
-        if (checkMatrixBounds()) {
+        checkAndDisplayMatrix(NOT_DEFINED, NOT_DEFINED);
+    }
+
+    private void checkAndDisplayMatrix(float focusX, float focusY) {
+        if (checkMatrixBounds(focusX, focusY)) {
             setImageViewMatrix(getDrawMatrix());
         }
     }
@@ -199,7 +204,11 @@ public class PhotoViewAttacher implements View.OnTouchListener, View.OnLayoutCha
         }
     }
 
-    private boolean checkMatrixBounds() {
+    private boolean checkMatrixBounds(float focusX, float focusY) {
+        return checkMatrixBounds(focusX, focusY, false);
+    }
+
+    private boolean checkMatrixBounds(float focusX, float focusY, boolean amendScale) {
         final RectF rect = getDisplayRect(getDrawMatrix());
         if (rect == null) {
             return false;
@@ -248,17 +257,25 @@ public class PhotoViewAttacher implements View.OnTouchListener, View.OnLayoutCha
         } else {
             mScrollEdge = EDGE_NONE;
         }
+        //处理边缘限制
         mEdge.set(mLeftEdge * width, mTopEdge * height, mRightEdge * width, mBottomEdge * height);
-
-        float sx = 1, sy = 1, scale;
-        if (mEdge.width() > viewWidth) sx = viewWidth / mEdge.width();
-        if (mEdge.height() > viewHeight) sy = viewHeight / mEdge.height();
-        if (1 != (scale = Math.min(sx, sy))) {
-            mSuppMatrix.postScale(scale, scale);
-            rect.set(rect.left * scale, rect.top * scale, rect.right * scale, rect.bottom * scale);
-            mEdge.set(mEdge.left * scale, mEdge.top * scale, mEdge.right * scale, mEdge.bottom * scale);
+        //处理缩放过大
+        if (!amendScale) {
+            float sx = 1, sy = 1, scale;
+            if (mEdge.width() > viewWidth) sx = viewWidth / mEdge.width();
+            if (mEdge.height() > viewHeight) sy = viewHeight / mEdge.height();
+            if (1 != (scale = Math.min(sx, sy))) {
+                if (NOT_DEFINED != focusX && NOT_DEFINED != focusY) {
+                    mSuppMatrix.postScale(scale, scale, focusX, focusY);
+                    return checkMatrixBounds(NOT_DEFINED, NOT_DEFINED, true);
+                } else {
+                    mSuppMatrix.postScale(scale, scale);
+                }
+                rect.set(rect.left * scale, rect.top * scale, rect.right * scale, rect.bottom * scale);
+                mEdge.set(mEdge.left * scale, mEdge.top * scale, mEdge.right * scale, mEdge.bottom * scale);
+            }
         }
-
+        //处理边缘限制
         if (mEdge.left <= -rect.left) {
             deltaX = -rect.left - mEdge.left;
         } else if (mEdge.right > -rect.left + viewWidth) {
@@ -318,7 +335,7 @@ public class PhotoViewAttacher implements View.OnTouchListener, View.OnLayoutCha
                     mScaleChangeListener.onScaleChange(scaleFactor, focusX, focusY);
                 }
                 mSuppMatrix.postScale(scaleFactor, scaleFactor, focusX, focusY);
-                checkAndDisplayMatrix();
+                checkAndDisplayMatrix(focusX, focusY);
             }
         }
     };
@@ -724,7 +741,7 @@ public class PhotoViewAttacher implements View.OnTouchListener, View.OnLayoutCha
         mSuppMatrix.reset();
         setRotationBy(mBaseRotation);
         setImageViewMatrix(getDrawMatrix());
-        checkMatrixBounds();
+        checkMatrixBounds(NOT_DEFINED, NOT_DEFINED);
     }
 
     /**

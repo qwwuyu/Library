@@ -38,7 +38,7 @@ public class GyroActivity extends BaseActivity {
         attacher.setOnPhotoTapListener(null);
         attacher.clearTouchSlop();
         attacher.setOnDoubleTapListener(new OnDoubleTapDefaultListener(attacher));
-        attacher.setScaleLevels(1, 3, 9);
+        attacher.setScaleLevels(1, 20, 40);
         attacher.setOnMatrixChangeListener(markView);
         gyroView.update(attacher);
         gyroView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
