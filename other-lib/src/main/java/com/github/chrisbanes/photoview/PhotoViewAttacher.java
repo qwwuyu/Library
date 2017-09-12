@@ -68,6 +68,7 @@ public class PhotoViewAttacher implements View.OnTouchListener, View.OnLayoutCha
     private final Matrix mDrawMatrix = new Matrix();//绘制矩阵
     private final Matrix mSuppMatrix = new Matrix();//新增矩阵
     private final RectF mDisplayRect = new RectF();//当前矩形
+    private final RectF mEdge = new RectF();//边缘矩形
     private final float[] mMatrixValues = new float[9];//读取矩阵值
     // Listeners
     private OnMatrixChangedListener mMatrixChangeListener;
@@ -203,7 +204,7 @@ public class PhotoViewAttacher implements View.OnTouchListener, View.OnLayoutCha
         if (rect == null) {
             return false;
         }
-        final float height = rect.height(), width = rect.width();
+        float height = rect.height(), width = rect.width();
         float deltaX = 0, deltaY = 0;
         final int viewHeight = getImageViewHeight(mImageView);
         if (height <= viewHeight) {
@@ -247,9 +248,27 @@ public class PhotoViewAttacher implements View.OnTouchListener, View.OnLayoutCha
         } else {
             mScrollEdge = EDGE_NONE;
         }
-        float leftEdge = mLeftEdge * width, rightEdge = mRightEdge * width;
-        float topEdge = mTopEdge * height, bottomEdge = mBottomEdge * height;
+        mEdge.set(mLeftEdge * width, mTopEdge * height, mRightEdge * width, mBottomEdge * height);
 
+        float sx = 1, sy = 1, scale;
+        if (mEdge.width() > viewWidth) sx = viewWidth / mEdge.width();
+        if (mEdge.height() > viewHeight) sy = viewHeight / mEdge.height();
+        if (1 != (scale = Math.min(sx, sy))) {
+            mSuppMatrix.postScale(scale, scale);
+            rect.set(rect.left * scale, rect.top * scale, rect.right * scale, rect.bottom * scale);
+            mEdge.set(mEdge.left * scale, mEdge.top * scale, mEdge.right * scale, mEdge.bottom * scale);
+        }
+
+        if (mEdge.left <= -rect.left) {
+            deltaX = -rect.left - mEdge.left;
+        } else if (mEdge.right > -rect.left + viewWidth) {
+            deltaX = -rect.left + viewWidth - mEdge.right;
+        }
+        if (mEdge.top <= -rect.top) {
+            deltaY = -rect.top - mEdge.top;
+        } else if (mEdge.bottom > -rect.top + viewHeight) {
+            deltaY = -rect.top + viewHeight - mEdge.bottom;
+        }
         // Finally actually translate the matrix
         mSuppMatrix.postTranslate(deltaX, deltaY);
         return true;
@@ -710,6 +729,7 @@ public class PhotoViewAttacher implements View.OnTouchListener, View.OnLayoutCha
 
     /**
      * Get the display matrix
+     *
      * @param matrix target matrix to copy to
      */
     public void getDisplayMatrix(Matrix matrix) {
@@ -731,7 +751,7 @@ public class PhotoViewAttacher implements View.OnTouchListener, View.OnLayoutCha
         this.mZoomDuration = milliseconds;
     }
 
-    private float mLeftEdge = 0, mTopEdge = 0, mRightEdge = 1, mBottomEdge = 1;
+    private float mLeftEdge = 1f, mTopEdge = 1f, mRightEdge = 0f, mBottomEdge = 0f;
 
     public void setEdge(float leftEdge, float topEdge, float rightEdge, float bottomEdge) {
         mLeftEdge = leftEdge;

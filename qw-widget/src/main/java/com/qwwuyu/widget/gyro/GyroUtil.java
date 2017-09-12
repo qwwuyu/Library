@@ -6,6 +6,8 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.support.annotation.Nullable;
 
+import com.github.chrisbanes.photoview.PhotoViewAttacher;
+
 public class GyroUtil {
     /** 机器人 紫色 */
     private static final int ROBOT = 0xffff0099;//0b0001000
@@ -124,5 +126,18 @@ public class GyroUtil {
             System.arraycopy(bs, i2, bytes, i1, bw);
         }
         return bytes;
+    }
+
+    public static void setEdge(PhotoViewAttacher attacher, GyroBean bean) {
+//        if (bean == null || bean.getRobot() == null || bean.getRobot().x < 0) return;
+//        Point robot = bean.getRobot();
+//        attacher.setEdge(robot.x / 200f, robot.y / 200f, (robot.x + 1) / 200f, (robot.y + 1) / 200f);
+        if (bean == null || bean.getDatas() == null || bean.getDatas().length != 40000) return;
+        Rect existRect = GyroUtil.getExistRect(bean.getDatas(), 200, (byte) 0);
+        if (existRect == null) {
+            attacher.setEdge(1, 1, 0, 0);
+        } else {
+            attacher.setEdge(existRect.left / 200f, existRect.top / 200f, (existRect.right + 1) / 200f, (existRect.bottom + 1) / 200f);
+        }
     }
 }

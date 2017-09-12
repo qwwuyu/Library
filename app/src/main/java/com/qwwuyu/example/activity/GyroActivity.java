@@ -13,6 +13,7 @@ import com.qwwuyu.lib.base.BaseActivity;
 import com.qwwuyu.lib.utils.CommUtil;
 import com.qwwuyu.widget.gyro.GyroBean;
 import com.qwwuyu.widget.gyro.GyroMarkView;
+import com.qwwuyu.widget.gyro.GyroUtil;
 import com.qwwuyu.widget.gyro.GyroView;
 
 import butterknife.BindView;
@@ -37,7 +38,7 @@ public class GyroActivity extends BaseActivity {
         attacher.setOnPhotoTapListener(null);
         attacher.clearTouchSlop();
         attacher.setOnDoubleTapListener(new OnDoubleTapDefaultListener(attacher));
-        attacher.setScaleLevels(1f, 3f, 9.0f);
+        attacher.setScaleLevels(1, 3, 9);
         attacher.setOnMatrixChangeListener(markView);
         gyroView.update(attacher);
         gyroView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
@@ -48,8 +49,15 @@ public class GyroActivity extends BaseActivity {
                 return false;
             }
         });
+//        Random random = new Random();
+//        byte[] datas = new byte[40000];
+//        for (int i = 599; i > 579; i--) {
+//            datas[i] = (byte) random.nextInt(255);
+//        }
+//        gyroBean.setDatas(datas);
         gyroBean.setDatas(CommUtil.gzipUnCompress(Base64.decode(map, Base64.DEFAULT)));
         gyroBean.setRobot(new Point(104, 97));
         markView.setData(gyroBean);
+        GyroUtil.setEdge(attacher, gyroBean);
     }
 }
