@@ -51,7 +51,6 @@ public class GyroMarkView extends View implements OnMatrixChangedListener {
     private void init() {
         robotDs = 4f * getResources().getDisplayMetrics().density;//
         changeDs = 9f * getResources().getDisplayMetrics().density;//
-        mapPaint.setAlpha(255);
         robotPaint.setColor(0xffff0000);
         robotPaint.setAntiAlias(true);
         robotPaint.setStyle(Paint.Style.FILL);
@@ -113,7 +112,7 @@ public class GyroMarkView extends View implements OnMatrixChangedListener {
         canvas.concat(mMatrix);
         canvas.drawBitmap(mapBitmap, 0, 0, mapPaint);
         canvas.restore();
-//        drawLine(canvas);
+        drawLine(canvas);
         if (charge != null) {
             drawCharge(canvas, fCharge);
         }
