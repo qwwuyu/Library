@@ -16,10 +16,10 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.github.chrisbanes.photoview.OnMatrixChangedListener;
+import com.qwwuyu.lib.utils.DfrUtil;
 import com.qwwuyu.widget.R;
 
 import java.nio.IntBuffer;
-
 
 public class GyroMarkView extends View implements OnMatrixChangedListener {
     private final int side = 200, alpha = 102;
@@ -40,6 +40,7 @@ public class GyroMarkView extends View implements OnMatrixChangedListener {
     private Point robot, charge;
     private PointF fRobot = new PointF(), fCharge = new PointF();
     private RectF rectF;
+    private DfrUtil dfr = DfrUtil.getInstance();
 
     public GyroMarkView(Context context) {
         this(context, null);
@@ -129,6 +130,7 @@ public class GyroMarkView extends View implements OnMatrixChangedListener {
     }
 
     private void drawRoute(Canvas canvas) {
+        dfr.dfr("drawRoute", 0);
         float scale = fm[Matrix.MSCALE_X];
         PathEffect pathEffect = new CornerPathEffect(scale / 2);
         routePaint.setPathEffect(pathEffect);
@@ -140,7 +142,9 @@ public class GyroMarkView extends View implements OnMatrixChangedListener {
                 else routePath.lineTo(lines[i][0] * scale, lines[i][1] * scale);
             }
         }
+        dfr.dfr("drawRoute", 1);
         canvas.drawPath(routePath, routePaint);
+        dfr.dfr("drawRoute", 2);
     }
 
     private void drawLine(Canvas canvas) {

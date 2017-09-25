@@ -40,7 +40,7 @@ public class GyroActivity extends BaseActivity {
         attacher.setOnPhotoTapListener(null);
         attacher.clearTouchSlop();
         attacher.setOnDoubleTapListener(new OnDoubleTapDefaultListener(attacher));
-        attacher.setScaleLevels(1, 10, 40);
+        attacher.setScaleLevels(1, 9, 30);
         attacher.setOnMatrixChangeListener(markView);
         gyroView.update(attacher);
         gyroView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
@@ -51,10 +51,16 @@ public class GyroActivity extends BaseActivity {
                 return false;
             }
         });
-
+        float[][] ls = new float[50 * lines.length][2];
         for (int i = 0; i < lines.length; i++) {
             lines[i][0] = lines[i][0] + 90;
-            lines[i][1] = lines[i][1] + 90;
+            lines[i][1] = lines[i][1] + 96;
+        }
+        for (int i = 0; i < 50; i++) {
+            for (int j = 0; j < lines.length; j++) {
+                ls[i * lines.length + j][0] = lines[j][0] + i;
+                ls[i * lines.length + j][1] = lines[j][1] + i;
+            }
         }
 
         gyroBean.setDatas(CommUtil.gzipUnCompress(Base64.decode(map, Base64.DEFAULT)));

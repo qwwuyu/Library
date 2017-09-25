@@ -37,30 +37,31 @@ import javax.xml.transform.stream.StreamSource;
  */
 public class LogUtil {
     public static final int V = Log.VERBOSE, D = Log.DEBUG, I = Log.INFO, W = Log.WARN, E = Log.ERROR, A = Log.ASSERT;
-    private static final char[] T = new char[]{'V', 'D', 'I', 'W', 'E', 'A'};
-    private static final int JSON = 0x10, XML = 0x20;
+    private static final char[] T    = new char[]{'V', 'D', 'I', 'W', 'E', 'A'};
+    private static final int    JSON = 0x10, XML = 0x20;
 
     @IntDef({V, D, I, W, E, A})
     @Retention(RetentionPolicy.SOURCE)
     private @interface TYPE {
     }
 
-    private static boolean log = BuildConfig.DEBUG;
-    private static String logTag = null;
-    private static boolean logHead = true;
-    private static boolean logBorder = true;
-    private static int logFilter = V;
-    private static ExecutorService executor;
-    private static String dir = null;
-
-    private static final String LINE_SEP = System.getProperty("line.separator");
-    private static final String TOP_BORDER = "╔═══════════════════════════════════════════════════════════════════════════════════════════════════";
-    private static final String LEFT_BORDER = "║ ";
+    private static final String LINE_SEP      = System.getProperty("line.separator");
+    private static final String TOP_BORDER    = "╔═══════════════════════════════════════════════════════════════════════════════════════════════════";
+    private static final String LEFT_BORDER   = "║ ";
     private static final String BOTTOM_BORDER = "╚═══════════════════════════════════════════════════════════════════════════════════════════════════";
-    private static final int MAX_LEN = 4000;
-    private static final Format FORMAT = new SimpleDateFormat("MM-dd HH:mm:ss.SSS ", Locale.getDefault());
-    private static final String NULL = "null";
-    private static final String ARGS = "args[%d] = %s" + LINE_SEP;
+    private static final int    MAX_LEN       = 4000;
+    private static final Format FORMAT        = new SimpleDateFormat("MM-dd HH:mm:ss.SSS ", Locale.getDefault());
+    private static final String NULL          = "null";
+    private static final String ARGS          = "args[%d] = %s" + LINE_SEP;
+
+    private static boolean log       = BuildConfig.DEBUG;
+    private static String  logTag    = null;
+    private static boolean logHead   = true;
+    private static boolean logBorder = true;
+    private static int     logFilter = V;
+    private static ExecutorService executor;
+    private static String dir      = null;
+    private static String head_sep = LINE_SEP;
 
     /** ======================== 使用Log工具 ======================== */
     public static class Builder {
@@ -96,80 +97,90 @@ public class LogUtil {
             logFilter = level;
             return this;
         }
+
+        public Builder setHeadSep(String head_sep) {
+            LogUtil.head_sep = head_sep;
+            return this;
+        }
     }
 
     public static void v(final Object contents) {
         log(V, logTag, contents);
     }
 
-    public static void v(final String tag, final Object... contents) {
+    public static void v(String tag, Object... contents) {
         log(V, tag, contents);
     }
 
-    public static void d(final Object contents) {
+    public static void d(Object contents) {
         log(D, logTag, contents);
     }
 
-    public static void d(final String tag, final Object... contents) {
+    public static void d(String tag, Object... contents) {
         log(D, tag, contents);
     }
 
-    public static void i(final Object contents) {
+    public static void i(Object contents) {
         log(I, logTag, contents);
     }
 
-    public static void i(final String tag, final Object... contents) {
+    public static void i(String tag, Object... contents) {
         log(I, tag, contents);
     }
 
-    public static void w(final Object contents) {
+    public static void w(Object contents) {
         log(W, logTag, contents);
     }
 
-    public static void w(final String tag, final Object... contents) {
+    public static void w(String tag, Object... contents) {
         log(W, tag, contents);
     }
 
-    public static void e(final Object contents) {
+    public static void e(Object contents) {
         log(E, logTag, contents);
     }
 
-    public static void e(final String tag, final Object... contents) {
+    public static void e(String tag, Object... contents) {
         log(E, tag, contents);
     }
 
-    public static void a(final Object contents) {
+    public static void a(Object contents) {
         log(A, logTag, contents);
     }
 
-    public static void a(final String tag, final Object... contents) {
+    public static void a(String tag, Object... contents) {
         log(A, tag, contents);
     }
 
-    public static void json(@TYPE final int type, final String tag, final String contents) {
+    public static void json(@TYPE int type, String tag, String contents) {
         log(JSON | type, tag, contents);
     }
 
-    public static void xml(@TYPE final int type, final String tag, final String contents) {
+    public static void xml(@TYPE int type, String tag, String contents) {
         log(XML | type, tag, contents);
     }
 
     /** 处理日志 */
     private static void log(final int type, final String tag, final Object... contents) {
+        log(type, tag, 4, contents);
+    }
+
+    /** 处理日志 */
+    public static void log(@TYPE int type, String tag, int stackTrace, Object... contents) {
         if (!log) return;
         int type_low = type & 0x0f, type_high = type & 0xf0;
         if (type_low < logFilter) return;
-        final String[] tagAndHead = processTagAndHead(tag);
+        final String[] tagAndHead = processTagAndHead(tag, stackTrace);
         String body = processBody(type_high, contents);
         print2Console(type_low, tagAndHead[0], tagAndHead[1] + body);
         if (dir != null) print2File(type_low, tagAndHead[0], tagAndHead[2] + body);
     }
 
     /** 处理TAG和位子 */
-    private static String[] processTagAndHead(String tag) {
+    private static String[] processTagAndHead(String tag, int stackTrace) {
         if (tag == null) tag = logTag;
         if (logHead || tag == null) {
-            StackTraceElement targetElement = new Throwable().getStackTrace()[3];
+            StackTraceElement targetElement = new Throwable().getStackTrace()[stackTrace];
             String className = targetElement.getClassName();
             String[] classNameInfo = className.split("\\.");
             if (classNameInfo.length > 0) {
@@ -182,7 +193,7 @@ public class LogUtil {
             if (logHead) {
                 String head = String.format(Locale.getDefault(), "%s, %s(%s.java:%d)",
                         Thread.currentThread().getName(), targetElement.getMethodName(), className, targetElement.getLineNumber());
-                return new String[]{tag, head + LINE_SEP, " [" + head + "]: "};
+                return new String[]{tag, head + head_sep, " [" + head + "]: "};
             }
         }
         return new String[]{tag, "", ": "};

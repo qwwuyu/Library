@@ -80,9 +80,14 @@ public class RxTest {
     }
 
     /** j8特性 */
+    @Test
     public void java8() throws Exception {
         Observable.empty().subscribe(System.out::println);
         Observable.empty().subscribe(i -> System.out.println(String.valueOf(i)));
+        System.out.print(java.util.stream.DoubleStream.iterate(1.5, x -> x - 0.1).limit(30)
+                .mapToObj(x -> java.util.stream.DoubleStream.iterate(1.5, y -> y - 0.05).limit(61)
+                        .mapToObj(y -> Math.pow((x * x + y * y - 1), 3) - x * x * x * y * y <= 0 ? "*" : " ")
+                        .collect(java.util.stream.Collectors.joining())).collect(java.util.stream.Collectors.joining("\n")));
     }
 
     /** 提供多种Scheduler */

@@ -4,6 +4,7 @@ import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.request.RequestOptions;
 import com.qwwuyu.lib.base.BaseApplication;
 import com.qwwuyu.lib.utils.CommUtil;
+import com.qwwuyu.lib.utils.DfrUtil;
 import com.qwwuyu.lib.utils.InitUtil;
 import com.qwwuyu.lib.utils.LogUtil;
 import com.qwwuyu.lib.utils.glide.DefaultGlideModule;
@@ -26,8 +27,10 @@ public class TApplication extends BaseApplication {
                 ).build());
         new LogUtil.Builder()
                 .enableLogBorder(false)
-                .enableLogHead(false)
+                .enableLogHead(true)
+                .setHeadSep(" : ")
                 .setLogTag("qwwuyu");
+        DfrUtil.getInstance().setEnable(false);
     }
 
     @Override
