@@ -27,6 +27,8 @@ public class GyroActivity extends BaseActivity {
     private PhotoViewAttacher attacher;
     private GyroBean gyroBean = new GyroBean();
     private String map = "H4sIAAAAAAAAAO3TsRGAIBBFQe6IDA0IbUb770mxBQLE2a3g3zwoBQAAAAAAAAAAAAAAAAAAAAAAAPiqreTsCcOyxhGtzp4xLlp77lg+yBURbV++x5nRrd+jvIcs36P/83zMnjEs6w/eVPeDFgAAAAAAAAAAAAAAAAAAAAAAALPdIrgBRkCcAAA=";
+    private float[][] lines = new float[][]{{1, 7}, {3, 5}, {3, 5}, {3, 9}, {4, 9}, {4, 3}, {5, 3}, {5, 4f},
+            {5.5f, 4.5f}, {5.5f, 4.5f}, {5.5f, 5.5f}, {5.5f, 5.5f}, {6, 6.5f}, {6, 9f}, {7, 10f}, {7, 1}, {7, 2}, {8, 3}, {8, 10},};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,7 +40,7 @@ public class GyroActivity extends BaseActivity {
         attacher.setOnPhotoTapListener(null);
         attacher.clearTouchSlop();
         attacher.setOnDoubleTapListener(new OnDoubleTapDefaultListener(attacher));
-        attacher.setScaleLevels(1, 20, 40);
+        attacher.setScaleLevels(1, 10, 40);
         attacher.setOnMatrixChangeListener(markView);
         gyroView.update(attacher);
         gyroView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
@@ -49,14 +51,15 @@ public class GyroActivity extends BaseActivity {
                 return false;
             }
         });
-//        Random random = new Random();
-//        byte[] datas = new byte[40000];
-//        for (int i = 599; i > 579; i--) {
-//            datas[i] = (byte) random.nextInt(255);
-//        }
-//        gyroBean.setDatas(datas);
+
+        for (int i = 0; i < lines.length; i++) {
+            lines[i][0] = lines[i][0] + 90;
+            lines[i][1] = lines[i][1] + 90;
+        }
+
         gyroBean.setDatas(CommUtil.gzipUnCompress(Base64.decode(map, Base64.DEFAULT)));
         gyroBean.setRobot(new Point(104, 97));
+        gyroBean.setLines(lines);
         markView.setData(gyroBean);
         GyroUtil.setEdge(attacher, gyroBean);
     }

@@ -7,6 +7,7 @@ public class GyroBean {
     private Point robot;
     private int areaNum;
     private int time;
+    private float[][] lines;
 
     public Point getRobot() {
         return robot;
@@ -38,5 +39,13 @@ public class GyroBean {
 
     public void setTime(int time) {
         this.time = time;
+    }
+
+    public float[][] getLines() {
+        return lines;
+    }
+
+    public void setLines(float[][] lines) {
+        this.lines = lines;
     }
 }
