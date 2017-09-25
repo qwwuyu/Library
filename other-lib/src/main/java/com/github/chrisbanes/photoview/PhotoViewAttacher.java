@@ -768,7 +768,7 @@ public class PhotoViewAttacher implements View.OnTouchListener, View.OnLayoutCha
         this.mZoomDuration = milliseconds;
     }
 
-    private float mLeftEdge = 1f, mTopEdge = 1f, mRightEdge = 0f, mBottomEdge = 0f;
+    private float mLeftEdge = 1, mTopEdge = 1, mRightEdge = 0, mBottomEdge = 0;
 
     public void setEdge(float leftEdge, float topEdge, float rightEdge, float bottomEdge) {
         mLeftEdge = leftEdge;
@@ -776,5 +776,15 @@ public class PhotoViewAttacher implements View.OnTouchListener, View.OnLayoutCha
         mRightEdge = rightEdge;
         mBottomEdge = bottomEdge;
         checkAndDisplayMatrix();
+    }
+
+    public boolean isEdgeMax() {
+        final RectF rect = getDisplayRect(getDrawMatrix());
+        if (rect == null) return false;
+        float height = rect.height(), width = rect.width();
+        final int viewWidth = getImageViewWidth(mImageView);
+        final int viewHeight = getImageViewHeight(mImageView);
+        mEdge.set(mLeftEdge * width, mTopEdge * height, mRightEdge * width, mBottomEdge * height);
+        return mEdge.width() >= viewWidth * 0.99f || mEdge.height() >= viewHeight * 0.99f;
     }
 }

@@ -15,7 +15,9 @@ public class OnDoubleTapDefaultListener implements OnDoubleTapListener {
             float scale = attacher.getScale();
             float x = ev.getX();
             float y = ev.getY();
-            if (scale <= attacher.getMediumScale() * 0.99f) {
+            if (attacher.isEdgeMax()) {
+                attacher.setScale(attacher.getMinimumScale(), x, y, true);
+            } else if (scale <= attacher.getMediumScale() * 0.99f) {
                 attacher.setScale(attacher.getMediumScale(), x, y, true);
             } else if (scale >= attacher.getMediumScale() * 0.99f && scale <= attacher.getMaximumScale() * 0.99f) {
                 attacher.setScale(attacher.getMaximumScale(), x, y, true);
