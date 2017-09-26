@@ -64,6 +64,6 @@ dependencies {
     //dagger2
     compile "com.google.dagger:dagger:$version.dagger2"
     annotationProcessor "com.google.dagger:dagger-compiler:$version.dagger2"
-
+    //numberprogressbar
     compile 'com.daimajia.numberprogressbar:library:1.4@aar'
 }
