@@ -57,4 +57,17 @@ public class MainActivity extends BaseActivity {
             CrashReport.postCatchedException(thr);
         }
     }
+
+    public void onClick7(View v) {
+        ToastUtil.show(new AJ8().s());
+    }
+
+    class AJ8 implements J8 {
+    }
+
+    interface J8 {
+        default boolean s() {
+            return true;
+        }
+    }
 }

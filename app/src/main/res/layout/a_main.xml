@@ -48,4 +48,11 @@
         android:layout_height="wrap_content"
         android:onClick="onClick6"
         android:text="bugly"/>
+
+    <Button
+        android:id="@+id/btn7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClick7"
+        android:text="j8 default"/>
 </LinearLayout>

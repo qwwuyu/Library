@@ -75,7 +75,6 @@ public class RxTest {
                 .take(0)
 
                 .sample(null)
-
         ;
     }
 
@@ -88,6 +87,16 @@ public class RxTest {
                 .mapToObj(x -> java.util.stream.DoubleStream.iterate(1.5, y -> y - 0.05).limit(61)
                         .mapToObj(y -> Math.pow((x * x + y * y - 1), 3) - x * x * x * y * y <= 0 ? "*" : " ")
                         .collect(java.util.stream.Collectors.joining())).collect(java.util.stream.Collectors.joining("\n")));
+        System.out.println(new AJ8().s());
+    }
+
+    class AJ8 implements J8 {
+    }
+
+    interface J8 {
+        default boolean s() {
+            return true;
+        }
     }
 
     /** 提供多种Scheduler */
