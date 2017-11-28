@@ -50,8 +50,7 @@ public class MainActivity extends BaseActivity {
 
     public void onClick6(View v) {
         try {
-            CrashReport.setUserSceneTag(this, 9527);
-            CrashReport.setUserId("9527");
+            CrashReport.setUserSceneTag(this, 100);
             CrashReport.testJavaCrash();
         } catch (Throwable thr) {
             CrashReport.postCatchedException(thr);
