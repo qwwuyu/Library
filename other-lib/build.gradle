@@ -5,7 +5,6 @@ def config = rootProject.ext.android;
 android {
     publishNonDefault true
     compileSdkVersion config.compileSdkVersion
-    buildToolsVersion config.buildToolsVersion
 
     defaultConfig {
         minSdkVersion config.minSdkVersion
@@ -15,8 +14,10 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    debugCompile project(path: ':qw-lib', configuration: "debug")
-    releaseCompile project(path: ':qw-lib', configuration: "release")
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation 'junit:junit:4.12'
+    debugApi project(':qw-lib')
+    releaseApi project(':qw-lib')
+//    debugApi project(path: ':qw-lib', configuration: "debug")
+//    releaseApi project(path: ':qw-lib', configuration: "release")
 }

@@ -5,7 +5,6 @@ def config = rootProject.ext.android;
 android {
     publishNonDefault true
     compileSdkVersion config.compileSdkVersion
-    buildToolsVersion config.buildToolsVersion
 
     defaultConfig {
         minSdkVersion config.minSdkVersion
@@ -15,7 +14,9 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    debugCompile project(path: ':other-lib', configuration: "debug")
-    releaseCompile project(path: ':other-lib', configuration: "release")
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    debugApi project(':other-lib')
+    releaseApi project(':other-lib')
+//    debugCompile project(path: ':other-lib', configuration: "debug")
+//    releaseCompile project(path: ':other-lib', configuration: "release")
 }

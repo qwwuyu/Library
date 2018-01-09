@@ -1,12 +1,10 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
 
-def config = rootProject.ext.android;
-def version = rootProject.ext.version;
+def config = rootProject.ext.android
+def version = rootProject.ext.version
 
 android {
     compileSdkVersion config.compileSdkVersion
-    buildToolsVersion config.buildToolsVersion
 
     defaultConfig {
         applicationId "com.qwwuyu.example"
@@ -42,28 +40,20 @@ android {
     }
 }
 
-retrolambda {
-    javaVersion JavaVersion.VERSION_1_7
-}
-
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    debugCompile project(path: ':qw-widget', configuration: "debug")
-    releaseCompile project(path: ':qw-widget', configuration: "release")
-    compile "com.tencent.bugly:crashreport:2.5.0"
-    compile "com.tencent.bugly:nativecrashreport:3.1.2"
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    debugApi project(':qw-widget')
+    releaseApi project(':qw-widget')
+//    debugApi project(path: ':qw-widget', configuration: "debug")
+//    releaseApi project(path: ':qw-widget', configuration: "release")
+    api "com.tencent.bugly:crashreport:2.5.0"
+    api "com.tencent.bugly:nativecrashreport:3.1.2"
     //butterknife
-    compile("com.jakewharton:butterknife:$version.butterknife") {
-        exclude module: 'support-annotations'
-        exclude module: 'support-compat'
-    }
-    annotationProcessor("com.jakewharton:butterknife-compiler:$version.butterknife") {
-        exclude module: 'support-annotations'
-        exclude module: 'butterknife-annotations'
-    }
+    api "com.jakewharton:butterknife:$version.butterknife"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$version.butterknife"
     //dagger2
-    compile "com.google.dagger:dagger:$version.dagger2"
+    api "com.google.dagger:dagger:$version.dagger2"
     annotationProcessor "com.google.dagger:dagger-compiler:$version.dagger2"
     //numberprogressbar
-    compile 'com.daimajia.numberprogressbar:library:1.4@aar'
+    api 'com.daimajia.numberprogressbar:library:1.4@aar'
 }

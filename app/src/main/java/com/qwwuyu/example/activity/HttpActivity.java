@@ -61,7 +61,7 @@ public class HttpActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a_http);
-        bar = (NumberProgressBar) findViewById(R.id.number_progress_bar);
+        bar = findViewById(R.id.number_progress_bar);
         bar.setMax(100);
         initHttp();
     }

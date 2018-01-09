@@ -28,10 +28,10 @@ public class ColorActivity extends BaseActivity implements ObservableColor.Color
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a_color);
-        pickerView = (ColorPickerView) findViewById(R.id.pickerView);
-        valueView = (ValueView) findViewById(R.id.valueView);
-        alphaView = (AlphaView) findViewById(R.id.alphaView);
-        resultView = (ImageView) findViewById(R.id.resultView);
+        pickerView = findViewById(R.id.pickerView);
+        valueView = findViewById(R.id.valueView);
+        alphaView = findViewById(R.id.alphaView);
+        resultView = findViewById(R.id.resultView);
         pickerView.observeColor(observableColor);
         valueView.observeColor(observableColor);
         alphaView.observeColor(observableColor);
