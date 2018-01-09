@@ -640,6 +640,13 @@ public class PhotoViewAttacher implements View.OnTouchListener, View.OnLayoutCha
         setScale(scale, false);
     }
 
+    public void setScale(float scale, float scaleX, float scaleY) {
+        mSuppMatrix.setScale(scale, scale, mImageView.getRight() / 2, mImageView.getBottom() / 2);
+        int side = Math.min(mImageView.getRight(), mImageView.getBottom());
+        mSuppMatrix.postTranslate(scale * side * (0.5f - scaleX), scale * side * (0.5f - scaleY));
+        checkAndDisplayMatrix();
+    }
+
     public void setScale(float scale, boolean animate) {
         setScale(scale, (mImageView.getRight()) / 2, (mImageView.getBottom()) / 2, animate);
     }

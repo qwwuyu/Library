@@ -50,11 +50,23 @@ public class MainActivity extends BaseActivity {
 
     public void onClick6(View v) {
         try {
-            CrashReport.setUserSceneTag(this, 9527);
-            CrashReport.setUserId("9527");
+            CrashReport.setUserSceneTag(this, 100);
             CrashReport.testJavaCrash();
         } catch (Throwable thr) {
             CrashReport.postCatchedException(thr);
+        }
+    }
+
+    public void onClick7(View v) {
+        ToastUtil.show(new AJ8().s());
+    }
+
+    class AJ8 implements J8 {
+    }
+
+    interface J8 {
+        default boolean s() {
+            return true;
         }
     }
 }

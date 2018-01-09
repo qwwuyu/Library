@@ -31,9 +31,15 @@
             android:layout_height="match_parent"/>
     </RelativeLayout>
 
-    <com.qwwuyu.widget.IndicatorView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@color/colorPrimary"/>
+    <RelativeLayout
+        android:id="@+id/shadowView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <com.qwwuyu.widget.IndicatorView
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
+
+    </RelativeLayout>
 </LinearLayout>

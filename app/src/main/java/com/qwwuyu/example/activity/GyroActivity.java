@@ -1,9 +1,13 @@
 package com.qwwuyu.example.activity;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewCompat;
 import android.util.Base64;
+import android.view.View;
 import android.view.ViewTreeObserver;
 
 import com.github.chrisbanes.photoview.OnDoubleTapDefaultListener;
@@ -11,6 +15,8 @@ import com.github.chrisbanes.photoview.PhotoViewAttacher;
 import com.qwwuyu.example.R;
 import com.qwwuyu.lib.base.BaseActivity;
 import com.qwwuyu.lib.utils.CommUtil;
+import com.qwwuyu.lib.utils.DisplayUtil;
+import com.qwwuyu.widget.drawable.card.RoundRectDrawableWithShadow;
 import com.qwwuyu.widget.gyro.GyroBean;
 import com.qwwuyu.widget.gyro.GyroMarkView;
 import com.qwwuyu.widget.gyro.GyroUtil;
@@ -20,6 +26,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class GyroActivity extends BaseActivity {
+    @BindView(R.id.shadowView)
+    View shadowView;
     @BindView(R.id.gyro_gyroView)
     GyroView gyroView;
     @BindView(R.id.gyro_markView)
@@ -68,5 +76,21 @@ public class GyroActivity extends BaseActivity {
         gyroBean.setLines(lines);
         markView.setData(gyroBean);
         GyroUtil.setEdge(attacher, gyroBean);
+
+//        ViewCompat.setBackground(shadowView, new ShadowDrawableWrapper(
+//                this, new ColorDrawable(ContextCompat.getColor(this, R.color.colorPrimary)),
+//                DisplayUtil.dp2px(5), DisplayUtil.dp2px(5), DisplayUtil.dp2px(5)));
+        ColorStateList stateList = new ColorStateList(new int[][]{
+                new int[]{-android.R.attr.state_enabled},
+                new int[]{android.R.attr.state_pressed},
+                new int[]{},
+        }, new int[]{
+                Color.BLACK,
+                Color.BLUE,
+                Color.RED,
+        });
+        ViewCompat.setBackground(shadowView, new RoundRectDrawableWithShadow(getResources(), stateList,
+                DisplayUtil.dp2px(5), DisplayUtil.dp2px(5), DisplayUtil.dp2px(5)));
+        shadowView.setOnClickListener(v -> shadowView.setEnabled(false));
     }
 }
