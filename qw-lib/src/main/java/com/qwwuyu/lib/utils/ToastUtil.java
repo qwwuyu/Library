@@ -7,13 +7,13 @@ import android.content.Context;
  * Created by qiwei on 2016/12/1
  */
 public final class ToastUtil {
-    private static IToastUtil toastUtil;
+    private static ToastUtilInterface toastUtil;
 
     private ToastUtil() {
         throw new UnsupportedOperationException("can't instantiate");
     }
 
-    synchronized static void init(Context context, IToastUtil iToastUtil) {
+    synchronized static void init(Context context, ToastUtilInterface iToastUtil) {
         if (toastUtil != null) return;
         toastUtil = iToastUtil;
         toastUtil.init(context);

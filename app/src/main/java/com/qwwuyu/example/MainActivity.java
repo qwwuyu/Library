@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 
+import com.qwwuyu.example.activity.ColorActivity;
 import com.qwwuyu.example.activity.ELMActivity;
 import com.qwwuyu.example.activity.GyroActivity;
 import com.qwwuyu.lib.base.BaseActivity;
@@ -23,21 +24,28 @@ public class MainActivity extends BaseActivity {
     }
 
     public void onClick1(View v) {
-        Intent intent = new Intent(this, GyroActivity.class);
-        startActivity(intent);
+        int i = 0, num = 3, index = -1;
+        if (flag[i] % num == ++index) {
+            Intent intent = new Intent(this, ELMActivity.class);
+            startActivity(intent);
+            finish();
+        } else if (flag[i] % num == ++index) {
+            Intent intent = new Intent(this, ColorActivity.class);
+            startActivity(intent);
+        } else if (flag[i] % num == ++index) {
+            Intent intent = new Intent(this, GyroActivity.class);
+            startActivity(intent);
+        }
+        flag[i]++;
     }
 
     public void onClick2(View v) {
-        if (flag[0] % 3 == 0) SystemBarUtil.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
-        else if (flag[0] % 3 == 1) SystemBarUtil.translucentStatusBar(this, false);
-        else if (flag[0] % 3 == 2) SystemBarUtil.translucentStatusBar(this, true);
-        flag[0]++;
-    }
-
-    public void onClick3(View v) {
-        Intent intent = new Intent(this, ELMActivity.class);
-        startActivity(intent);
-        finish();
+        int i = 1, num = 3, index = -1;
+        if (flag[i] % num == ++index)
+            SystemBarUtil.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
+        else if (flag[i] % num == ++index) SystemBarUtil.translucentStatusBar(this, false);
+        else if (flag[i] % num == ++index) SystemBarUtil.translucentStatusBar(this, true);
+        flag[i]++;
     }
 
     public void onClick4(View v) {

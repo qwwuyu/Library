@@ -5,7 +5,7 @@ import android.content.Context;
 /**
  * Created by qiwei on 2016/12/13
  */
-public interface IToastUtil {
+public interface ToastUtilInterface {
     /** 初始化工具,这个方法必须其他方法调用前使用 */
     void init(Context context);
 

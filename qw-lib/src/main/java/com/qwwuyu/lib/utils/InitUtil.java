@@ -23,7 +23,7 @@ public class InitUtil {
 
     public static class Configuration {
         Context context;
-        IToastUtil toastUtil;
+        ToastUtilInterface toastUtil;
         public boolean leakCanary = false, blockCanary = false;
 
         public Configuration(Context context) {
@@ -31,7 +31,7 @@ public class InitUtil {
             this.context = context.getApplicationContext();
         }
 
-        public Configuration setToastUtil(IToastUtil toastUtil) {
+        public Configuration setToastUtil(ToastUtilInterface toastUtil) {
             this.toastUtil = toastUtil;
             return this;
         }

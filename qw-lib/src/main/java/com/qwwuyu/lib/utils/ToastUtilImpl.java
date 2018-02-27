@@ -3,12 +3,13 @@ package com.qwwuyu.lib.utils;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.StringRes;
 import android.widget.Toast;
 
 /**
  * Created by qiwei on 2016/12/13
  */
-class ToastUtilImpl implements IToastUtil {
+class ToastUtilImpl implements ToastUtilInterface {
     /** 主线程Handler */
     private Handler handler = new Handler(Looper.getMainLooper());
     /** 主线程id */
@@ -46,7 +47,7 @@ class ToastUtilImpl implements IToastUtil {
     }
 
     @Override
-    public void show(int id) {
+    public void show(@StringRes int id) {
         show(id, Toast.LENGTH_SHORT);
     }
 
@@ -57,7 +58,7 @@ class ToastUtilImpl implements IToastUtil {
     }
 
     @Override
-    public void show(int id, int duration) {
+    public void show(@StringRes int id, int duration) {
         showToast(appContext.getResources().getText(id), duration);
     }
 

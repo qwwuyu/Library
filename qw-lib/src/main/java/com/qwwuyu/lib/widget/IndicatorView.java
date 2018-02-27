@@ -1,4 +1,4 @@
-package com.qwwuyu.widget;
+package com.qwwuyu.lib.widget;
 
 import android.animation.ValueAnimator;
 import android.content.Context;

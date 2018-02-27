@@ -1,4 +1,4 @@
-package com.qwwuyu.widget;
+package com.qwwuyu.lib.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -10,6 +10,8 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.view.View;
+
+import com.qwwuyu.library.R;
 
 /**
  * Created by qiwei on 2017/8/16
