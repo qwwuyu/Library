@@ -23,9 +23,7 @@ dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     //test
     testImplementation 'junit:junit:4.12'
-    androidTestApi('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
+    androidTestApi 'com.android.support.test.espresso:espresso-core:3.0.1'
     //support
     api "com.android.support:support-v4:$version.support"
     api "com.android.support:appcompat-v7:$version.support"
@@ -43,34 +41,14 @@ dependencies {
     api "com.google.code.gson:gson:$version.gson"
     //rx
     api "io.reactivex.rxjava2:rxjava:$version.rxjava2"
-    api("io.reactivex.rxjava2:rxandroid:$version.rxandroid2") {
-        exclude module: 'rxjava'
-    }
-    api("com.trello.rxlifecycle2:rxlifecycle:$version.rxlifecycle2") {
-        exclude module: 'rxjava'
-    }
-    api("com.trello.rxlifecycle2:rxlifecycle-components:$version.rxlifecycle2") {
-        exclude module: 'support-v4'
-        exclude module: 'appcompat-v7'
-        exclude module: 'support-annotations'
-        exclude module: 'rxjava'
-        exclude module: 'rxandroid'
-        exclude module: 'rxlifecycle'
-    }
+    api "io.reactivex.rxjava2:rxandroid:$version.rxandroid2"
+    api "com.trello.rxlifecycle2:rxlifecycle:$version.rxlifecycle2"
+    api "com.trello.rxlifecycle2:rxlifecycle-components:$version.rxlifecycle2"
     //network
     api "com.squareup.okhttp3:okhttp:$version.okhttp3"
-    api("com.squareup.retrofit2:retrofit:$version.retrofit") {
-        exclude module: 'okhttp'
-        exclude module: 'okio'
-    }
-    api("com.squareup.retrofit2:converter-gson:$version.retrofit") {
-        exclude module: 'gson'
-        exclude module: 'retrofit'
-    }
-    api("com.squareup.retrofit2:adapter-rxjava2:$version.retrofit") {
-        exclude module: 'rxjava'
-        exclude module: 'retrofit'
-    }
+    api "com.squareup.retrofit2:retrofit:$version.retrofit"
+    api "com.squareup.retrofit2:converter-gson:$version.retrofit"
+    api "com.squareup.retrofit2:adapter-rxjava2:$version.retrofit"
     //glide
     api "com.github.bumptech.glide:glide:$version.glide"
     annotationProcessor "com.github.bumptech.glide:compiler:$version.glide"
