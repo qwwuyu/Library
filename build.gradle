@@ -42,7 +42,7 @@ ext {
             dagger2    : "2.10",
             eventbus   : "3.0.0",
             gson       : "2.8.0",
-            rxjava2    : "2.1.0", rxandroid2: "2.0.1", rxlifecycle2: "2.0.1",
-            okhttp3    : "3.8.0", retrofit: "2.3.0", glide: "4.0.0", glidetrans: "2.0.2",
+            rxjava2    : "2.1.9", rxandroid2: "2.0.2", rxlifecycle2: "2.2.1",
+            okhttp3    : "3.10.0", retrofit: "2.4.0", glide: "4.6.1", glidetrans: "3.1.1",
     ]
 }

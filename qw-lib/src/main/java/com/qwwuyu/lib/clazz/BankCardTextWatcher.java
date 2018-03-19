@@ -51,17 +51,17 @@ public class BankCardTextWatcher implements TextWatcher {
         if (!isChange) {
             isChange = true;
             String txt = s.toString().replace(String.valueOf(space), "").replaceAll(regex, replacement);
-            if (!txt.equals(s.toString())) {
-                int select = editText.getSelectionEnd();
-                for (int i = 0, j = Math.min(select, s.length()); i < j; i++) {
-                    if (s.charAt(i) == space) select--;
-                }
-                for (int i = 0, j = Math.min(select, txt.length()); i < j; i++) {
-                    if (txt.charAt(i) == space && j++ > Integer.MIN_VALUE) select++;
-                }
-                editText.setText(txt);
-                editText.setSelection(Math.min(select, txt.length()));
+//            if (!txt.equals(s.toString())) {
+            int select = editText.getSelectionEnd();
+            for (int i = 0, j = Math.min(select, s.length()); i < j; i++) {
+                if (s.charAt(i) == space) select--;
             }
+            for (int i = 0, j = Math.min(select, txt.length()); i < j; i++) {
+                if (txt.charAt(i) == space && j++ > Integer.MIN_VALUE) select++;
+            }
+            editText.setText(txt);
+            editText.setSelection(Math.min(Math.max(0, select), editText.getText().length()));
+//            }
             isChange = false;
         }
     }
