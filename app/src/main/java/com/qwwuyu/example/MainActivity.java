@@ -12,7 +12,6 @@ import com.qwwuyu.lib.base.BaseActivity;
 import com.qwwuyu.lib.utils.LogUtil;
 import com.qwwuyu.lib.utils.SystemBarUtil;
 import com.qwwuyu.lib.utils.ToastUtil;
-import com.tencent.bugly.crashreport.CrashReport;
 
 public class MainActivity extends BaseActivity {
     private static int[] flag = new int[10];
@@ -57,12 +56,6 @@ public class MainActivity extends BaseActivity {
     }
 
     public void onClick6(View v) {
-        try {
-            CrashReport.setUserSceneTag(this, 100);
-            CrashReport.testJavaCrash();
-        } catch (Throwable thr) {
-            CrashReport.postCatchedException(thr);
-        }
     }
 
     public void onClick7(View v) {

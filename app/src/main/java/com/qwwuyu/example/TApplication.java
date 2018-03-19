@@ -9,7 +9,6 @@ import com.qwwuyu.lib.utils.InitUtil;
 import com.qwwuyu.lib.utils.LogUtil;
 import com.qwwuyu.lib.utils.glide.DefaultGlideModule;
 import com.qwwuyu.lib.utils.glide.GlideConfig;
-import com.tencent.bugly.crashreport.CrashReport;
 
 /**
  * Created by qiwei on 2017/7/13
@@ -19,10 +18,6 @@ public class TApplication extends BaseApplication {
     public void onCreate() {
         super.onCreate();
         if (!CommUtil.isInMainProcess(getApplicationContext())) return;
-        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(getApplicationContext());
-        strategy.setAppReportDelay(20000);
-        CrashReport.initCrashReport(getApplicationContext(), "99095bbe1c", BuildConfig.DEBUG, strategy);
-        CrashReport.setUserId("9527");
 
         DefaultGlideModule.setGlideConfig(new GlideConfig.Builder()
                 .options(new RequestOptions().format(DecodeFormat.PREFER_ARGB_8888)//图片格式

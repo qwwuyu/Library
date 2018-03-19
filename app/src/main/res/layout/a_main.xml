@@ -29,7 +29,7 @@
     <Button
         style="@style/btn"
         android:onClick="onClick6"
-        android:text="bugly" />
+        android:text="empty" />
 
     <Button
         style="@style/btn"
