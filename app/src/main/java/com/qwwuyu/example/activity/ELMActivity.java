@@ -60,10 +60,14 @@ public class ELMActivity extends PermitActivity {
         for (String permit : foreverDenied) {
             message.append("\n").append(permit);
         }
-        new AlertDialog.Builder(ELMActivity.this)
+        AlertDialog alertDialog = new AlertDialog.Builder(ELMActivity.this)
+                .setCancelable(false)
                 .setTitle("请在设置中打开").setMessage(message.toString())
-                .setPositiveButton("去设置", (dialog, which) -> proceedListener.proceed())
-                .setNegativeButton("拒绝", (dialog, which) -> finish()).create().show();
+                .setPositiveButton("去设置", null).setNegativeButton("拒绝", null)
+                .create();
+        alertDialog.show();
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> proceedListener.proceed());
+        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener(v -> finish());
     }
 
     @Override

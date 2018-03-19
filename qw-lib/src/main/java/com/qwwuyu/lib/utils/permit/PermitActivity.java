@@ -17,7 +17,7 @@ import java.util.List;
  */
 public abstract class PermitActivity extends AppCompatActivity {
     private boolean isGranted = false;
-    private final String[] requests = requestPermissions();
+    protected final String[] requests = requestPermissions();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
