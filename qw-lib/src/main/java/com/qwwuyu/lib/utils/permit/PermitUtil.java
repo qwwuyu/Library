@@ -23,7 +23,7 @@ public class PermitUtil {
      * @param ctrl        请求操作
      */
     public static void request(@NonNull final Activity activity, @NonNull final String[] permissions, @NonNull final PermitCtrl ctrl) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+        if (!isMarshmallow()) {
             ctrl.onGranted();
             return;
         }
@@ -78,11 +78,11 @@ public class PermitUtil {
     }
 
     private static boolean isRevoked(Context context, @NonNull String permName) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            return false;
-        } else {
-            return context.getPackageManager().isPermissionRevokedByPolicy(permName, context.getPackageName());
-        }
+        return isMarshmallow() && context.getPackageManager().isPermissionRevokedByPolicy(permName, context.getPackageName());
+    }
+
+    private static boolean isMarshmallow() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
     }
 
     /** 打开设置 */
