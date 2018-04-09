@@ -60,6 +60,15 @@ public class CommUtil {
 
     /** 获取进程号对应的进程名 */
     private static String getProcessName(Context context, int pid) {
+        try {
+            ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+            if (activityManager != null) {
+                for (ActivityManager.RunningAppProcessInfo procInfo : activityManager.getRunningAppProcesses()) {
+                    if (procInfo.pid == pid) return procInfo.processName;
+                }
+            }
+        } catch (Throwable ignored) {
+        }
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new FileReader("/proc/" + pid + "/cmdline"));
@@ -67,18 +76,9 @@ public class CommUtil {
         } catch (Throwable ignored) {
         } finally {
             try {
-                reader.close();
+                if (reader != null) reader.close();
             } catch (Exception ignored) {
             }
-        }
-        try {
-            List<ActivityManager.RunningAppProcessInfo> runningApps = ((ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE)).getRunningAppProcesses();
-            if (runningApps != null) {
-                for (ActivityManager.RunningAppProcessInfo procInfo : runningApps) {
-                    if (procInfo.pid == pid) return procInfo.processName;
-                }
-            }
-        } catch (Throwable ignored) {
         }
         return null;
     }

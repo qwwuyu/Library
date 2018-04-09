@@ -40,7 +40,7 @@ public class GlideTest {
                 .centerCrop()//centerCrop
                 .placeholder(-1)//加载中图片
                 .error(-1)//加载失败图片
-                .transform(new CropCircleTransformation(context))//加载圆形图片
+                .circleCrop()//加载圆形图片
                 .skipMemoryCache(true)//跳过内存缓存
                 .diskCacheStrategy(DiskCacheStrategy.ALL)//设置磁盘缓存策略
 
