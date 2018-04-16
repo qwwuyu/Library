@@ -7,14 +7,17 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:3.1.1'
     }
 }
 
 allprojects {
     repositories {
-        google()
         jcenter()
+        google()
+        maven {
+            url "https://jitpack.io"
+        }
     }
 }
 
@@ -22,14 +25,26 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
+Properties properties = new Properties()
+if (project.rootProject.file('local.properties') != null) {
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+}
+ext.getPropertyByName = { key, defValue ->
+    def value = properties.getProperty(key)
+    if (value == null) value = System.getenv(key)
+    return value != null ? value : defValue
+}
+
 ext {
     int major = 0, minor = 0, revision = 0
     android = [
             compileSdkVersion: 27,
             minSdkVersion    : 15,
-            targetSdkVersion : 23,
-            versionCode      : major * 1000 + minor * 100 + revision,
-            versionName      : major + "." + minor + "." + revision
+            targetSdkVersion : 27,
+            versionCode      : major * 10000 + minor * 100 + revision,//max=2147483647
+            versionName      : major + "." + minor + "." + revision,
+            currentDate      : new Date().format('yyyyMMdd_HHmmss'),
+            testEnable       : getPropertyByName("APP_TEST_ENABLE", "false"),
     ]
 
     version = [

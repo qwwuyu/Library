@@ -14,30 +14,100 @@ android {
         versionName config.versionName
         ndk {
             //设置支持的SO库架构
-            //abiFilters 'armeabi' , 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+            //abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a', 'x86', 'x86-64'
         }
     }
-    buildTypes {
-        debug {
-            minifyEnabled false
-            proguardFiles 'proguard-rules.pro'
-        }
 
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    signingConfigs {
+        sign {
+            storeFile file("../qwwuyu.jks")
+            storePassword ""
+            keyAlias ""
+            keyPassword ""
+        }
+    }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            outputFileName = "App_${config.versionName}_${config.currentDate}_${variant.name}.apk"
+        }
+    }
+
+    buildTypes {
         release {
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            buildConfigField "boolean", "TEST", "false"
+
             minifyEnabled true
             shrinkResources true
             zipAlignEnabled true
+//            signingConfig signingConfigs.sign
+            proguardFiles 'proguard-rules.pro'
+        }
+
+        debug {
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            buildConfigField "boolean", "TEST", config.testEnable
+
+            minifyEnabled false
+//            signingConfig signingConfigs.sign
+            versionNameSuffix ".debug"
             proguardFiles 'proguard-rules.pro'
         }
     }
 
+    flavorDimensions "default"
+
     productFlavors {
+        a_test {
+            buildConfigField("String", "BASE_URL", "\"http://10.13.131.50\"")
+            versionNameSuffix ".test"
+            manifestPlaceholders = [
+                    KEY: "TEST",
+            ]
+        }
+
+        b_publish {
+            buildConfigField("String", "BASE_URL", "\"http://www.qwwuyu.com\"")
+            manifestPlaceholders = [
+                    KEY: "PUBLISH",
+            ]
+        }
     }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+//    lintOptions {
+//        abortOnError false
+//        disable 'MissingTranslation'
+//    }
+}
+
+buildscript {
+    repositories {
+        jcenter()//or mavenCentral()
+    }
+    dependencies {
+        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.8.2'
+    }
+}
+apply plugin: 'com.getkeepsafe.dexcount'
+dexcount {
+    format = "list"
+    includeClasses = false
+    includeFieldCount = true
+    includeTotalMethodCount = true
+    orderByMethodCount = false
+    verbose = false
 }
 
 dependencies {

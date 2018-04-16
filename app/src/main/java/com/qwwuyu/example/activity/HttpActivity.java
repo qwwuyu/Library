@@ -131,7 +131,7 @@ public class HttpActivity extends BaseActivity {
 //            }
 //        });
         Request request = new Request.Builder()
-                .url("http://192.168.1.218/test/download?name=1.file")
+                .url("http://10.13.131.50/test/download?name=1.file")
                 .build();
         okHttpClient.newCall(request).enqueue(new okhttp3.Callback() {
             @Override
@@ -199,7 +199,7 @@ public class HttpActivity extends BaseActivity {
         }
         okHttpClient = okBuilder.build();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.218/")
+                .baseUrl("http://10.13.131.50/")
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 
-def config = rootProject.ext.android;
+def config = rootProject.ext.android
 
 android {
     publishNonDefault true
@@ -15,9 +15,6 @@ android {
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-    testImplementation 'junit:junit:4.12'
     debugApi project(':qw-lib')
     releaseApi project(':qw-lib')
-//    debugApi project(path: ':qw-lib', configuration: "debug")
-//    releaseApi project(path: ':qw-lib', configuration: "release")
 }

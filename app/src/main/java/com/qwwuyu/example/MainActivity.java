@@ -8,6 +8,7 @@ import android.view.View;
 import com.qwwuyu.example.activity.ColorActivity;
 import com.qwwuyu.example.activity.ELMActivity;
 import com.qwwuyu.example.activity.GyroActivity;
+import com.qwwuyu.example.activity.HttpActivity;
 import com.qwwuyu.lib.base.BaseActivity;
 import com.qwwuyu.lib.utils.LogUtil;
 import com.qwwuyu.lib.utils.SystemBarUtil;
@@ -52,10 +53,12 @@ public class MainActivity extends BaseActivity {
     }
 
     public void onClick5(View v) {
-        LogUtil.i(null);
+        LogUtil.i(BuildConfig.TEST);
     }
 
     public void onClick6(View v) {
+        Intent intent = new Intent(this, HttpActivity.class);
+        startActivity(intent);
     }
 
     public void onClick7(View v) {

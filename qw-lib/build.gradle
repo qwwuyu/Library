@@ -13,6 +13,15 @@ android {
         consumerProguardFiles 'proguard-rules.pro'
     }
 
+    sourceSets {
+        main {
+            res.srcDirs = ['src/main/res']
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    resourcePrefix "lib_"
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -23,7 +32,7 @@ dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     //test
     testImplementation 'junit:junit:4.12'
-    androidTestApi 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     //support
     api "com.android.support:support-v4:$version.support"
     api "com.android.support:appcompat-v7:$version.support"
@@ -31,7 +40,7 @@ dependencies {
     //leakcanary
     debugApi "com.squareup.leakcanary:leakcanary-android:$version.leakcanary"
     releaseApi "com.squareup.leakcanary:leakcanary-android-no-op:$version.leakcanary"
-    testCompile "com.squareup.leakcanary:leakcanary-android-no-op:$version.leakcanary"
+    testImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$version.leakcanary"
     //blockcanary
     debugApi "com.github.markzhai:blockcanary-android:$version.blockcanary"
     releaseApi "com.github.markzhai:blockcanary-no-op:$version.blockcanary"
