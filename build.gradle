@@ -43,7 +43,7 @@ ext {
             targetSdkVersion : 27,
             versionCode      : major * 10000 + minor * 100 + revision,//max=2147483647
             versionName      : major + "." + minor + "." + revision,
-            currentDate      : new Date().format('yyMMdd-HHmm'),
+            currentDate      : new Date().format('yyMMdd-HH'),
             testEnable       : getPropertyByName("APP_TEST_ENABLE", "false"),
     ]
 
