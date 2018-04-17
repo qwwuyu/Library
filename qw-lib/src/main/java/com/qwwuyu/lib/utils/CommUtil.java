@@ -32,11 +32,20 @@ public class CommUtil {
         return s != null && s.length() != 0;
     }
 
-    /** 是否处于后台 */
-    public static boolean isApplicationBroughtToBackground(final Context context) {
-        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(1);
-        return !tasks.isEmpty() && !tasks.get(0).topActivity.getPackageName().equals(context.getPackageName());
+    public static String getVersionName(Context context) {
+        try {
+            return context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName;
+        } catch (Exception ignored) {
+        }
+        return "";
+    }
+
+    public static int getVersionCode(Context context) {
+        try {
+            return context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionCode;
+        } catch (Exception ignored) {
+        }
+        return 0;
     }
 
     /** 是否安装packageName的包 */
@@ -132,20 +141,20 @@ public class CommUtil {
     }
 
     /** close */
-    public static void closeStream(Closeable... streams) {
-        for (Closeable stream : streams) {
+    public static void closeStream(Object... streams) {
+        for (Object stream : streams) {
             try {
-                if (null != stream) stream.close();
+                if (stream instanceof Closeable) ((Closeable) stream).close();
             } catch (IOException ignored) {
             }
         }
     }
 
-    /** sleep */
-    public static void sleep(long millis) {
-        try {
-            Thread.sleep(millis);
-        } catch (InterruptedException ignored) {
-        }
+    /** 是否处于后台 */
+    @Deprecated
+    public static boolean isApplicationBroughtToBackground(final Context context) {
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(1);
+        return !tasks.isEmpty() && !tasks.get(0).topActivity.getPackageName().equals(context.getPackageName());
     }
 }

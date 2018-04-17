@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.TextView;
 
 import com.qwwuyu.example.activity.ColorActivity;
 import com.qwwuyu.example.activity.ELMActivity;
 import com.qwwuyu.example.activity.GyroActivity;
 import com.qwwuyu.example.activity.HttpActivity;
 import com.qwwuyu.lib.base.BaseActivity;
+import com.qwwuyu.lib.utils.CommUtil;
 import com.qwwuyu.lib.utils.LogUtil;
 import com.qwwuyu.lib.utils.SystemBarUtil;
 import com.qwwuyu.lib.utils.ToastUtil;
@@ -21,6 +23,8 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a_main);
+        TextView tv = findViewById(R.id.tv);
+        tv.setText(CommUtil.getVersionName(context));
     }
 
     public void onClick1(View v) {
@@ -48,20 +52,20 @@ public class MainActivity extends BaseActivity {
         flag[i]++;
     }
 
-    public void onClick4(View v) {
+    public void onClick3(View v) {
         ToastUtil.show("123");
     }
 
-    public void onClick5(View v) {
+    public void onClick4(View v) {
         LogUtil.i(BuildConfig.TEST);
     }
 
-    public void onClick6(View v) {
+    public void onClick5(View v) {
         Intent intent = new Intent(this, HttpActivity.class);
         startActivity(intent);
     }
 
-    public void onClick7(View v) {
+    public void onClick6(View v) {
         ToastUtil.show(new AJ8().s());
     }
 

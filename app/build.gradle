@@ -1,7 +1,8 @@
 apply plugin: 'com.android.application'
 
-def config = rootProject.ext.android
+def config = rootProject.ext.config
 def version = rootProject.ext.version
+def signInfo = rootProject.ext.signInfo
 
 android {
     compileSdkVersion config.compileSdkVersion
@@ -24,39 +25,42 @@ android {
         }
     }
 
-    signingConfigs {
-        sign {
-            storeFile file("../qwwuyu.jks")
-            storePassword ""
-            keyAlias ""
-            keyPassword ""
+    if (signInfo.isSign) {
+        signingConfigs {
+            sign {
+                storeFile file(signInfo.storeFile)
+                storePassword signInfo.storePassword
+                keyAlias signInfo.keyAlias
+                keyPassword signInfo.keyPassword
+            }
         }
     }
 
     android.applicationVariants.all { variant ->
         variant.outputs.all { output ->
-            outputFileName = "App_${config.versionName}_${config.currentDate}_${variant.name}.apk"
+            def start = signInfo.isSign ? signInfo.keyAlias : "unsign"
+            outputFileName = "${start}_${config.versionName}_${config.currentDate}_${variant.name}.apk"
         }
     }
 
     buildTypes {
         release {
-            buildConfigField "boolean", "LOG_DEBUG", "false"
+            if (signInfo.isSign) signingConfig signingConfigs.sign
+
             buildConfigField "boolean", "TEST", "false"
 
             minifyEnabled true
             shrinkResources true
             zipAlignEnabled true
-//            signingConfig signingConfigs.sign
             proguardFiles 'proguard-rules.pro'
         }
 
         debug {
-            buildConfigField "boolean", "LOG_DEBUG", "false"
+            if (signInfo.isSign) signingConfig signingConfigs.sign
+
             buildConfigField "boolean", "TEST", config.testEnable
 
             minifyEnabled false
-//            signingConfig signingConfigs.sign
             versionNameSuffix ".debug"
             proguardFiles 'proguard-rules.pro'
         }

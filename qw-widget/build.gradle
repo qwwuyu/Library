@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 
-def config = rootProject.ext.android
+def config = rootProject.ext.config
 
 android {
     publishNonDefault true

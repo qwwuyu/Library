@@ -37,14 +37,23 @@ ext.getPropertyByName = { key, defValue ->
 
 ext {
     int major = 0, minor = 0, revision = 0
-    android = [
+    config = [
             compileSdkVersion: 27,
             minSdkVersion    : 15,
             targetSdkVersion : 27,
             versionCode      : major * 10000 + minor * 100 + revision,//max=2147483647
             versionName      : major + "." + minor + "." + revision,
-            currentDate      : new Date().format('yyyyMMdd_HHmmss'),
+            currentDate      : new Date().format('yyMMdd-HHmm'),
             testEnable       : getPropertyByName("APP_TEST_ENABLE", "false"),
+    ]
+
+    def storeFile = getPropertyByName("STORE_FILE", null)
+    signInfo = [
+            storeFile    : storeFile,
+            storePassword: getPropertyByName("STORE_PASSWORD", null),
+            keyAlias     : getPropertyByName("KEY_ALIAS", null),
+            keyPassword  : getPropertyByName("KEY_PASSWORD", null),
+            isSign       : storeFile != null,
     ]
 
     version = [

@@ -1,38 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@android:color/white"
     tools:context=".MainActivity">
 
     <Button
+        android:id="@+id/btn1"
         style="@style/btn"
         android:onClick="onClick1"
         android:text="权限/Color/Gyro" />
 
     <Button
+        android:id="@+id/btn2"
         style="@style/btn"
         android:onClick="onClick2"
-        android:text="状态栏" />
+        android:text="状态栏"
+        app:layout_constraintTop_toBottomOf="@id/btn1" />
 
     <Button
+        android:id="@+id/btn3"
+        style="@style/btn"
+        android:onClick="onClick3"
+        android:text="Toast"
+        app:layout_constraintTop_toBottomOf="@id/btn2" />
+
+    <Button
+        android:id="@+id/btn4"
         style="@style/btn"
         android:onClick="onClick4"
-        android:text="Toast" />
+        android:text="Log"
+        app:layout_constraintTop_toBottomOf="@id/btn3" />
 
     <Button
+        android:id="@+id/btn5"
         style="@style/btn"
         android:onClick="onClick5"
-        android:text="Log" />
+        android:text="empty"
+        app:layout_constraintTop_toBottomOf="@id/btn4" />
 
     <Button
+        android:id="@+id/btn6"
         style="@style/btn"
         android:onClick="onClick6"
-        android:text="empty" />
+        android:text="j8 default"
+        app:layout_constraintTop_toBottomOf="@id/btn5" />
 
-    <Button
-        style="@style/btn"
-        android:onClick="onClick7"
-        android:text="j8 default" />
-</LinearLayout>
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:text="233" />
+</android.support.constraint.ConstraintLayout>
