@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 
 def config = rootProject.ext.config
+def version = rootProject.ext.version
 
 android {
     publishNonDefault true
@@ -15,6 +16,8 @@ android {
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-    debugApi project(':qw-lib')
-    releaseApi project(':qw-lib')
+    //support
+    implementation "com.android.support:support-v4:$version.support"
+    implementation "com.android.support:appcompat-v7:$version.support"
+    implementation "com.android.support:support-annotations:$version.support"
 }

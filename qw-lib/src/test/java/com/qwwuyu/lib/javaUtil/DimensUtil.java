@@ -32,7 +32,7 @@ public class DimensUtil {
             }
         }
         if (resPath == null || !resPath.exists()) {
-            throw new RuntimeException("path error");
+            throw new RuntimeException("res path error");
         }
     }
 

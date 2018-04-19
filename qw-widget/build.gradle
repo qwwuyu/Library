@@ -15,6 +15,6 @@ android {
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-    debugApi project(':other-lib')
-    releaseApi project(':other-lib')
+    debugApi project(':qw-lib')
+    releaseApi project(':qw-lib')
 }

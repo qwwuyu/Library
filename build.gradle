@@ -49,11 +49,11 @@ ext {
 
     def storeFile = getPropertyByName("STORE_FILE", null)
     signInfo = [
+            isSign       : storeFile != null,
             storeFile    : storeFile,
             storePassword: getPropertyByName("STORE_PASSWORD", null),
             keyAlias     : getPropertyByName("KEY_ALIAS", null),
             keyPassword  : getPropertyByName("KEY_PASSWORD", null),
-            isSign       : storeFile != null,
     ]
 
     version = [

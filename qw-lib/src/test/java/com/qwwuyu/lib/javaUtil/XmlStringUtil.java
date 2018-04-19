@@ -14,12 +14,26 @@ import java.util.Arrays;
 import java.util.List;
 
 public class XmlStringUtil {
-    private final static File resDir = new File("D:\\develop\\as_work\\library\\app\\src\\main\\res");
-    private final static File results = new File("D:\\jt\\xml\\res");
+    /** res目录 */
+    private File resDir;
+    /** 放置目录 */
+    private final File results = new File("D:\\jt\\xml\\res");
+    /** 所有strings文件 */
     private ArrayList<File> files = new ArrayList<>();
 
     @Before
     public void before() {
+        if (resDir == null) {
+            String path = getClass().getResource("").getPath();
+            String end = "build/intermediates/classes/test/debug/" +
+                    getClass().getPackage().getName().replace(".", "/") + "/";
+            if (path.endsWith(end)) {
+                resDir = new File(path.substring(0, path.length() - end.length()) + "src/main/res");
+            }
+        }
+        if (resDir == null || !resDir.exists()) {
+            throw new RuntimeException("res path error");
+        }
         if (!results.exists()) results.mkdirs();
         File[] fs = resDir.listFiles();
         for (File file : fs) {
