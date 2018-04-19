@@ -116,9 +116,10 @@ dexcount {
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':other-lib')
-    debugApi project(':qw-widget')
-    releaseApi project(':qw-widget')
+    //project
+    debugImplementation project(':qw-lib')
+    releaseImplementation project(':qw-lib')
+    implementation project(':qw-widget')
     //butterknife
     implementation "com.jakewharton:butterknife:$version.butterknife"
     annotationProcessor "com.jakewharton:butterknife-compiler:$version.butterknife"
