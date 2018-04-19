@@ -10,6 +10,7 @@ import com.qwwuyu.example.activity.ColorActivity;
 import com.qwwuyu.example.activity.ELMActivity;
 import com.qwwuyu.example.activity.GyroActivity;
 import com.qwwuyu.example.activity.HttpActivity;
+import com.qwwuyu.example.activity.MvpActivity;
 import com.qwwuyu.lib.base.BaseActivity;
 import com.qwwuyu.lib.utils.CommUtil;
 import com.qwwuyu.lib.utils.LogUtil;
@@ -30,15 +31,12 @@ public class MainActivity extends BaseActivity {
     public void onClick1(View v) {
         int i = 0, num = 3, index = -1;
         if (flag[i] % num == ++index) {
-            Intent intent = new Intent(this, ELMActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(this, ELMActivity.class));
             finish();
         } else if (flag[i] % num == ++index) {
-            Intent intent = new Intent(this, ColorActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(this, ColorActivity.class));
         } else if (flag[i] % num == ++index) {
-            Intent intent = new Intent(this, GyroActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(this, GyroActivity.class));
         }
         flag[i]++;
     }
@@ -61,8 +59,13 @@ public class MainActivity extends BaseActivity {
     }
 
     public void onClick5(View v) {
-        Intent intent = new Intent(this, HttpActivity.class);
-        startActivity(intent);
+        int i = 2, num = 3, index = -1;
+        if (flag[i] % num == ++index) {
+            startActivity(new Intent(this, MvpActivity.class));
+        } else if (flag[i] % num == ++index) {
+            startActivity(new Intent(this, HttpActivity.class));
+        }
+        flag[i]++;
     }
 
     public void onClick6(View v) {
