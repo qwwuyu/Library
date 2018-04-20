@@ -25,7 +25,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a_main);
         TextView tv = findViewById(R.id.tv);
-        tv.setText(CommUtil.getVersionName(context));
+        tv.setText(CommUtil.getVersionName(mContext));
     }
 
     public void onClick1(View v) {

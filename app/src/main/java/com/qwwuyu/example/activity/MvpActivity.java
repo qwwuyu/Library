@@ -24,26 +24,6 @@ public class MvpActivity extends BaseMvpActivity<MvpContract.Presenter> implemen
     }
 
     @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
-    @Override
-    public void showEmpty() {
-
-    }
-
-    @Override
-    public void showError(int code, String msg) {
-
-    }
-
-    @Override
     protected MvpContract.Presenter createPresenter() {
         return new MvpPresenter();
     }
