@@ -9,10 +9,21 @@ import org.junit.Test;
 public class UnitTest {
     @Test
     public void test() throws Exception {
+
+    }
+
+    @Test
+    public void getAngle() throws Exception {
         System.out.println(getAngle(0, 0, 1, 1));
         System.out.println(getAngle(0, 0, -1, 1));
         System.out.println(getAngle(0, 0, 1, -1));
         System.out.println(getAngle(0, 0, -1, -1));
+    }
+
+    public static double getAngle(double centerX, double centerY, double targetX, double targetY) {
+        double angle = Math.toDegrees(Math.atan2(targetY - centerY, targetX - centerX));
+        if (angle < 0) angle += 360;
+        return angle;
     }
 
     @Test
@@ -27,11 +38,5 @@ public class UnitTest {
     public void ascii2str() throws Exception {
         String s = "\u6d4b\u8bd5";
         System.out.println(s);
-    }
-
-    public static double getAngle(double centerX, double centerY, double targetX, double targetY) {
-        double angle = Math.toDegrees(Math.atan2(targetY - centerY, targetX - centerX));
-        if (angle < 0) angle += 360;
-        return angle;
     }
 }

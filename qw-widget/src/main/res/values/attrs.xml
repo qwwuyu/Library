@@ -1,2 +1,8 @@
 <resources>
+    <declare-styleable name="LinkageView">
+        <attr name="linkageIndicatorHeight" format="dimension" />
+        <attr name="linkageLineSpace" format="dimension" />
+        <attr name="linkageLineColor" format="color" />
+        <attr name="linkageVpHeight" format="dimension" />
+    </declare-styleable>
 </resources>

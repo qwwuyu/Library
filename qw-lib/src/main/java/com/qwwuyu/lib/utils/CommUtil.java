@@ -1,6 +1,7 @@
 package com.qwwuyu.lib.utils;
 
 import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -108,16 +109,6 @@ public class CommUtil {
         context.startActivity(intent);
     }
 
-    /** 打开设置 */
-    public static void openSetting(Context context, boolean newTask) {
-        Intent intent = new Intent();
-        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        Uri uri = Uri.fromParts("package", context.getPackageName(), null);
-        intent.setData(uri);
-        if (newTask) intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-    }
-
     /** Gzip解压 */
     public static byte[] gzipUnCompress(byte[] bt) {
         ByteArrayOutputStream byteAos = null;
@@ -153,8 +144,35 @@ public class CommUtil {
     /** 是否处于后台 */
     @Deprecated
     public static boolean isApplicationBroughtToBackground(final Context context) {
+        ComponentName topComponentName = getTopComponentName(context);
+        return topComponentName != null && !topComponentName.getPackageName().equals(context.getPackageName());
+    }
+
+    public static String getTopActivity(Context context) {
+        ComponentName topComponentName = getTopComponentName(context);
+        if (topComponentName != null) {
+            return topComponentName.toString();
+        }
+        return "";
+    }
+
+    private static ComponentName getTopComponentName(final Context context) {
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        if (am == null) return null;
         List<ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(1);
-        return !tasks.isEmpty() && !tasks.get(0).topActivity.getPackageName().equals(context.getPackageName());
+        if (tasks != null && !tasks.isEmpty()) {
+            return tasks.get(0).topActivity;
+        }
+        return null;
+    }
+
+    /** 打开设置 */
+    public static void openSetting(Context context, boolean newTask) {
+        Intent intent = new Intent();
+        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package", context.getPackageName(), null);
+        intent.setData(uri);
+        if (newTask) intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 }

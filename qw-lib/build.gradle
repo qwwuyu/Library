@@ -38,6 +38,7 @@ dependencies {
     api "com.android.support:support-v4:$version.support"
     api "com.android.support:appcompat-v7:$version.support"
     api "com.android.support:support-annotations:$version.support"
+    api "com.android.support:recyclerview-v7:$version.support"
     //leakcanary
     debugApi "com.squareup.leakcanary:leakcanary-android:$version.leakcanary"
     releaseApi "com.squareup.leakcanary:leakcanary-android-no-op:$version.leakcanary"

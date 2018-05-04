@@ -17,7 +17,8 @@ android {
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     //support
-    implementation "com.android.support:support-v4:$version.support"
-    implementation "com.android.support:appcompat-v7:$version.support"
-    implementation "com.android.support:support-annotations:$version.support"
+    api "com.android.support:support-v4:$version.support"
+    api "com.android.support:appcompat-v7:$version.support"
+    api "com.android.support:support-annotations:$version.support"
+    api 'com.github.hackware1993:MagicIndicator:1.5.0'
 }
