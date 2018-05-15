@@ -9,7 +9,11 @@ import org.junit.Test;
 public class UnitTest {
     @Test
     public void test() throws Exception {
+    }
 
+    @Test
+    public void sumNN() throws Exception {
+        Ngraphy.printIS(14);
     }
 
     @Test
@@ -20,7 +24,7 @@ public class UnitTest {
         System.out.println(getAngle(0, 0, -1, -1));
     }
 
-    public static double getAngle(double centerX, double centerY, double targetX, double targetY) {
+    private static double getAngle(double centerX, double centerY, double targetX, double targetY) {
         double angle = Math.toDegrees(Math.atan2(targetY - centerY, targetX - centerX));
         if (angle < 0) angle += 360;
         return angle;
