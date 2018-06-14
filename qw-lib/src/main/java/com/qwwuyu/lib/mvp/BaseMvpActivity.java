@@ -14,12 +14,16 @@ public abstract class BaseMvpActivity<P extends WrapperPresenter> extends BaseAc
     protected Context context = BaseMvpActivity.this;
     protected P mPresenter;
 
-    @SuppressWarnings("unchecked")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        initPresenter();
+        super.onCreate(savedInstanceState);
+    }
+
+    @SuppressWarnings("unchecked")
+    private void initPresenter() {
         mPresenter = createPresenter();
         if (mPresenter != null) mPresenter.attachView(this);
-        super.onCreate(savedInstanceState);
     }
 
     @Override

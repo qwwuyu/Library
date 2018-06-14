@@ -4,9 +4,7 @@ import com.qwwuyu.lib.mvp.BaseView;
 import com.qwwuyu.lib.mvp.WrapperPresenter;
 
 /**
- * Create by 0222387(qiwei2)
- * On 2018/4/19 18:24
- * Copyright(c) 2017 世联行
+ * Created by qiwei on 2018/6/14 14:02
  * Description .
  */
 public interface MvpContract {

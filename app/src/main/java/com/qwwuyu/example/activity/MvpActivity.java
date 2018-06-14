@@ -11,9 +11,7 @@ import com.qwwuyu.lib.mvp.BaseMvpActivity;
 import com.qwwuyu.lib.utils.ToastUtil;
 
 /**
- * Create by 0222387(qiwei2)
- * On 2018/4/19 18:22
- * Copyright(c) 2017 世联行
+ * Created by qiwei on 2018/6/14 14:02
  * Description .
  */
 public class MvpActivity extends BaseMvpActivity<MvpContract.Presenter> implements MvpContract.View {
