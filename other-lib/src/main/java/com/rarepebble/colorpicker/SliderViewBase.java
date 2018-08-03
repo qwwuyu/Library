@@ -102,7 +102,7 @@ public abstract class SliderViewBase extends View implements ObservableColor.Col
         canvas.drawRect(0, 0, w, h, rectPaint);
         canvas.drawPath(borderPath, borderPaint);
 
-        canvas.save(Canvas.MATRIX_SAVE_FLAG);
+        canvas.save();
         canvas.translate(w * currentPos, h / 2);
         canvas.drawPath(pointerPath, pointerPaint);
         canvas.restore();

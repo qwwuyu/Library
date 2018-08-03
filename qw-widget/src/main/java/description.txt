@@ -1,1 +1,0 @@
-IndicatorView:改于https://github.com/QMUI/QMUI_Android

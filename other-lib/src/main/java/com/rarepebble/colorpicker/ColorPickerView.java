@@ -152,7 +152,7 @@ public class ColorPickerView extends View implements ObservableColor.ColorObserv
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.drawPath(borderPath, borderPaint);
-        canvas.save(Canvas.MATRIX_SAVE_FLAG | Canvas.CLIP_SAVE_FLAG);
+        canvas.save();
         canvas.clipPath(borderPath);
         canvas.drawBitmap(bitmap, null, viewRect, null);
         canvas.translate(pointer.x, pointer.y);

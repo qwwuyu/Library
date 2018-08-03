@@ -141,8 +141,10 @@ public class HttpActivity extends BaseActivity {
 
             @Override
             public void onResponse(@NonNull okhttp3.Call call, @NonNull okhttp3.Response response) throws IOException {
-                InputStream is = response.body().byteStream();
-                final long length = response.body().contentLength();
+                ResponseBody body = response.body();
+                if (body == null) throw new IOException("body is null");
+                InputStream is = body.byteStream();
+                final long length = body.contentLength();
                 byte[] buf = new byte[1024 * 100];
                 int len;
                 long read = 0;
@@ -150,7 +152,7 @@ public class HttpActivity extends BaseActivity {
                     read += len;
                     LogUtil.i("download:read:" + read + " length" + length);
                 }
-                response.body().close();
+                body.close();
             }
         });
     }
