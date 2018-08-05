@@ -19,12 +19,14 @@ public class InitUtil {
         Context context = config.context.getApplicationContext();
         ToastUtil.init(context, config.toastUtil == null ? ToastUtilImpl.getInstance() : config.toastUtil);
         DisplayUtil.init(context);
+        SpUtil.init(context, config.spName);
     }
 
     public static class Configuration {
         Context context;
         ToastUtilInterface toastUtil;
         public boolean leakCanary = false, blockCanary = false;
+        String spName;
 
         public Configuration(Context context) {
             if (context == null) throw new NullPointerException("context == null");
@@ -43,6 +45,11 @@ public class InitUtil {
 
         public Configuration enableBlockCanary() {
             this.blockCanary = true;
+            return this;
+        }
+
+        public Configuration spName(String spName) {
+            this.spName = spName;
             return this;
         }
     }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <!-- ToolBar -->
+    <item name="toolBar" type="id"/>
+    <!-- 根布局id -->
+    <item name="layout_root" type="id"/>
+</resources>

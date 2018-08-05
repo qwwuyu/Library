@@ -1,2 +1,4 @@
 <resources>
+    <!-- contentDescription -->
+    <string name="ActionButtonOverflow">ActionButtonOverflow</string>
 </resources>

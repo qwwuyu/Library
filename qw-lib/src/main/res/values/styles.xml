@@ -4,5 +4,55 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="colorControlHighlight">@color/colorAccent</item>
+        <!--<item name="android:textColorPrimary">@color/textColorPrimary</item>-->
+        <!-- ToolBar的默认样式 -->
+        <item name="toolbarStyle">@style/ToolBar</item>
+        <item name="toolbarNavigationButtonStyle">@style/Toolbar_NavigationButton</item>
+        <item name="actionButtonStyle">@style/ToolBar_ActionButton</item>
+        <item name="actionOverflowButtonStyle">@style/ToolBar_ActionButtonOverflow</item>
+        <item name="actionBarDivider">@drawable/shape_bg_divider_dark</item>
+    </style>
+
+    <!-- ======================== Activity ======================== -->
+    <!-- 常用Act -->
+    <style name="AppTheme.Def">
+    </style>
+    <!-- MainAct -->
+    <style name="AppTheme.Main">
+    </style>
+    <!-- LauncherStyle -->
+    <style name="AppTheme.Launcher">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowAnimationStyle">@style/LauncherAnimation</item>
+    </style>
+
+    <style name="LauncherAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/anim_no</item>
+        <item name="android:windowExitAnimation">@anim/system_close_exit</item>
+        <item name="android:taskToBackEnterAnimation">@null</item>
+        <item name="android:taskToBackExitAnimation">@null</item>
+    </style>
+    <!-- Search -->
+    <style name="AppTheme.Search">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowEnterAnimation">@anim/system_open_enter</item>
+        <item name="android:windowExitAnimation">@anim/alpha_no</item>
+    </style>
+    <!-- TransStyle -->
+    <style name="AppTheme.Trans">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowAnimationStyle">@style/TransAnimation</item>
+    </style>
+
+    <style name="TransAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/alpha_in</item>
+        <item name="android:windowExitAnimation">@anim/alpha_out</item>
+        <item name="android:taskToBackEnterAnimation">@null</item>
+        <item name="android:taskToBackExitAnimation">@null</item>
     </style>
 </resources>
