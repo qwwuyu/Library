@@ -1,6 +1,7 @@
 package com.qwwuyu.lib.utils.glide;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
@@ -24,7 +25,7 @@ public final class DefaultGlideModule extends AppGlideModule {
     }
 
     @Override
-    public void applyOptions(Context context, GlideBuilder builder) {
+    public void applyOptions(@NonNull Context context, @NonNull GlideBuilder builder) {
         if (g == null) {
             g = new GlideConfig.Builder().build();
         }
@@ -44,7 +45,7 @@ public final class DefaultGlideModule extends AppGlideModule {
     }
 
     @Override
-    public void registerComponents(Context context, Glide glide, Registry registry) {
+    public void registerComponents(@NonNull Context context, @NonNull Glide glide, Registry registry) {
         registry.replace(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory());
     }
 

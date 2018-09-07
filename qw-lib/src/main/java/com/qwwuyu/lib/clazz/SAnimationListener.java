@@ -4,7 +4,6 @@ import android.view.animation.Animation;
 
 /**
  * Created by qiwei on 2017/8/7
- * @deprecated use {@link android.animation.AnimatorListenerAdapter}
  */
 public class SAnimationListener implements Animation.AnimationListener {
     @Override
