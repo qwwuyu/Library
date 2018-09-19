@@ -161,16 +161,20 @@ public class LogUtil {
         log(XML | type, tag, contents);
     }
 
-    public static void printStackTrace(Throwable e) {
+    public static void e(Throwable e) {
         if (log && logFilter < E) {
             e("StackTrace", getStackTraceString(e));
         }
     }
 
-    public static void e(Throwable e) {
+    public static void printStackTrace(Throwable e) {
         if (log) {
             e.printStackTrace();
         }
+    }
+
+    public static boolean logEnable() {
+        return log;
     }
 
     /** 处理日志 */
@@ -268,16 +272,19 @@ public class LogUtil {
         }
         final String content = time + T[type - V] + "/" + tag + msg + LINE_SEP;
         if (executor == null) executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
-            BufferedWriter bw = null;
-            try {
-                bw = new BufferedWriter(new FileWriter(fullPath, true));
-                bw.write(content);
-            } catch (IOException ignored) {
-            } finally {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                BufferedWriter bw = null;
                 try {
-                    if (bw != null) bw.close();
+                    bw = new BufferedWriter(new FileWriter(fullPath, true));
+                    bw.write(content);
                 } catch (IOException ignored) {
+                } finally {
+                    try {
+                        if (bw != null) bw.close();
+                    } catch (IOException ignored) {
+                    }
                 }
             }
         });
