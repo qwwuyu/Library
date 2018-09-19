@@ -214,9 +214,11 @@ public class LogUtil {
                 className = className.split("\\$")[0];
             }
             if (tag == null) tag = className;
+            String fileName = targetElement.getFileName();
+            if (fileName == null) fileName = className + ".java";
             if (logHead) {
-                String head = String.format(Locale.getDefault(), "%s, %s(%s.java:%d)",
-                        Thread.currentThread().getName(), targetElement.getMethodName(), className, targetElement.getLineNumber());
+                String head = String.format(Locale.getDefault(), "%s, %s(%s:%d)",
+                        Thread.currentThread().getName(), targetElement.getMethodName(), fileName, targetElement.getLineNumber());
                 return new String[]{tag, head + head_sep, " [" + head + "]: "};
             }
         }
