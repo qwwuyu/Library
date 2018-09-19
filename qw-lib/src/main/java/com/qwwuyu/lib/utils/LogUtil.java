@@ -107,59 +107,59 @@ public class LogUtil {
     }
 
     public static void v(final Object contents) {
-        log(V, logTag, contents);
+        log4(V, logTag, contents);
     }
 
     public static void v(String tag, Object... contents) {
-        log(V, tag, contents);
+        log4(V, tag, contents);
     }
 
     public static void d(Object contents) {
-        log(D, logTag, contents);
+        log4(D, logTag, contents);
     }
 
     public static void d(String tag, Object... contents) {
-        log(D, tag, contents);
+        log4(D, tag, contents);
     }
 
     public static void i(Object contents) {
-        log(I, logTag, contents);
+        log4(I, logTag, contents);
     }
 
     public static void i(String tag, Object... contents) {
-        log(I, tag, contents);
+        log4(I, tag, contents);
     }
 
     public static void w(Object contents) {
-        log(W, logTag, contents);
+        log4(W, logTag, contents);
     }
 
     public static void w(String tag, Object... contents) {
-        log(W, tag, contents);
+        log4(W, tag, contents);
     }
 
     public static void e(Object contents) {
-        log(E, logTag, contents);
+        log4(E, logTag, contents);
     }
 
     public static void e(String tag, Object... contents) {
-        log(E, tag, contents);
+        log4(E, tag, contents);
     }
 
     public static void a(Object contents) {
-        log(A, logTag, contents);
+        log4(A, logTag, contents);
     }
 
     public static void a(String tag, Object... contents) {
-        log(A, tag, contents);
+        log4(A, tag, contents);
     }
 
     public static void json(@TYPE int type, String tag, String contents) {
-        log(JSON | type, tag, contents);
+        log4(JSON | type, tag, contents);
     }
 
     public static void xml(@TYPE int type, String tag, String contents) {
-        log(XML | type, tag, contents);
+        log4(XML | type, tag, contents);
     }
 
     public static boolean logEnable() {
@@ -185,7 +185,7 @@ public class LogUtil {
     }
 
     /** 处理日志 */
-    private static void log(final int type, final String tag, final Object... contents) {
+    private static void log4(final int type, final String tag, final Object... contents) {
         log(type, tag, 4, contents);
     }
 
