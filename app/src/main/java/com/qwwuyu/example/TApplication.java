@@ -25,7 +25,6 @@ public class TApplication extends BaseApplication {
                         .error(0)//加载失败图片
                 ).build());
         new LogUtil.Builder()
-                .enableLogBorder(false)
                 .enableLogHead(true)
                 .setHeadSep(" : ")
                 .setLogTag("qwwuyu");

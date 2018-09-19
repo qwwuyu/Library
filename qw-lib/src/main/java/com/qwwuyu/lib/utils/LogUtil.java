@@ -1,5 +1,6 @@
 package com.qwwuyu.lib.utils;
 
+import android.os.Looper;
 import android.support.annotation.IntDef;
 import android.util.Log;
 
@@ -57,8 +58,8 @@ public class LogUtil {
 
     private static boolean log       = BuildConfig.DEBUG;
     private static String  logTag    = null;
-    private static boolean logHead   = true;
-    private static boolean logBorder = true;
+    private static boolean logHead   = false;
+    private static boolean logBorder = false;
     private static int     logFilter = V;
     private static ExecutorService executor;
     private static String dir      = null;
@@ -161,6 +162,10 @@ public class LogUtil {
         log(XML | type, tag, contents);
     }
 
+    public static boolean logEnable() {
+        return log;
+    }
+
     public static void e(Throwable e) {
         if (log && logFilter < E) {
             e("StackTrace", getStackTraceString(e));
@@ -173,8 +178,10 @@ public class LogUtil {
         }
     }
 
-    public static boolean logEnable() {
-        return log;
+    public static void thread(String tag) {
+        if (log) {
+            log(I, tag, 4, "isMainThread=" + (Thread.currentThread().getId() == Looper.getMainLooper().getThread().getId()));
+        }
     }
 
     /** 处理日志 */
