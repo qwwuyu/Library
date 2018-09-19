@@ -13,6 +13,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.lang.annotation.Retention;
@@ -158,6 +159,18 @@ public class LogUtil {
 
     public static void xml(@TYPE int type, String tag, String contents) {
         log(XML | type, tag, contents);
+    }
+
+    public static void printStackTrace(Throwable e) {
+        if (log && logFilter < E) {
+            e("StackTrace", getStackTraceString(e));
+        }
+    }
+
+    public static void e(Throwable e) {
+        if (log) {
+            e.printStackTrace();
+        }
     }
 
     /** 处理日志 */
@@ -314,5 +327,12 @@ public class LogUtil {
             sb.append(LEFT_BORDER).append(line).append(LINE_SEP);
         }
         return sb.toString();
+    }
+
+    private static String getStackTraceString(Throwable tr) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        tr.printStackTrace(pw);
+        return sw.toString();
     }
 }
