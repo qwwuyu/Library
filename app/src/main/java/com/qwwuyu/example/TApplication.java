@@ -6,7 +6,7 @@ import com.qwwuyu.lib.base.BaseApplication;
 import com.qwwuyu.lib.utils.CommUtil;
 import com.qwwuyu.lib.utils.DfrUtil;
 import com.qwwuyu.lib.utils.InitUtil;
-import com.qwwuyu.lib.utils.LogUtil;
+import com.qwwuyu.lib.utils.LogUtils;
 import com.qwwuyu.lib.utils.glide.DefaultGlideModule;
 import com.qwwuyu.lib.utils.glide.GlideConfig;
 
@@ -24,7 +24,7 @@ public class TApplication extends BaseApplication {
                         .placeholder(0)//加载中图片
                         .error(0)//加载失败图片
                 ).build());
-        new LogUtil.Builder()
+        new LogUtils.Builder()
                 .enableLogHead(true)
                 .setHeadSep(" : ")
                 .setLogTag("qwwuyu");

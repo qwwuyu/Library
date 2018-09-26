@@ -13,7 +13,7 @@ import com.qwwuyu.example.R;
 import com.qwwuyu.lib.base.BaseActivity;
 import com.qwwuyu.lib.http.body.ProgressResponseBody;
 import com.qwwuyu.lib.http.interceptor.HttpLoggingInterceptor;
-import com.qwwuyu.lib.utils.LogUtil;
+import com.qwwuyu.lib.utils.LogUtils;
 import com.qwwuyu.library.BuildConfig;
 
 import java.io.File;
@@ -96,19 +96,19 @@ public class HttpActivity extends BaseActivity {
         ProgressResponseBody progressFileBody = new ProgressResponseBody(fileBody, new ProgressResponseBody.MainProgressListener() {
             @Override
             public void onMainProgressUpdate(long read, long length) {
-                LogUtil.i("upload", "read:" + read + " length:" + length);
+                LogUtils.i("upload", "read:" + read + " length:" + length);
                 bar.setProgress((int) (read * 100 / length) / 100);
             }
 
             @Override
             public void onMainError() {
-                LogUtil.i("upload", "onError");
+                LogUtils.i("upload", "onError");
                 bar.setProgress(0);
             }
 
             @Override
             public void onMainFinish(long length) {
-                LogUtil.i("upload", "onFinish:" + length);
+                LogUtils.i("upload", "onFinish:" + length);
                 bar.setProgress(100);
             }
         });
@@ -118,16 +118,16 @@ public class HttpActivity extends BaseActivity {
     }
 
     public void onClick6(View DOWNLOAD) {
-        LogUtil.i("download:main" + Looper.getMainLooper().getThread().getId());
+        LogUtils.i("download:main" + Looper.getMainLooper().getThread().getId());
 //        api.download().enqueue(new Callback<ResponseBody>() {
 //            @Override
 //            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-//                LogUtil.i("download:onResponse" + Thread.currentThread().getId());
+//                LogUtils.i("download:onResponse" + Thread.currentThread().getId());
 //            }
 //
 //            @Override
 //            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-//                LogUtil.i("download:onFailure" + Thread.currentThread().getId() + t.getMessage());
+//                LogUtils.i("download:onFailure" + Thread.currentThread().getId() + t.getMessage());
 //            }
 //        });
         Request request = new Request.Builder()
@@ -136,7 +136,7 @@ public class HttpActivity extends BaseActivity {
         okHttpClient.newCall(request).enqueue(new okhttp3.Callback() {
             @Override
             public void onFailure(@NonNull okhttp3.Call call, @NonNull IOException e) {
-                LogUtil.i("download:onFailure" + Thread.currentThread().getId() + e.getMessage());
+                LogUtils.i("download:onFailure" + Thread.currentThread().getId() + e.getMessage());
             }
 
             @Override
@@ -150,7 +150,7 @@ public class HttpActivity extends BaseActivity {
                 long read = 0;
                 while ((len = is.read(buf)) != -1) {
                     read += len;
-                    LogUtil.i("download:read:" + read + " length" + length);
+                    LogUtils.i("download:read:" + read + " length" + length);
                 }
                 body.close();
             }
@@ -166,22 +166,22 @@ public class HttpActivity extends BaseActivity {
 
         @Override
         public void onSubscribe(Disposable d) {
-            LogUtil.i(tag, "onSubscribe");
+            LogUtils.i(tag, "onSubscribe");
         }
 
         @Override
         public void onNext(T t) {
-            LogUtil.i(tag, "onNext:" + gson.toJson(t));
+            LogUtils.i(tag, "onNext:" + gson.toJson(t));
         }
 
         @Override
         public void onError(Throwable e) {
-            LogUtil.i(tag, "onError:" + e.getMessage());
+            LogUtils.i(tag, "onError:" + e.getMessage());
         }
 
         @Override
         public void onComplete() {
-            LogUtil.i(tag, "onComplete");
+            LogUtils.i(tag, "onComplete");
         }
     }
 
@@ -192,7 +192,7 @@ public class HttpActivity extends BaseActivity {
                 .writeTimeout(5, TimeUnit.SECONDS)
                 .readTimeout(5, TimeUnit.SECONDS);
         if (BuildConfig.DEBUG) {
-            okBuilder.addInterceptor(new HttpLoggingInterceptor(message -> LogUtil.i("http", message)).setLevel(HttpLoggingInterceptor.Level.BASIC));
+            okBuilder.addInterceptor(new HttpLoggingInterceptor(message -> LogUtils.i("http", message)).setLevel(HttpLoggingInterceptor.Level.BASIC));
         }
         if (false) {
             okBuilder.retryOnConnectionFailure(true)

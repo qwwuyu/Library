@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.qwwuyu.example.R;
-import com.qwwuyu.lib.utils.LogUtil;
+import com.qwwuyu.lib.utils.LogUtils;
 
 /**
  * Created by qiwei on 2017/8/10
@@ -39,7 +39,7 @@ public class Test2Activity extends AppCompatActivity implements View.OnClickList
     protected void onDestroy() {
         super.onDestroy();
         new Handler().postDelayed(() -> {
-            LogUtil.i("show");
+            LogUtils.i("show");
             try {
                 dialog.dismiss();
             } catch (Exception e) {

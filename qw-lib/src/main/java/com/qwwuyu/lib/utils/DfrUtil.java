@@ -33,7 +33,7 @@ public class DfrUtil {
         if (BuildConfig.DEBUG && enable) {
             long nowTime = System.currentTimeMillis();
             map.put(tag, nowTime);
-            LogUtil.log(LogUtil.I, tag, 4, "begin:" + nowTime);
+            LogUtils.log(LogUtils.I, tag, 4, "begin:" + nowTime);
         }
     }
 
@@ -47,9 +47,9 @@ public class DfrUtil {
             long nowTime = System.currentTimeMillis();
             map.put(tag, nowTime);
             if (lastTime != null) {
-                LogUtil.log(LogUtil.I, tag + append, 4, "dfr:" + (nowTime - lastTime));
+                LogUtils.log(LogUtils.I, tag + append, 4, "dfr:" + (nowTime - lastTime));
             } else {
-                LogUtil.log(LogUtil.I, tag + append, 4, "no dfr:" + nowTime);
+                LogUtils.log(LogUtils.I, tag + append, 4, "no dfr:" + nowTime);
             }
         }
     }

@@ -13,7 +13,7 @@ import com.qwwuyu.example.activity.HttpActivity;
 import com.qwwuyu.example.activity.MvpActivity;
 import com.qwwuyu.lib.base.BaseActivity;
 import com.qwwuyu.lib.utils.CommUtil;
-import com.qwwuyu.lib.utils.LogUtil;
+import com.qwwuyu.lib.utils.LogUtils;
 import com.qwwuyu.lib.utils.SystemBarUtil;
 import com.qwwuyu.lib.utils.ToastUtil;
 
@@ -55,7 +55,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public void onClick4(View v) {
-        LogUtil.i(BuildConfig.TEST);
+        LogUtils.i(BuildConfig.TEST);
     }
 
     public void onClick5(View v) {

@@ -13,7 +13,7 @@ import android.view.animation.Animation;
 import android.view.animation.CycleInterpolator;
 import android.view.animation.TranslateAnimation;
 
-import com.qwwuyu.lib.utils.LogUtil;
+import com.qwwuyu.lib.utils.LogUtils;
 import com.qwwuyu.library.R;
 
 
@@ -48,7 +48,7 @@ public class ClearEditText extends AppCompatEditText implements OnFocusChangeLis
             mClearDrawable = getResources().getDrawable(R.drawable.select_del_edit);
         }
         mClearDrawable.setBounds(0, 0, mClearDrawable.getIntrinsicWidth(), mClearDrawable.getIntrinsicHeight());
-        LogUtil.i("w:" + mClearDrawable.getIntrinsicWidth() + " h:" + mClearDrawable.getIntrinsicHeight());
+        LogUtils.i("w:" + mClearDrawable.getIntrinsicWidth() + " h:" + mClearDrawable.getIntrinsicHeight());
         //默认设置隐藏图标
         setClearIconVisible(false);
         //设置焦点改变的监听

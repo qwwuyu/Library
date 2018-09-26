@@ -37,7 +37,7 @@ import javax.xml.transform.stream.StreamSource;
  * Created by qiwei on 2017/7/12
  * 改于https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/main/java/com/blankj/utilcode/util/LogUtils.java
  */
-public class LogUtil {
+public class LogUtils {
     public static final int V = Log.VERBOSE, D = Log.DEBUG, I = Log.INFO, W = Log.WARN, E = Log.ERROR, A = Log.ASSERT;
     private static final char[] T    = new char[]{'V', 'D', 'I', 'W', 'E', 'A'};
     private static final int    JSON = 0x10, XML = 0x20;
@@ -54,7 +54,6 @@ public class LogUtil {
     private static final int    MAX_LEN       = 4000;
     private static final Format FORMAT        = new SimpleDateFormat("MM-dd HH:mm:ss.SSS ", Locale.getDefault());
     private static final String NULL          = "null";
-    private static final String ARGS          = "args[%d] = %s" + LINE_SEP;
 
     private static boolean log       = BuildConfig.DEBUG;
     private static String  logTag    = null;
@@ -71,87 +70,87 @@ public class LogUtil {
         }
 
         public Builder enableLog(boolean enable) {
-            LogUtil.log = enable;
+            LogUtils.log = enable;
             return this;
         }
 
         public Builder setLogDir(String dir) {
-            LogUtil.dir = dir;
+            LogUtils.dir = dir;
             return this;
         }
 
         public Builder setLogTag(String tag) {
-            LogUtil.logTag = tag;
+            LogUtils.logTag = tag;
             return this;
         }
 
         public Builder enableLogHead(boolean enable) {
-            LogUtil.logHead = enable;
+            LogUtils.logHead = enable;
             return this;
         }
 
         public Builder enableLogBorder(boolean enable) {
-            LogUtil.logBorder = enable;
+            LogUtils.logBorder = enable;
             return this;
         }
 
         public Builder setLogFilter(@TYPE final int level) {
-            logFilter = level;
+            LogUtils.logFilter = level;
             return this;
         }
 
         public Builder setHeadSep(String head_sep) {
-            LogUtil.head_sep = head_sep;
+            LogUtils.head_sep = head_sep;
             return this;
         }
     }
 
-    public static void v(final Object contents) {
+    public static void v(Object contents) {
         log4(V, logTag, contents);
-    }
-
-    public static void v(String tag, Object... contents) {
-        log4(V, tag, contents);
     }
 
     public static void d(Object contents) {
         log4(D, logTag, contents);
     }
 
-    public static void d(String tag, Object... contents) {
-        log4(D, tag, contents);
-    }
-
     public static void i(Object contents) {
         log4(I, logTag, contents);
-    }
-
-    public static void i(String tag, Object... contents) {
-        log4(I, tag, contents);
     }
 
     public static void w(Object contents) {
         log4(W, logTag, contents);
     }
 
-    public static void w(String tag, Object... contents) {
-        log4(W, tag, contents);
-    }
-
     public static void e(Object contents) {
         log4(E, logTag, contents);
-    }
-
-    public static void e(String tag, Object... contents) {
-        log4(E, tag, contents);
     }
 
     public static void a(Object contents) {
         log4(A, logTag, contents);
     }
 
-    public static void a(String tag, Object... contents) {
-        log4(A, tag, contents);
+    public static void v(String tag, String format, Object... args) {
+        log4(V, tag, format, args);
+    }
+
+    public static void d(String tag, String format, Object... args) {
+        log4(D, tag, format, args);
+    }
+
+    public static void i(String tag, String format, Object... args) {
+        log4(I, tag, format, args);
+    }
+
+    public static void w(String tag, String format, Object... args) {
+        log4(W, tag, format, args);
+    }
+
+    public static void e(String tag, String format, Object... args) {
+        log4(E, tag, format, args);
+    }
+
+    public static void a(String tag, String format, Object... args) {
+        log4(A, tag, format, args);
     }
 
     public static void json(@TYPE int type, String tag, String contents) {
@@ -172,6 +171,12 @@ public class LogUtil {
         }
     }
 
+    public static void printStackTrace(Exception e) {
+        if (log) {
+            e.printStackTrace();
+        }
+    }
+
     public static void printStackTrace(Throwable e) {
         if (log) {
             e.printStackTrace();
@@ -185,17 +190,17 @@ public class LogUtil {
     }
 
     /** 处理日志 */
-    private static void log4(final int type, final String tag, final Object... contents) {
-        log(type, tag, 4, contents);
+    private static void log4(int type, String tag, Object format, Object... args) {
+        log(type, tag, 4, format, args);
     }
 
     /** 处理日志 */
-    public static void log(@TYPE int type, String tag, int stackTrace, Object... contents) {
+    public static void log(@TYPE int type, String tag, int stackTrace, Object format, Object... args) {
         if (!log) return;
         int type_low = type & 0x0f, type_high = type & 0xf0;
         if (type_low < logFilter) return;
         final String[] tagAndHead = processTagAndHead(tag, stackTrace);
-        String body = processBody(type_high, contents);
+        String body = processBody(type_high, format, args);
         print2Console(type_low, tagAndHead[0], tagAndHead[1] + body);
         if (dir != null) print2File(type_low, tagAndHead[0], tagAndHead[2] + body);
     }
@@ -226,21 +231,20 @@ public class LogUtil {
     }
 
     /** 处理内容 */
-    private static String processBody(final int type, final Object... contents) {
-        String body;
-        if (contents.length == 1) {
-            Object object = contents[0];
-            body = object == null ? NULL : object.toString();
-            if (type == JSON) body = formatJson(body);
-            else if (type == XML) body = formatXml(body);
-        } else {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0, len = contents.length; i < len; ++i) {
-                sb.append(String.format(Locale.getDefault(), ARGS, i, contents[i] == null ? NULL : contents[i].toString()));
-            }
-            body = sb.toString();
+    private static String processBody(final int type, Object format, final Object... args) {
+        if (format == null) {
+            return NULL;
         }
-        return body;
+        String body = format.toString();
+        if (type == JSON) {
+            return formatJson(body);
+        } else if (type == XML) {
+            return formatXml(body);
+        } else if (args.length == 0) {
+            return body;
+        } else {
+            return String.format(body, args);
+        }
     }
 
     /** 打印日志到控制台 */
@@ -280,7 +284,13 @@ public class LogUtil {
             return;
         }
         final String content = time + T[type - V] + "/" + tag + msg + LINE_SEP;
-        if (executor == null) executor = Executors.newSingleThreadExecutor();
+        if (executor == null) {
+            synchronized (LogUtils.class) {
+                if (executor == null) {
+                    executor = Executors.newSingleThreadExecutor();
+                }
+            }
+        }
         executor.execute(new Runnable() {
             @Override
             public void run() {
