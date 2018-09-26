@@ -1,15 +1,15 @@
 apply plugin: 'com.android.library'
 
-def config = rootProject.ext.config
-def version = rootProject.ext.version
+def configs = rootProject.ext.configs
+def versions = rootProject.ext.versions
 
 android {
     publishNonDefault true
-    compileSdkVersion config.compileSdkVersion
+    compileSdkVersion configs.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion config.minSdkVersion
-        targetSdkVersion config.targetSdkVersion
+        minSdkVersion configs.minSdkVersion
+        targetSdkVersion configs.targetSdkVersion
         consumerProguardFiles 'proguard-rules.pro'
     }
 }
@@ -17,8 +17,8 @@ android {
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     //support
-    api "com.android.support:support-v4:$version.support"
-    api "com.android.support:appcompat-v7:$version.support"
-    api "com.android.support:support-annotations:$version.support"
+    api "com.android.support:support-v4:$versions.support"
+    api "com.android.support:appcompat-v7:$versions.support"
+    api "com.android.support:support-annotations:$versions.support"
     api 'com.github.hackware1993:MagicIndicator:1.5.0'
 }

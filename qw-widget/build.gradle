@@ -1,14 +1,14 @@
 apply plugin: 'com.android.library'
 
-def config = rootProject.ext.config
+def configs = rootProject.ext.configs
 
 android {
     publishNonDefault true
-    compileSdkVersion config.compileSdkVersion
+    compileSdkVersion configs.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion config.minSdkVersion
-        targetSdkVersion config.targetSdkVersion
+        minSdkVersion configs.minSdkVersion
+        targetSdkVersion configs.targetSdkVersion
         consumerProguardFiles 'proguard-rules.pro'
     }
 }
