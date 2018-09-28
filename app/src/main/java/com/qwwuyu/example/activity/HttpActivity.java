@@ -56,6 +56,8 @@ public class HttpActivity extends BaseActivity {
     private Gson gson = new Gson();
     private NumberProgressBar bar;
     private OkHttpClient okHttpClient;
+    private String host = "http://192.168.20.42/";
+    private String token = "eyJhY2MiOiJxd3d1eXUiLCJuaWNrIjoicXd3dXl1IiwiYXV0aCI6NSwiaWQiOjIsInV1aWQiOiI1ZmM4MTcxNy1hMzI3LTQxN2ItYWQ0NC0zZTBhY2IxMzNhNmQifQ==";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,7 +93,7 @@ public class HttpActivity extends BaseActivity {
     }
 
     public void onClick5(View UPLOAD) {
-        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/BackHome/1.jpg");
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/AAAA/txt/1.txt");
         RequestBody fileBody = RequestBody.create(MediaType.parse("application/octet-stream"), file);
         ProgressResponseBody progressFileBody = new ProgressResponseBody(fileBody, new ProgressResponseBody.MainProgressListener() {
             @Override
@@ -113,8 +115,8 @@ public class HttpActivity extends BaseActivity {
             }
         });
         MultipartBody.Part picturePart = MultipartBody.Part.createFormData("pName", file.getName(), progressFileBody);
-        RequestBody fieldBody = RequestBody.create(MediaType.parse("text/plain"), "pictureName");
-        api.upload(picturePart, fieldBody).compose(compose()).subscribe(new SObserver<>("upload"));
+        RequestBody fieldBody = RequestBody.create(MediaType.parse("text/plain"), "fileName");
+        api.upload(picturePart, fieldBody, token).compose(compose()).subscribe(new SObserver<>("upload"));
     }
 
     public void onClick6(View DOWNLOAD) {
@@ -131,7 +133,7 @@ public class HttpActivity extends BaseActivity {
 //            }
 //        });
         Request request = new Request.Builder()
-                .url("http://10.13.131.50/test/download?name=1.file")
+                .url(host + "test/download?name=1.txt&token=" + token)
                 .build();
         okHttpClient.newCall(request).enqueue(new okhttp3.Callback() {
             @Override
@@ -153,6 +155,7 @@ public class HttpActivity extends BaseActivity {
                     LogUtils.i("download:read:" + read + " length" + length);
                 }
                 body.close();
+                LogUtils.i("download:over");
             }
         });
     }
@@ -201,7 +204,7 @@ public class HttpActivity extends BaseActivity {
         }
         okHttpClient = okBuilder.build();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.13.131.50/")
+                .baseUrl(host)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -223,12 +226,12 @@ public class HttpActivity extends BaseActivity {
         @POST("test/error")
         Observable<ResponseBean> error();
 
-        @POST("http://192.168.1.234/test/get")
+        @POST("http://www.qweasdzxc.com/test/get")
         Observable<ResponseBean> notFound();
 
         @Multipart
         @POST("test/upload")
-        Observable<ResponseBean> upload(@Part MultipartBody.Part file, @Part("fileName") RequestBody fileName);
+        Observable<ResponseBean> upload(@Part MultipartBody.Part file, @Part("fileName") RequestBody fileName, @Query("token") String token);
 
         @GET("test/download")
         Call<ResponseBody> download();

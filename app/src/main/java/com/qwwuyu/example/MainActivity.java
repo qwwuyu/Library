@@ -61,9 +61,9 @@ public class MainActivity extends BaseActivity {
     public void onClick5(View v) {
         int i = 2, num = 3, index = -1;
         if (flag[i] % num == ++index) {
-            startActivity(new Intent(this, MvpActivity.class));
-        } else if (flag[i] % num == ++index) {
             startActivity(new Intent(this, HttpActivity.class));
+        } else if (flag[i] % num == ++index) {
+            startActivity(new Intent(this, MvpActivity.class));
         }
         flag[i]++;
     }
