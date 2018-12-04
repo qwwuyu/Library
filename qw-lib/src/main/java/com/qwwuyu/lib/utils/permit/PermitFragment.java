@@ -1,20 +1,17 @@
 package com.qwwuyu.lib.utils.permit;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.SparseArray;
 
 /**
- * Created by qiwei on 2017/8/4
+ * be like https://github.com/tbruyelle/RxPermissions
  */
 public class PermitFragment extends Fragment {
     private static final String TAG = "Permissions";
-    private static int requestCode = 10000;
+    private static int requestCode = 436;
     private SparseArray<OnCallback> callbacks = new SparseArray<>();
 
     private synchronized static int getRequestCode() {
@@ -24,13 +21,11 @@ public class PermitFragment extends Fragment {
     /**
      * @return 获取权限工具PermitFragment
      */
-    static PermitFragment getPermissionsFragment(Activity activity) {
-        PermitFragment permitFragment = (PermitFragment) activity.getFragmentManager().findFragmentByTag(TAG);
+    static PermitFragment getPermissionsFragment(FragmentManager fragmentManager) {
+        PermitFragment permitFragment = (PermitFragment) fragmentManager.findFragmentByTag(TAG);
         if (permitFragment == null) {
             permitFragment = new PermitFragment();
-            FragmentManager fragmentManager = activity.getFragmentManager();
-            fragmentManager.beginTransaction().add(permitFragment, TAG).commitAllowingStateLoss();
-            fragmentManager.executePendingTransactions();
+            fragmentManager.beginTransaction().add(permitFragment, TAG).commitNow();
         }
         return permitFragment;
     }
@@ -41,7 +36,6 @@ public class PermitFragment extends Fragment {
         setRetainInstance(true);
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
     void request(@NonNull String[] permissions, OnCallback callback) {
         int requestCode = getRequestCode();
         callbacks.put(requestCode, callback);

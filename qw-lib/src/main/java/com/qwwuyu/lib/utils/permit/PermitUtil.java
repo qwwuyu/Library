@@ -1,6 +1,5 @@
 package com.qwwuyu.lib.utils.permit;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,6 +8,8 @@ import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 
 import java.util.ArrayList;
@@ -17,12 +18,19 @@ import java.util.ArrayList;
  * Created by qiwei on 2017/8/4
  */
 public class PermitUtil {
+    public static void request(@NonNull final Fragment fragment, @NonNull final String[] permissions, @NonNull final PermitCtrl ctrl) {
+        FragmentActivity activity = fragment.getActivity();
+        if (activity != null) {
+            request(activity, permissions, ctrl);
+        }
+    }
+
     /**
      * @param activity    当前活动
      * @param permissions 请求的权限
      * @param ctrl        请求操作
      */
-    public static void request(@NonNull final Activity activity, @NonNull final String[] permissions, @NonNull final PermitCtrl ctrl) {
+    public static void request(@NonNull final FragmentActivity activity, @NonNull final String[] permissions, @NonNull final PermitCtrl ctrl) {
         if (!isMarshmallow()) {
             ctrl.onGranted();
             return;
@@ -41,7 +49,7 @@ public class PermitUtil {
             ctrl.onGranted();
             return;
         }
-        final PermitFragment fragment = PermitFragment.getPermissionsFragment(activity);
+        final PermitFragment fragment = PermitFragment.getPermissionsFragment(activity.getSupportFragmentManager());
         final PermitFragment.OnCallback onCallback = new PermitFragment.OnCallback() {
             @Override
             public void onResult(@NonNull String[] permissions, @NonNull int[] grantResults) {

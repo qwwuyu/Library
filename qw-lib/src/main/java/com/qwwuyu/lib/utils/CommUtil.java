@@ -1,5 +1,6 @@
 package com.qwwuyu.lib.utils;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -10,6 +11,7 @@ import android.os.Build;
 import android.os.Process;
 import android.provider.Settings;
 import android.support.v4.content.FileProvider;
+import android.view.inputmethod.InputMethodManager;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -174,5 +176,15 @@ public class CommUtil {
         intent.setData(uri);
         if (newTask) intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
+    }
+
+    public static void ctrlSoftKeyboard(Activity act, boolean show) {
+        InputMethodManager imm = (InputMethodManager) act.getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm == null) return;
+        if (show && imm.isActive()) {
+            imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+        } else {
+            imm.toggleSoftInput(0, InputMethodManager.HIDE_IMPLICIT_ONLY);
+        }
     }
 }

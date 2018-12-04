@@ -17,7 +17,7 @@ public class XmlStringUtil {
     /** res目录 */
     private File resDir;
     /** 放置目录 */
-    private final File results = new File("D:\\jt\\xml\\res");
+    private final File results = new File("D:\\qwwuyu\\xml\\res");
     /** 所有strings文件 */
     private ArrayList<File> files = new ArrayList<>();
 

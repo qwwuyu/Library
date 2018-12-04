@@ -1,5 +1,6 @@
 package com.qwwuyu.lib.utils;
 
+import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.IntDef;
 import android.util.Log;
@@ -55,7 +56,7 @@ public class LogUtils {
     private static final Format FORMAT        = new SimpleDateFormat("MM-dd HH:mm:ss.SSS ", Locale.getDefault());
     private static final String NULL          = "null";
 
-    private static boolean log       = BuildConfig.DEBUG;
+    public static final boolean log  = BuildConfig.DEBUG;
     private static String  logTag    = null;
     private static boolean logHead   = false;
     private static boolean logBorder = false;
@@ -67,11 +68,6 @@ public class LogUtils {
     /** ======================== 使用Log工具 ======================== */
     public static class Builder {
         public Builder() {
-        }
-
-        public Builder enableLog(boolean enable) {
-            LogUtils.log = enable;
-            return this;
         }
 
         public Builder setLogDir(String dir) {
@@ -161,18 +157,21 @@ public class LogUtils {
         log4(XML | type, tag, contents);
     }
 
-    public static boolean logEnable() {
-        return log;
+    public static void throwsE(final Throwable e) {
+        e(e);
+        if (log && logFilter < E) {
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    throw new RuntimeException(e);
+                }
+            });
+        }
     }
 
     public static void e(Throwable e) {
         if (log && logFilter < E) {
-            e("StackTrace", getStackTraceString(e));
-        }
-    }
-
-    public static void printStackTrace(Exception e) {
-        if (log) {
+            log(E, "StackTrace", 4, getStackTraceString(e));
             e.printStackTrace();
         }
     }

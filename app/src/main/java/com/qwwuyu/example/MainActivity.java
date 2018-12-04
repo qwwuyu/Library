@@ -52,6 +52,7 @@ public class MainActivity extends BaseActivity {
 
     public void onClick3(View v) {
         ToastUtil.show("123");
+        CommUtil.ctrlSoftKeyboard(this, true);
     }
 
     public void onClick4(View v) {

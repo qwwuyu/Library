@@ -62,6 +62,11 @@ android {
             versionNameSuffix ".debug"
             proguardFiles 'proguard-rules.pro'
         }
+
+        gray {
+            initWith debug
+            matchingFallbacks = ['debug']
+        }
     }
 
     flavorDimensions "default"

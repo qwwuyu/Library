@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
@@ -11,42 +13,42 @@
         android:id="@+id/btn1"
         style="@style/btn"
         android:onClick="onClick1"
-        android:text="权限/Color/Gyro" />
+        android:text="权限/Color/Gyro"/>
 
     <Button
         android:id="@+id/btn2"
         style="@style/btn"
         android:onClick="onClick2"
         android:text="状态栏"
-        app:layout_constraintTop_toBottomOf="@id/btn1" />
+        app:layout_constraintTop_toBottomOf="@id/btn1"/>
 
     <Button
         android:id="@+id/btn3"
         style="@style/btn"
         android:onClick="onClick3"
         android:text="Toast"
-        app:layout_constraintTop_toBottomOf="@id/btn2" />
+        app:layout_constraintTop_toBottomOf="@id/btn2"/>
 
     <Button
         android:id="@+id/btn4"
         style="@style/btn"
         android:onClick="onClick4"
         android:text="Log"
-        app:layout_constraintTop_toBottomOf="@id/btn3" />
+        app:layout_constraintTop_toBottomOf="@id/btn3"/>
 
     <Button
         android:id="@+id/btn5"
         style="@style/btn"
         android:onClick="onClick5"
         android:text="empty"
-        app:layout_constraintTop_toBottomOf="@id/btn4" />
+        app:layout_constraintTop_toBottomOf="@id/btn4"/>
 
     <Button
         android:id="@+id/btn6"
         style="@style/btn"
         android:onClick="onClick6"
         android:text="j8 default"
-        app:layout_constraintTop_toBottomOf="@id/btn5" />
+        app:layout_constraintTop_toBottomOf="@id/btn5"/>
 
     <TextView
         android:id="@+id/tv"
@@ -56,5 +58,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        tools:text="233" />
+        tools:text="233"/>
 </android.support.constraint.ConstraintLayout>

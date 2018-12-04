@@ -61,7 +61,7 @@ public class SystemBarUtil {
         private void keepChildView(Window window) {
             View childView = ((ViewGroup) window.findViewById(Window.ID_ANDROID_CONTENT)).getChildAt(0);
             if (childView != null) {
-                ViewCompat.setFitsSystemWindows(childView, false);
+                childView.setFitsSystemWindows(false);
                 ViewCompat.requestApplyInsets(childView);
             }
         }
