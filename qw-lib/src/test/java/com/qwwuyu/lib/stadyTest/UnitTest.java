@@ -69,10 +69,6 @@ public class UnitTest {
         System.out.println(output.toString());
     }
 
-    public static void printStackTrace(Throwable e) {
-        e.printStackTrace();
-    }
-
     @Test
     public void sumNN() throws Exception {
         Ngraphy.printIS(14);

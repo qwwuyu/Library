@@ -1,9 +1,5 @@
 apply plugin: 'com.android.application'
 
-def configs = rootProject.ext.configs
-def versions = rootProject.ext.versions
-def signInfo = rootProject.ext.signInfo
-
 android {
     compileSdkVersion configs.compileSdkVersion
 
@@ -104,7 +100,7 @@ buildscript {
         jcenter()//or mavenCentral()
     }
     dependencies {
-        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.8.2'
+        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.8.6'
     }
 }
 apply plugin: 'com.getkeepsafe.dexcount'
@@ -131,4 +127,5 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-compiler:$versions.dagger2"
     //numberprogressbar
     implementation "com.daimajia.numberprogressbar:library:1.4@aar"
+    implementation "android.arch.lifecycle:extensions:1.1.1"
 }

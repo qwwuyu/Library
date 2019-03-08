@@ -1,5 +1,10 @@
 package com.qwwuyu.example;
 
+import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.LifecycleObserver;
+import android.arch.lifecycle.OnLifecycleEvent;
+import android.arch.lifecycle.ProcessLifecycleOwner;
+
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.request.RequestOptions;
 import com.qwwuyu.lib.base.BaseApplication;
@@ -29,6 +34,26 @@ public class TApplication extends BaseApplication {
                 .setHeadSep(" : ")
                 .setLogTag("qwwuyu");
         DfrUtil.getInstance().setEnable(false);
+        KeepLifecycleCallbacks callbacks = new KeepLifecycleCallbacks() {
+            @Override
+            protected void wakeOnce() {
+            }
+        };
+        registerActivityLifecycleCallbacks(callbacks);
+        registerComponentCallbacks(callbacks);
+        ProcessLifecycleOwner.get().getLifecycle().addObserver(new MyObserver());
+    }
+
+    public class MyObserver implements LifecycleObserver {
+        @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+        public void onAppBackgrounded() {
+            LogUtils.i("onAppBackgrounded");
+        }
+
+        @OnLifecycleEvent(Lifecycle.Event.ON_START)
+        public void onAppForegrounded() {
+            LogUtils.i("onAppForegrounded");
+        }
     }
 
     @Override

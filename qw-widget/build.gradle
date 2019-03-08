@@ -1,7 +1,5 @@
 apply plugin: 'com.android.library'
 
-def configs = rootProject.ext.configs
-
 android {
     publishNonDefault true
     compileSdkVersion configs.compileSdkVersion
