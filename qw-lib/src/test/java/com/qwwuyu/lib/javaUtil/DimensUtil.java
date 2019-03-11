@@ -23,17 +23,11 @@ public class DimensUtil {
 
     @Before
     public void before() {
-        if (resPath == null) {
-            String path = getClass().getResource("").getPath();
-            String end = "build/intermediates/classes/test/debug/" +
-                    getClass().getPackage().getName().replace(".", "/") + "/";
-            if (path.endsWith(end)) {
-                resPath = new File(path.substring(0, path.length() - end.length()) + "src/main/res");
-            }
-        }
-        if (resPath == null || !resPath.exists()) {
-            throw new RuntimeException("res path error");
-        }
+        String fs = System.getProperty("file.separator");
+        String dir = System.getProperty("user.dir");
+        resPath = new File(dir + fs + "src" + fs + "main" + fs + "res");
+        System.out.println(resPath);
+        if (!resPath.exists()) throw new RuntimeException("res path error");
     }
 
     @Test
@@ -82,7 +76,8 @@ public class DimensUtil {
         XHDPI("xhdpi", 5, 2, 1, 2, 1, 2),
         XXHDPI("xxhdpi", 5, 2, 1, 2, 1, 2),
         LARGE("large", 380, 100, 44, 100, 2, 3),
-        XLARGE("xlarge", 550, 100, 46, 100, 1, 1),;
+        XLARGE("xlarge", 550, 100, 46, 100, 1, 1),
+        ;
 
         public String name;
         public int spStartX, spStartY, spUpX, spUpY, dimX, dimY;

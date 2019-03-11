@@ -5,7 +5,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.OutputStream;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -25,11 +27,21 @@ import javax.xml.transform.stream.StreamResult;
 public class UnitTest {
     @Test
     public void test() throws Exception {
+        System.out.println(getClass().getResource("").getPath());
+        System.out.println(getClass().getResource("/").getPath());
+        System.out.println(new File("").getAbsolutePath());
+        System.out.println(System.getProperty("user.dir"));
+        URL location = UnitTest.class.getProtectionDomain().getCodeSource().getLocation();
+        System.out.println(location.getFile());
+    }
+
+    @Test
+    public void xml() throws Exception {
         String version = "versionA";
-         Map<String, String> messages = new HashMap<>();
-        messages.put("key1","value1");
-        messages.put("key2","value2");
-        messages.put("key3","value3");
+        Map<String, String> messages = new HashMap<>();
+        messages.put("key1", "value1");
+        messages.put("key2", "value2");
+        messages.put("key3", "value3");
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();

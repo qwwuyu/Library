@@ -23,20 +23,14 @@ public class XmlStringUtil {
 
     @Before
     public void before() {
-        if (resDir == null) {
-            String path = getClass().getResource("").getPath();
-            String end = "build/intermediates/classes/test/debug/" +
-                    getClass().getPackage().getName().replace(".", "/") + "/";
-            if (path.endsWith(end)) {
-                resDir = new File(path.substring(0, path.length() - end.length()) + "src/main/res");
-            }
-        }
-        if (resDir == null || !resDir.exists()) {
-            throw new RuntimeException("res path error");
-        }
+        String fs = System.getProperty("file.separator");
+        String dir = System.getProperty("user.dir");
+        resDir = new File(dir + fs + "src" + fs + "main" + fs + "res");
+        System.out.println(resDir);
+        if (!resDir.exists()) throw new RuntimeException("res path error");
         if (!results.exists()) results.mkdirs();
-        File[] fs = resDir.listFiles();
-        for (File file : fs) {
+        File[] listFiles = resDir.listFiles();
+        for (File file : listFiles) {
             File res = new File(file, "strings.xml");
             if (res.exists()) {
                 files.add(file);

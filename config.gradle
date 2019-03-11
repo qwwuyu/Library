@@ -1,0 +1,46 @@
+Properties properties = new Properties()
+if (project.rootProject.file('local.properties').exists()) {
+    def stream = project.rootProject.file('local.properties').newDataInputStream()
+    properties.load(stream)
+    stream.close()
+}
+ext.getPropertyByName = { key, defValue ->
+    def value = properties.getProperty(key)
+    if (value == null) value = System.getenv(key)
+    return value != null ? value : defValue
+}
+
+ext {
+    int major = 0, minor = 0, revision = 1
+    configs = [
+            compileSdkVersion: 27,
+            minSdkVersion    : 15,
+            targetSdkVersion : 27,
+            versionCode      : major * 10000 + minor * 100 + revision,//max=2147483647
+            versionName      : major + "." + minor + "." + revision,
+            currentDate      : new Date().format('yyMMdd-HH'),
+            testEnable       : getPropertyByName("APP_TEST_ENABLE", "false"),
+    ]
+
+    def storeFile = getPropertyByName("STORE_FILE", null)
+    signInfo = [
+            isSign       : storeFile != null,
+            storeFile    : storeFile,
+            storePassword: getPropertyByName("STORE_PASSWORD", null),
+            keyAlias     : getPropertyByName("KEY_ALIAS", null),
+            keyPassword  : getPropertyByName("KEY_PASSWORD", null),
+    ]
+
+    versions = [
+            junit      : "4.12",
+            support    : "27.1.0",
+            leakcanary : "1.5.4",
+            blockcanary: "1.5.0",
+            butterknife: "8.8.1",
+            dagger2    : "2.10",
+            eventbus   : "3.0.0",
+            gson       : "2.8.0",
+            rxjava2    : "2.1.9", rxandroid2: "2.0.2", rxlifecycle2: "2.2.1",
+            okhttp3    : "3.10.0", retrofit: "2.4.0", glide: "4.6.1", glidetrans: "3.1.1",
+    ]
+}

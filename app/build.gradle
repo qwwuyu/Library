@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion configs.compileSdkVersion
@@ -119,6 +121,8 @@ dependencies {
     debugImplementation project(':qw-lib')
     releaseImplementation project(':qw-lib')
     implementation project(':qw-widget')
+    //kotlin
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     //butterknife
     implementation "com.jakewharton:butterknife:$versions.butterknife"
     annotationProcessor "com.jakewharton:butterknife-compiler:$versions.butterknife"
