@@ -26,14 +26,12 @@
         <item name="android:gravity">left|center_vertical</item>
         <item name="android:textColor">@color/def_txt_normal</item>
         <item name="android:textColorHint">@color/def_txt_hint</item>
-        <item name="android:singleLine">true</item>
     </style>
     <!-- 默认提交按钮样式 -->
     <style name="def_btn">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/def_btn_height</item>
-        <item name="android:paddingBottom">@dimen/def_btn_h_padding</item>
-        <item name="android:paddingTop">@dimen/def_btn_h_padding</item>
+        <item name="android:singleLine">true</item>
         <item name="android:paddingLeft">@dimen/def_btn_w_padding</item>
         <item name="android:paddingRight">@dimen/def_btn_w_padding</item>
         <item name="android:textSize">@dimen/fontNormal</item>
@@ -59,22 +57,12 @@
     <style name="def_item">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/def_item_height</item>
-        <item name="android:layout_marginTop">20dp</item>
         <item name="android:background">@drawable/select_def_item</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:orientation">horizontal</item>
-    </style>
-    <!-- 默认item -->
-    <style name="def_item_icon">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginLeft">@dimen/def_item_padding</item>
-        <item name="android:layout_marginRight">@dimen/def_item_padding</item>
     </style>
     <!-- ======================== md样式 ======================== -->
     <!-- 默认toolBar样式 -->
     <style name="def_toolBar">
-        <item name="android:id">@id/toolBar</item>
+        <item name="android:id">@id/tool_bar</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/toolBar_height</item>
         <item name="android:minHeight">@dimen/toolBar_height</item>

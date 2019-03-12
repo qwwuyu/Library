@@ -1,11 +1,12 @@
-#leakcanary
+###leakcanary
+-dontwarn com.squareup.haha.guava.**
 -dontwarn com.squareup.haha.perflib.**
 -dontwarn com.squareup.haha.trove.**
 -dontwarn com.squareup.leakcanary.**
 -keep class com.squareup.haha.** { *; }
 -keep class com.squareup.leakcanary.** { *; }
 -dontwarn android.app.Notification
-#butterknife
+###butterknife
 -keep class butterknife.** { *; }
 -dontwarn butterknife.internal.**
 -keep class **$$ViewBinder { *; }
@@ -15,78 +16,40 @@
 -keepclasseswithmembernames class * {
  @butterknife.* <methods>;
 }
-#eventbus
+###eventbus
 -keepattributes *Annotation*
--keepclassmembers class ** {
+-keepclassmembers class * {
     @org.greenrobot.eventbus.Subscribe <methods>;
 }
 -keep enum org.greenrobot.eventbus.ThreadMode { *; }
--keep class com.qwwuyu.lib.bean.** { *; }
-#gson
+#Only required if you use AsyncExecutor
+-keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
+    <init>(java.lang.Throwable);
+}
+###gson
 -keepattributes Signature
 -keepattributes *Annotation*
--keep class sun.misc.Unsafe { *; }
--keep class com.google.gson.stream.** { *; }
--keep class com.qwwuyu.lib.bean.** { *; }
-#rxjava2 rxandroid2
--dontwarn org.mockito.**
--dontwarn org.junit.**
--dontwarn org.robolectric.**
-
--keep class rx.** { *; }
--keep interface rx.** { *; }
-
--keepattributes Signature
--keepattributes *Annotation*
--keep class com.squareup.okhttp.** { *; }
--dontwarn okio.**
--keep interface com.squareup.okhttp.** { *; }
--dontwarn com.squareup.okhttp.**
-
--dontwarn rx.**
--dontwarn retrofit.**
--keep class retrofit.** { *; }
--keepclasseswithmembers class * {
-    @retrofit.http.* <methods>;
-}
-
--keep class sun.misc.Unsafe { *; }
-
--dontwarn java.lang.invoke.*
-
--keep class rx.schedulers.Schedulers {
-    public static <methods>;
-}
--keep class rx.schedulers.ImmediateScheduler {
-    public <methods>;
-}
--keep class rx.schedulers.TestScheduler {
-    public <methods>;
-}
--keep class rx.schedulers.Schedulers {
-    public static ** test();
-}
+-dontwarn sun.misc.**
+-keep class * implements com.google.gson.TypeAdapterFactory
+-keep class * implements com.google.gson.JsonSerializer
+-keep class * implements com.google.gson.JsonDeserializer
+###rxjava2 rxandroid2
+-dontwarn sun.misc.**
 -keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
-    long producerIndex;
-    long consumerIndex;
+   long producerIndex;
+   long consumerIndex;
 }
--keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
-    long producerNode;
-    long consumerNode;
-}
-
 -keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
     rx.internal.util.atomic.LinkedQueueNode producerNode;
 }
 -keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
     rx.internal.util.atomic.LinkedQueueNode consumerNode;
 }
-
--dontwarn rx.internal.util.unsafe.**
-#rxlifecycle2
+-dontnote rx.internal.util.PlatformDependent
+###rxlifecycle2
 -keep class com.trello.rxlifecycle.** { *; }
 -keep interface com.trello.rxlifecycle.** { *; }
-#okhttp3
+###okhttp3
 -keepattributes Signature
 -keepattributes *Annotation*
 -keep class com.squareup.okhttp.** { *; }
@@ -100,7 +63,7 @@
 -dontwarn javax.annotation.**
 -dontwarn org.conscrypt.**
 -keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
-#retrofit
+###retrofit
 -dontwarn retrofit2.**
 -keep class retrofit2.** { *; }
 
@@ -110,7 +73,7 @@
     @retrofit2.http.* <methods>;
 }
 -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
-#glide
+###glide
 -keep class com.bumptech.glide.** { *; }
 
 -keep public class * implements com.bumptech.glide.module.GlideModule

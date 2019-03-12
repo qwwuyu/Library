@@ -2,6 +2,11 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'com.getkeepsafe.dexcount'
+dexcount {
+    includeTotalMethodCount = true
+}
+
 android {
     compileSdkVersion configs.compileSdkVersion
 
@@ -11,14 +16,14 @@ android {
         targetSdkVersion configs.targetSdkVersion
         versionCode configs.versionCode
         versionName configs.versionName
+        // dex突破65535的限制
+        multiDexEnabled true
         //设置支持的SO库架构
         //ndk { abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a', 'x86', 'x86-64' }
-    }
-
-    sourceSets {
-        main {
-            jniLibs.srcDirs = ['libs']
-        }
+        // 设置meta-data
+        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "baidu"]
+        // 设置BuildConfig
+        buildConfigField "String", "BASE_URL", "\"https://www.qwwuyu.com\""
     }
 
     if (signInfo.isSign) {
@@ -32,57 +37,73 @@ android {
         }
     }
 
-    android.applicationVariants.all { variant ->
-        variant.outputs.all { output ->
-            def start = signInfo.isSign ? signInfo.keyAlias : "unsign"
-            outputFileName = "${start}_${configs.versionName}_${configs.currentDate}_${variant.name}.apk"
-        }
-    }
-
     buildTypes {
-        release {
-            if (signInfo.isSign) signingConfig signingConfigs.sign
-
-            buildConfigField "boolean", "TEST", "false"
-
-            minifyEnabled true
-            shrinkResources true
-            zipAlignEnabled true
-            proguardFiles 'proguard-rules.pro'
-        }
-
         debug {
             if (signInfo.isSign) signingConfig signingConfigs.sign
-
-            buildConfigField "boolean", "TEST", configs.testEnable
-
-            minifyEnabled false
             versionNameSuffix ".debug"
+            debuggable true
+            zipAlignEnabled false
+            minifyEnabled false
             proguardFiles 'proguard-rules.pro'
+            shrinkResources false
+            ndk { abiFilters "armeabi", "x86" }
+            buildConfigField "boolean", "TEST", "$configs.test"
         }
-
-        gray {
+        release {
+            if (signInfo.isSign) signingConfig signingConfigs.sign
+            debuggable false
+            zipAlignEnabled true
+            minifyEnabled true
+            proguardFiles 'proguard-rules.pro'
+            shrinkResources true
+            ndk { abiFilters "armeabi", "x86" }
+            buildConfigField "boolean", "TEST", "false"
+        }
+        ts {
             initWith debug
             matchingFallbacks = ['debug']
+            versionNameSuffix ".ts"
+            buildConfigField "String", "BASE_URL", "\"https://old.qwwuyu.com\""
         }
     }
 
-    flavorDimensions "default"
-
+    flavorDimensions "log", "channel"
     productFlavors {
-        a_test {
-            buildConfigField("String", "BASE_URL", "\"http://10.13.131.50\"")
-            versionNameSuffix ".test"
-            manifestPlaceholders = [
-                    KEY: "TEST",
-            ]
+        log {
+            dimension "log"
+            buildConfigField "boolean", "LOG", "true"
         }
-
-        b_publish {
-            buildConfigField("String", "BASE_URL", "\"http://www.qwwuyu.com\"")
-            manifestPlaceholders = [
-                    KEY: "PUBLISH",
-            ]
+        nolog {
+            dimension "log"
+            buildConfigField "boolean", "LOG", "false"
+        }
+        baidu {
+            dimension "channel"
+        }
+        qq {
+            dimension "channel"
+        }
+    }
+    variantFilter { variant ->
+        def names = variant.flavors*.name
+        if (names.contains("nolog") && variant.buildType.name != "release") {
+            setIgnore(true)
+        }
+    }
+    productFlavors.all { flavor ->
+        if ("channel" == flavor.dimension) {
+            flavor.addManifestPlaceholders([UMENG_CHANNEL_VALUE: name])
+        }
+    }
+    android.applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def name = "v${variant.mergedFlavor.versionName}%s%s%s.apk"
+            def channel = "", log = "", buildType = "_" + variant.buildType.name
+            variant.productFlavors.each { flavor ->
+                if (flavor.dimension == "channel") channel = "_" + flavor.name
+                if (flavor.dimension == "log" && flavor.name == "log") log = "_" + flavor.name
+            }
+            outputFileName = String.format(name, channel, log, buildType)
         }
     }
 
@@ -97,32 +118,21 @@ android {
 //    }
 }
 
-buildscript {
-    repositories {
-        jcenter()//or mavenCentral()
-    }
-    dependencies {
-        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.8.6'
-    }
-}
-apply plugin: 'com.getkeepsafe.dexcount'
-dexcount {
-    format = "list"
-    includeClasses = false
-    includeFieldCount = true
-    includeTotalMethodCount = true
-    orderByMethodCount = false
-    verbose = false
-}
-
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
+    //test
+    testImplementation 'junit:junit:4.12'
+    //support
+    implementation "com.android.support.constraint:constraint-layout:$versions.constraint"
+    implementation "com.android.support:support-v4:$versions.support"
+    implementation "com.android.support:appcompat-v7:$versions.support"
+    implementation "com.android.support:support-annotations:$versions.support"
+    implementation "com.android.support:recyclerview-v7:$versions.support"
     //project
-    debugImplementation project(':qw-lib')
-    releaseImplementation project(':qw-lib')
+    implementation project(':qw-lib')
     implementation project(':qw-widget')
     //kotlin
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     //butterknife
     implementation "com.jakewharton:butterknife:$versions.butterknife"
     annotationProcessor "com.jakewharton:butterknife-compiler:$versions.butterknife"

@@ -17,16 +17,16 @@
 
     <!-- ======================== Activity ======================== -->
     <!-- 常用Act -->
-    <style name="AppTheme.Def">
-    </style>
-    <!-- MainAct -->
-    <style name="AppTheme.Main">
+    <style name="AppTheme.Default">
     </style>
     <!-- LauncherStyle -->
     <style name="AppTheme.Launcher">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowAnimationStyle">@style/LauncherAnimation</item>
+    </style>
+    <!-- MainAct -->
+    <style name="AppTheme.Main">
     </style>
 
     <style name="LauncherAnimation" parent="@android:style/Animation.Activity">

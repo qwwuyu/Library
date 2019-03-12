@@ -1,2 +1,0 @@
-com.github.chrisbanes.photoview:https://github.com/chrisbanes/PhotoView
-com.rarepebble.colorpicker:https://github.com/martin-stone/hsv-alpha-color-picker-android

@@ -9,13 +9,33 @@ android {
         targetSdkVersion configs.targetSdkVersion
         consumerProguardFiles 'proguard-rules.pro'
     }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'src/main/AndroidManifest.xml'
+            java.srcDirs = ['src/main/java', 'src/colorpicker/java', 'src/photoview/java']
+            res.srcDirs = ['src/main/res', 'src/colorpicker/res',]
+            resources.srcDirs = ['src/main/java',]
+            aidl.srcDirs = ['src/main/java',]
+            renderscript.srcDirs = ['src/main/java',]
+            assets.srcDirs = ['src/main/assets',]
+            jniLibs.srcDirs = ['src/main/jniLibs',]
+        }
+    }
+}
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
 }
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     //support
-    api "com.android.support:support-v4:$versions.support"
-    api "com.android.support:appcompat-v7:$versions.support"
-    api "com.android.support:support-annotations:$versions.support"
+    implementation "com.android.support:support-v4:$versions.support"
+    implementation "com.android.support:appcompat-v7:$versions.support"
+    implementation "com.android.support:support-annotations:$versions.support"
+    //MagicIndicator
     api 'com.github.hackware1993:MagicIndicator:1.5.0'
 }

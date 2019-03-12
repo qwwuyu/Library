@@ -12,7 +12,10 @@ android {
 }
 
 dependencies {
-    api fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "com.android.support.constraint:constraint-layout:$versions.constraint"
+    implementation "com.android.support:support-v4:$versions.support"
+    implementation "com.android.support:appcompat-v7:$versions.support"
+    implementation "com.android.support:support-annotations:$versions.support"
+    implementation "com.android.support:recyclerview-v7:$versions.support"
     api project(':other-lib')
-    api project(':qw-lib')
 }

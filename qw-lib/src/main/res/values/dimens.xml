@@ -1,9 +1,7 @@
 <resources>
     <!-- ======================== 默认sp ======================== -->
     <!-- 超大号文字 -->
-    <dimen name="fontLetter">@dimen/txt64</dimen>
-    <!-- 超大号文字 -->
-    <dimen name="fontXlarge">@dimen/txt48</dimen>
+    <dimen name="fontXLarge">@dimen/txt48</dimen>
     <!-- 标题、高Btn -->
     <dimen name="fontLarge">@dimen/txt36</dimen>
     <!-- 正常文字 -->
@@ -27,14 +25,13 @@
     <!-- 阴影范围 -->
     <dimen name="def_elevation">4dp</dimen>
     <!-- 分割线 -->
-    <dimen name="def_view_line">1dp</dimen>
-    <dimen name="def_view_line_margin">4dp</dimen>
+    <dimen name="def_view_line">0.6dp</dimen>
+    <dimen name="def_view_line_margin">16dp</dimen>
     <!-- 默认按钮 -->
     <dimen name="def_btn_height">48dp</dimen>
     <dimen name="def_btn_marginLeft">16dp</dimen>
     <dimen name="def_btn_marginRight">16dp</dimen>
     <dimen name="def_btn_top_margin">32dp</dimen>
-    <dimen name="def_btn_h_padding">0dp</dimen>
     <dimen name="def_btn_w_padding">16dp</dimen>
     <!-- 默认输入框 -->
     <dimen name="def_edit_height">48dp</dimen>
@@ -45,7 +42,6 @@
     <dimen name="def_txt_drawPadding">4dp</dimen>
     <dimen name="def_txt_link">1dp</dimen>
     <!-- 默认item -->
-    <dimen name="def_item_padding">16dp</dimen>
     <dimen name="def_item_height">48dp</dimen>
 
     <!-- ======================== 分模块_控件名/功能名_位子 ======================== -->

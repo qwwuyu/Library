@@ -16,7 +16,6 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.github.chrisbanes.photoview.OnMatrixChangedListener;
-import com.qwwuyu.lib.utils.DfrUtil;
 import com.qwwuyu.widget.R;
 
 import java.nio.IntBuffer;
@@ -40,7 +39,6 @@ public class GyroMarkView extends View implements OnMatrixChangedListener {
     private Point robot, charge;
     private PointF fRobot = new PointF(), fCharge = new PointF();
     private RectF rectF;
-    private DfrUtil dfr = DfrUtil.getInstance();
 
     public GyroMarkView(Context context) {
         this(context, null);
@@ -67,16 +65,23 @@ public class GyroMarkView extends View implements OnMatrixChangedListener {
     }
 
     public void setData(GyroBean gyroBean) {
-        if (gyroBean == null || gyroBean.getDatas() == null || gyroBean.getDatas().length != side * side) return;
+        if (gyroBean == null || gyroBean.getDatas() == null || gyroBean.getDatas().length != side * side)
+            return;
         robot = gyroBean.getRobot();
-        if (robot != null && robot.x < 0) robot = null;
+        if (robot != null && robot.x < 0) {
+            robot = null;
+        }
         charge = null;
         int areaNum = 0;
         byte[] bs = gyroBean.getDatas();
         for (int i = 0; i < bs.length; i++) {
             is[i] = colors[bs[i] & 0b01111111];
-            if (charge == null && (bs[i] & 0b1000000) == 0b1000000) charge = new Point(i % side, i / side);
-            if ((bs[i] & 0b00001001) != 0) areaNum++;
+            if (charge == null && (bs[i] & 0b1000000) == 0b1000000) {
+                charge = new Point(i % side, i / side);
+            }
+            if ((bs[i] & 0b00001001) != 0) {
+                areaNum++;
+            }
         }
         gyroBean.setAreaNum(areaNum);
         mapBitmap.copyPixelsFromBuffer(IntBuffer.wrap(is));
@@ -130,7 +135,6 @@ public class GyroMarkView extends View implements OnMatrixChangedListener {
     }
 
     private void drawRoute(Canvas canvas) {
-        dfr.dfr("drawRoute", 0);
         float scale = fm[Matrix.MSCALE_X];
         PathEffect pathEffect = new CornerPathEffect(scale / 2);
         routePaint.setPathEffect(pathEffect);
@@ -142,9 +146,7 @@ public class GyroMarkView extends View implements OnMatrixChangedListener {
                 else routePath.lineTo(lines[i][0] * scale, lines[i][1] * scale);
             }
         }
-        dfr.dfr("drawRoute", 1);
         canvas.drawPath(routePath, routePaint);
-        dfr.dfr("drawRoute", 2);
     }
 
     private void drawLine(Canvas canvas) {

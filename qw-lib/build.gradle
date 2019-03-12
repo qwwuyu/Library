@@ -29,13 +29,12 @@ dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     //test
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     //support
-    api 'com.android.support.constraint:constraint-layout:1.1.3'
-    api "com.android.support:support-v4:$versions.support"
-    api "com.android.support:appcompat-v7:$versions.support"
-    api "com.android.support:support-annotations:$versions.support"
-    api "com.android.support:recyclerview-v7:$versions.support"
+    implementation "com.android.support.constraint:constraint-layout:$versions.constraint"
+    implementation "com.android.support:support-v4:$versions.support"
+    implementation "com.android.support:appcompat-v7:$versions.support"
+    implementation "com.android.support:support-annotations:$versions.support"
+    implementation "com.android.support:recyclerview-v7:$versions.support"
     //leakcanary
     debugApi "com.squareup.leakcanary:leakcanary-android:$versions.leakcanary"
     releaseApi "com.squareup.leakcanary:leakcanary-android-no-op:$versions.leakcanary"
@@ -44,13 +43,14 @@ dependencies {
     debugApi "com.github.markzhai:blockcanary-android:$versions.blockcanary"
     releaseApi "com.github.markzhai:blockcanary-no-op:$versions.blockcanary"
     //eventbus
-    api "org.greenrobot:eventbus:$versions.eventbus"
+    api "org.greenrobot:eventbus:3.1.1"
     //gson
-    api "com.google.code.gson:gson:$versions.gson"
+    api "com.google.code.gson:gson:2.8.5"
     //rx
     api "io.reactivex.rxjava2:rxjava:$versions.rxjava2"
     api "io.reactivex.rxjava2:rxandroid:$versions.rxandroid2"
     api "com.trello.rxlifecycle2:rxlifecycle:$versions.rxlifecycle2"
+    api "com.trello.rxlifecycle2:rxlifecycle-android:$versions.rxlifecycle2"
     api "com.trello.rxlifecycle2:rxlifecycle-components:$versions.rxlifecycle2"
     //network
     api "com.squareup.okhttp3:okhttp:$versions.okhttp3"
