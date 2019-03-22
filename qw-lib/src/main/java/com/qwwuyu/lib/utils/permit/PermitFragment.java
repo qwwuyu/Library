@@ -6,12 +6,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.SparseArray;
 
+import com.qwwuyu.lib.utils.LogUtils;
+
 /**
  * be like https://github.com/tbruyelle/RxPermissions
  */
 public class PermitFragment extends Fragment {
     private static final String TAG = "Permissions";
-    private static int requestCode = 436;
+    private static int requestCode = 12345;
     private SparseArray<OnCallback> callbacks = new SparseArray<>();
 
     private synchronized static int getRequestCode() {
@@ -25,7 +27,11 @@ public class PermitFragment extends Fragment {
         PermitFragment permitFragment = (PermitFragment) fragmentManager.findFragmentByTag(TAG);
         if (permitFragment == null) {
             permitFragment = new PermitFragment();
-            fragmentManager.beginTransaction().add(permitFragment, TAG).commitNow();
+            try {
+                fragmentManager.beginTransaction().add(permitFragment, TAG).commitNow();
+            } catch (IllegalStateException e) {
+                return null;
+            }
         }
         return permitFragment;
     }
@@ -47,8 +53,12 @@ public class PermitFragment extends Fragment {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         OnCallback onCallback = callbacks.get(requestCode);
         if (onCallback != null) {
+            LogUtils.i("onCallback!=null size=" + callbacks.size());
             callbacks.delete(requestCode);
             onCallback.onResult(permissions, grantResults);
+        } else {
+            //TODO
+            LogUtils.i("onCallback==null size=" + callbacks.size());
         }
     }
 
@@ -56,6 +66,6 @@ public class PermitFragment extends Fragment {
         /**
          * 请求权限结果
          */
-        void onResult(@NonNull String[] permissions, @NonNull int[] grantResults);
+        void onResult(String[] permissions, int[] grantResults);
     }
 }

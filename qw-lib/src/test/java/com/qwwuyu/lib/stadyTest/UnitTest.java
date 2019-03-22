@@ -7,6 +7,7 @@ import org.w3c.dom.Element;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -112,5 +113,20 @@ public class UnitTest {
     public void ascii2str() throws Exception {
         String s = "\u6d4b\u8bd5";
         System.out.println(s);
+    }
+
+    @Test
+    public void xyz4() throws Exception {        // 4 * (i + j) * (j + k) * (k + i) == (i * (i + j) * (i + k) + j * (j + i) * (j + k) + k * (k + i) * (k + j))
+        BigDecimal b1 = new BigDecimal("154476802108746166441951315019919837485664325669565431700026634898253202035277999");
+        BigDecimal b2 = new BigDecimal("36875131794129999827197811565225474825492979968971970996283137471637224634055579");
+        BigDecimal b3 = new BigDecimal("4373612677928697257861252602371390152816537558161613618621437993378423467772036");
+        BigDecimal a1 = b1.add(b2);
+        BigDecimal a2 = b2.add(b3);
+        BigDecimal a3 = b3.add(b1);
+        System.out.println(a1.multiply(a2).multiply(a3).multiply(new BigDecimal("4")));
+        BigDecimal m1 = b1.multiply(a1).multiply(a3);
+        BigDecimal m2 = b2.multiply(a1).multiply(a2);
+        BigDecimal m3 = b3.multiply(a3).multiply(a2);
+        System.out.println(m1.add(m2).add(m3));
     }
 }

@@ -34,7 +34,7 @@ public abstract class PermitActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onDenied(@NonNull List<String> granted, @NonNull List<String> onlyDenied, @NonNull List<String> foreverDenied) {
+            public void onDenied(List<String> granted, List<String> onlyDenied, List<String> foreverDenied, List<String> denied) {
                 singleRequest();
             }
         });
@@ -66,7 +66,7 @@ public abstract class PermitActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onDenied(@NonNull List<String> granted, @NonNull List<String> onlyDenied, @NonNull List<String> foreverDenied) {
+                public void onDenied(List<String> granted, List<String> onlyDenied, List<String> foreverDenied, List<String> denied) {
                     singleRequest();
                 }
             });
@@ -109,7 +109,6 @@ public abstract class PermitActivity extends AppCompatActivity {
 
     /**
      * 第一次请求权限
-     *
      * @param showRationales  需要提醒的权限
      * @param request         需求请求的权限
      * @param proceedListener 继续请求
