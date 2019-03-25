@@ -1,7 +1,5 @@
 package com.qwwuyu.lib.utils;
 
-import com.qwwuyu.library.BuildConfig;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +28,7 @@ public class DfrUtil {
     }
 
     public void begin(String tag) {
-        if (BuildConfig.DEBUG && enable) {
+        if (enable) {
             long nowTime = System.currentTimeMillis();
             map.put(tag, nowTime);
             LogUtils.log(LogUtils.I, tag, 4, "begin:" + nowTime);
@@ -42,7 +40,7 @@ public class DfrUtil {
     }
 
     public void dfr(String tag, Object append) {
-        if (BuildConfig.DEBUG && enable) {
+        if (enable) {
             Long lastTime = map.get(tag);
             long nowTime = System.currentTimeMillis();
             map.put(tag, nowTime);

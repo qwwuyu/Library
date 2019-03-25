@@ -2,6 +2,7 @@ package com.qwwuyu.example.activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +14,7 @@ import com.qwwuyu.lib.utils.ToastUtil;
 import com.qwwuyu.lib.utils.permit.PermitActivity;
 import com.qwwuyu.lib.utils.permit.ProceedCallback;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,7 +30,13 @@ public class ELMActivity extends PermitActivity {
     @NonNull
     @Override
     protected String[] requestPermissions() {
-        return new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.READ_PHONE_STATE};
+        List<String> requests = new ArrayList<>();
+        requests.add(Manifest.permission.CAMERA);
+        requests.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            requests.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        }
+        return requests.toArray(new String[0]);
     }
 
     @Override

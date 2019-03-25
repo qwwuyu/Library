@@ -33,7 +33,7 @@ public class TApplication extends BaseApplication {
                 .enableLogHead(true)
                 .setHeadSep(" : ")
                 .setLogTag("qwwuyu");
-        DfrUtil.getInstance().setEnable(false);
+        DfrUtil.getInstance().setEnable(BuildConfig.DEBUG);
         KeepLifecycleCallbacks callbacks = new KeepLifecycleCallbacks() {
             @Override
             protected void wakeOnce() {

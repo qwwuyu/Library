@@ -105,6 +105,9 @@ public class WifiUtil {
         activity.startActivityForResult(intent, requestCode);
     }
 
+    /**
+     * need {@link android.Manifest.permission#ACCESS_WIFI_STATE}{@link android.Manifest.permission#CHANGE_WIFI_STATE}
+     */
     @SuppressLint("MissingPermission")
     public static void connectWifi(WifiManager wifiManager, String wifiType, String ssid, String pwd) {
         WifiConfiguration conf = new WifiConfiguration();
