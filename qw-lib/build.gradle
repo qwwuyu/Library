@@ -1,7 +1,6 @@
 apply plugin: 'com.android.library'
 
 android {
-    publishNonDefault true
     compileSdkVersion configs.compileSdkVersion
 
     defaultConfig {

@@ -67,10 +67,10 @@ public class PermitUtil {
             public void onResult(String[] permissions, int[] grantResults) {
                 if (permissions == null || grantResults == null) {
                     //自由客 Z2121 grantResults = null
-                    LogUtils.e(new Exception("permissions=" + (permissions == null) + ",grantResults=" + (grantResults == null)));
+                    LogUtils.logError(new Exception("permissions=" + (permissions == null) + ",grantResults=" + (grantResults == null)));
                 } else if (permissions.length != request.size()) {
                     //VIVO V1809A [],request=[android.permission.SEND_SMS]
-                    LogUtils.e(new Exception(Arrays.toString(permissions) + ",request=" + request));
+                    LogUtils.logError(new Exception(Arrays.toString(permissions) + ",request=" + request));
                 }
                 permissions = requestPermissions;
                 grantResults = new int[permissions.length];

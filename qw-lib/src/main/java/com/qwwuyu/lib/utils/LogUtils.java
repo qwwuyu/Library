@@ -1,5 +1,6 @@
 package com.qwwuyu.lib.utils;
 
+import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.IntDef;
@@ -36,7 +37,7 @@ import javax.xml.transform.stream.StreamSource;
 
 /**
  * Created by qiwei on 2017/7/12
- * 改于https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/main/java/com/blankj/utilcode/util/LogUtils.java
+ * 改于https://github.com/Blankj/AndroidUtilCode
  */
 public class LogUtils {
     public static final int V = Log.VERBOSE, D = Log.DEBUG, I = Log.INFO, W = Log.WARN, E = Log.ERROR, A = Log.ASSERT;
@@ -48,12 +49,13 @@ public class LogUtils {
     private @interface TYPE {
     }
 
+    @SuppressLint("SimpleDateFormat")
+    private static final Format FORMAT        = new SimpleDateFormat("MM-dd HH:mm:ss.SSS ");
     private static final String LINE_SEP      = System.getProperty("line.separator");
     private static final String TOP_BORDER    = "╔═══════════════════════════════════════════════════════════════════════════════════════════════════";
     private static final String LEFT_BORDER   = "║ ";
     private static final String BOTTOM_BORDER = "╚═══════════════════════════════════════════════════════════════════════════════════════════════════";
     private static final int    MAX_LEN       = 4000;
-    private static final Format FORMAT        = new SimpleDateFormat("MM-dd HH:mm:ss.SSS ", Locale.getDefault());
     private static final String NULL          = "null";
 
     public static final boolean log  = BuildConfig.DEBUG;
@@ -62,6 +64,7 @@ public class LogUtils {
     private static boolean logBorder = false;
     private static int     logFilter = V;
     private static ExecutorService executor;
+    private static OnErrorListener onErrorListener;
     private static String dir      = null;
     private static String head_sep = LINE_SEP;
 
@@ -97,6 +100,11 @@ public class LogUtils {
 
         public Builder setHeadSep(String head_sep) {
             LogUtils.head_sep = head_sep;
+            return this;
+        }
+
+        public Builder onErrorListener(OnErrorListener onErrorListener) {
+            LogUtils.onErrorListener = onErrorListener;
             return this;
         }
     }
@@ -157,34 +165,35 @@ public class LogUtils {
         log4(XML | type, tag, contents);
     }
 
-    public static void throwsE(final Throwable e) {
-        e(e);
-        if (log && logFilter < E) {
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
-                @Override
-                public void run() {
-                    throw new RuntimeException(e);
-                }
-            });
-        }
+    public static void onError(final Throwable e) {
+        onError(e, -1);
     }
 
-    public static void e(Throwable e) {
+    public static void onError(final Throwable e, int flag) {
         if (log && logFilter < E) {
-            log(E, "StackTrace", 4, getStackTraceString(e));
-            e.printStackTrace();
+            logError(e);
+            if (onErrorListener != null) {
+                onErrorListener.onError(e, flag);
+            }
         }
     }
 
     public static void printStackTrace(Throwable e) {
-        if (log) {
+        if (log && logFilter < E) {
             e.printStackTrace();
         }
     }
 
-    public static void thread(String tag) {
+    public static void logError(Throwable e) {
+        if (log && logFilter < E) {
+            log(E, "StackTrace", 4, ThrowableUtils.getFullStackTrace(e));
+            e.printStackTrace();
+        }
+    }
+
+    public static void logThread(String tag) {
         if (log) {
-            log(I, tag, 4, "isMainThread=" + (Thread.currentThread().getId() == Looper.getMainLooper().getThread().getId()));
+            log(I, tag, 4, "isMainThread=%b", Looper.myLooper() == Looper.getMainLooper());
         }
     }
 
@@ -290,20 +299,10 @@ public class LogUtils {
                 }
             }
         }
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                BufferedWriter bw = null;
-                try {
-                    bw = new BufferedWriter(new FileWriter(fullPath, true));
-                    bw.write(content);
-                } catch (IOException ignored) {
-                } finally {
-                    try {
-                        if (bw != null) bw.close();
-                    } catch (IOException ignored) {
-                    }
-                }
+        executor.execute(() -> {
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(fullPath, true))) {
+                bw.write(content);
+            } catch (IOException ignored) {
             }
         });
     }
@@ -359,5 +358,18 @@ public class LogUtils {
         PrintWriter pw = new PrintWriter(sw);
         tr.printStackTrace(pw);
         return sw.toString();
+    }
+
+    public interface OnErrorListener {
+        void onError(Throwable throwable, int flag);
+    }
+
+    public static class crashErrorListener implements OnErrorListener {
+        @Override
+        public void onError(Throwable throwable, int flag) {
+            new Handler(Looper.getMainLooper()).post(() -> {
+                throw new RuntimeException(throwable);
+            });
+        }
     }
 }

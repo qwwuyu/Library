@@ -18,9 +18,9 @@ android {
         versionName configs.versionName
         // dex突破65535的限制
         multiDexEnabled true
-        //设置支持的SO库架构
+        // 设置支持的SO库架构
         //ndk { abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a', 'x86', 'x86-64' }
-        // 设置meta-data
+        // 替换manifest属性
         manifestPlaceholders = [UMENG_CHANNEL_VALUE: "baidu"]
         // 设置BuildConfig
         buildConfigField "String", "BASE_URL", "\"https://www.qwwuyu.com\""
