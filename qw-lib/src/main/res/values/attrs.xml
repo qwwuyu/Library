@@ -10,4 +10,12 @@
         <attr name="grl_color0" format="reference|color"/>
         <attr name="grl_color1" format="reference|color"/>
     </declare-styleable>
+    <!-- 多状态布局 -->
+    <declare-styleable name="MultipleStateLayout">
+        <attr name="loadingView" format="reference"/>
+        <attr name="emptyView" format="reference"/>
+        <attr name="errorView" format="reference"/>
+        <attr name="networkView" format="reference"/>
+        <attr name="removeState" format="boolean"/>
+    </declare-styleable>
 </resources>

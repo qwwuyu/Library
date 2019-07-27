@@ -55,4 +55,13 @@
         <item name="android:taskToBackEnterAnimation">@null</item>
         <item name="android:taskToBackExitAnimation">@null</item>
     </style>
+
+    <!-- ======================== TitleView ======================== -->
+    <style name="TitleTextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">@dimen/fontNormal</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/def_txt_normal</item>
+    </style>
 </resources>

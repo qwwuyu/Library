@@ -16,10 +16,11 @@
     小图标点击区域：48x48dp；侧边抽屉到屏幕右边的距离：56dp；卡片间距：8dp；分隔线上下留白：8dp；
     大多元素的留白距离：16dp；屏幕左右对齐基线：16dp；文字左侧对齐基线：72dp； -->
 
+    <dimen name="title_height">48dp</dimen>
     <!-- ToolBar -->
-    <dimen name="toolBar_height">48dp</dimen>
-    <dimen name="toolBar_ab_w">48dp</dimen>
-    <dimen name="toolBar_abo_w">48dp</dimen>
+    <dimen name="toolBar_height">@dimen/title_height</dimen>
+    <dimen name="toolBar_ab_w">@dimen/title_height</dimen>
+    <dimen name="toolBar_abo_w">@dimen/title_height</dimen>
     <!-- 背景圆角度 -->
     <dimen name="def_radius">5dp</dimen>
     <!-- 阴影范围 -->

@@ -4,16 +4,18 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Looper;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.google.gson.Gson;
 import com.qwwuyu.example.R;
-import com.qwwuyu.lib.base.BaseActivity;
 import com.qwwuyu.lib.http.body.ProgressResponseBody;
 import com.qwwuyu.lib.http.interceptor.HttpLoggingInterceptor;
+import com.qwwuyu.lib.mvp.BaseMvpActivity;
+import com.qwwuyu.lib.mvp.BasePresenter;
 import com.qwwuyu.lib.utils.LogUtils;
+import com.qwwuyu.lib.widget.MultipleStateLayout;
+import com.qwwuyu.lib.widget.TitleView;
 import com.qwwuyu.library.BuildConfig;
 
 import java.io.File;
@@ -51,7 +53,7 @@ import retrofit2.http.Query;
 /**
  * Created by qiwei on 2017/8/12
  */
-public class HttpActivity extends BaseActivity {
+public class HttpActivity extends BaseMvpActivity {
     private Api api;
     private Gson gson = new Gson();
     private NumberProgressBar bar;
@@ -60,9 +62,17 @@ public class HttpActivity extends BaseActivity {
     private String token = "eyJhY2MiOiJxd3d1eXUiLCJuaWNrIjoicXd3dXl1IiwiYXV0aCI6NSwiaWQiOjIsInV1aWQiOiI1ZmM4MTcxNy1hMzI3LTQxN2ItYWQ0NC0zZTBhY2IxMzNhNmQifQ==";
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.a_http);
+    protected BasePresenter createPresenter() {
+        return null;
+    }
+
+    @Override
+    protected int getContentLayout() {
+        return R.layout.a_http;
+    }
+
+    @Override
+    protected void init(Bundle bundle, TitleView titleView, MultipleStateLayout stateLayout) {
         bar = findViewById(R.id.number_progress_bar);
         bar.setMax(100);
         initHttp();

@@ -4,7 +4,6 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
 import android.util.Base64;
 import android.view.View;
@@ -13,9 +12,12 @@ import android.view.ViewTreeObserver;
 import com.github.chrisbanes.photoview.OnDoubleTapDefaultListener;
 import com.github.chrisbanes.photoview.PhotoViewAttacher;
 import com.qwwuyu.example.R;
-import com.qwwuyu.lib.base.BaseActivity;
+import com.qwwuyu.lib.mvp.BaseMvpActivity;
+import com.qwwuyu.lib.mvp.BasePresenter;
 import com.qwwuyu.lib.utils.CommUtil;
 import com.qwwuyu.lib.utils.DisplayUtil;
+import com.qwwuyu.lib.widget.MultipleStateLayout;
+import com.qwwuyu.lib.widget.TitleView;
 import com.qwwuyu.widget.drawable.card.RoundRectDrawableWithShadow;
 import com.qwwuyu.widget.gyro.GyroBean;
 import com.qwwuyu.widget.gyro.GyroMarkView;
@@ -25,7 +27,7 @@ import com.qwwuyu.widget.gyro.GyroView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class GyroActivity extends BaseActivity {
+public class GyroActivity extends BaseMvpActivity {
     @BindView(R.id.shadowView)
     View shadowView;
     @BindView(R.id.gyro_gyroView)
@@ -39,11 +41,18 @@ public class GyroActivity extends BaseActivity {
             {5.5f, 4.5f}, {5.5f, 4.5f}, {5.5f, 5.5f}, {5.5f, 5.5f}, {6, 6.5f}, {6, 9f}, {7, 10f}, {7, 1}, {7, 2}, {8, 3}, {8, 10},};
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.a_gyro);
-        ButterKnife.bind(this);
+    protected BasePresenter createPresenter() {
+        return null;
+    }
 
+    @Override
+    protected int getContentLayout() {
+        return R.layout.a_gyro;
+    }
+
+    @Override
+    protected void init(Bundle bundle, TitleView titleView, MultipleStateLayout stateLayout) {
+        ButterKnife.bind(this);
         attacher = gyroView.getAttacher();
         attacher.setOnPhotoTapListener(null);
         attacher.clearTouchSlop();

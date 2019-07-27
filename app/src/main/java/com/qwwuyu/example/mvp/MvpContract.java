@@ -1,7 +1,8 @@
 package com.qwwuyu.example.mvp;
 
+import com.qwwuyu.lib.mvp.BaseModel;
+import com.qwwuyu.lib.mvp.BasePresenter;
 import com.qwwuyu.lib.mvp.BaseView;
-import com.qwwuyu.lib.mvp.WrapperPresenter;
 
 /**
  * Created by qiwei on 2018/6/14 14:02
@@ -16,7 +17,9 @@ public interface MvpContract {
         void test();
     }
 
-    abstract class Presenter extends WrapperPresenter<View> implements IPresenter {
-
+    abstract class Presenter<M extends BaseModel> extends BasePresenter<View,M> implements IPresenter {
+        public Presenter(View view,M model) {
+            super(view,model);
+        }
     }
 }

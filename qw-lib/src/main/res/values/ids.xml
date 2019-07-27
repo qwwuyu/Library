@@ -4,4 +4,12 @@
     <item name="tool_bar" type="id"/>
     <!-- 根布局id -->
     <item name="layout_root" type="id"/>
+    <!-- MultipleStateLayout的重试控件ids -->
+    <item name="retry_empty" type="id"/>
+    <item name="retry_error" type="id"/>
+    <item name="retry_network" type="id"/>
+
+    <item name="body" type="id"/>
+    <item name="message" type="id"/>
+    <item name="progress" type="id"/>
 </resources>

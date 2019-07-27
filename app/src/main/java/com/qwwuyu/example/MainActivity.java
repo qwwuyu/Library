@@ -10,22 +10,33 @@ import com.qwwuyu.example.activity.ColorActivity;
 import com.qwwuyu.example.activity.ELMActivity;
 import com.qwwuyu.example.activity.GyroActivity;
 import com.qwwuyu.example.activity.HttpActivity;
-import com.qwwuyu.example.activity.MvpActivity;
-import com.qwwuyu.lib.base.BaseActivity;
+import com.qwwuyu.example.mvp.MvpActivity;
+import com.qwwuyu.lib.mvp.BaseMvpActivity;
+import com.qwwuyu.lib.mvp.BasePresenter;
 import com.qwwuyu.lib.utils.CommUtil;
 import com.qwwuyu.lib.utils.LogUtils;
 import com.qwwuyu.lib.utils.SystemBarUtil;
 import com.qwwuyu.lib.utils.ToastUtil;
+import com.qwwuyu.lib.widget.MultipleStateLayout;
+import com.qwwuyu.lib.widget.TitleView;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseMvpActivity {
     private static int[] flag = new int[10];
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.a_main);
+    protected BasePresenter createPresenter() {
+        return null;
+    }
+
+    @Override
+    protected int getContentLayout() {
+        return R.layout.a_main;
+    }
+
+    @Override
+    protected void init(Bundle bundle, TitleView titleView, MultipleStateLayout stateLayout) {
         TextView tv = findViewById(R.id.tv);
-        tv.setText(CommUtil.getVersionName(mContext));
+        tv.setText(CommUtil.getVersionName(context));
     }
 
     public void onClick1(View v) {

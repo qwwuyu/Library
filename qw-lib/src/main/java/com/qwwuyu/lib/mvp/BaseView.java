@@ -4,12 +4,10 @@ package com.qwwuyu.lib.mvp;
  * Created by qiwei on 2018/4/19 17:17
  * Description .
  */
-public interface BaseView {
-    void showLoading();
+public interface BaseView extends IStateLayout {
+    void showLoadingDialog(CharSequence message);
 
-    void hideLoading();
+    void hideLoadingDialog();
 
-    void showEmpty();
-
-    void showError(int code, String msg);
+    void showError(String code, String msg);
 }
