@@ -87,6 +87,8 @@ public abstract class BaseMvpActivity<P extends BasePresenter> extends AppCompat
             } else {
                 rootView = frameLayout;
             }
+        } else if (rootView != null) {
+            rootView.addView(contentView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         }
         setContentView(rootView != null ? rootView : contentView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
     }

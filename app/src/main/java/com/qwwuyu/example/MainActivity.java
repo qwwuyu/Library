@@ -10,6 +10,7 @@ import com.qwwuyu.example.activity.ColorActivity;
 import com.qwwuyu.example.activity.ELMActivity;
 import com.qwwuyu.example.activity.GyroActivity;
 import com.qwwuyu.example.activity.HttpActivity;
+import com.qwwuyu.example.activity.RvActivity;
 import com.qwwuyu.example.mvp.MvpActivity;
 import com.qwwuyu.lib.mvp.BaseMvpActivity;
 import com.qwwuyu.lib.mvp.BasePresenter;
@@ -62,8 +63,7 @@ public class MainActivity extends BaseMvpActivity {
     }
 
     public void onClick3(View v) {
-        ToastUtil.show("123");
-        CommUtil.ctrlSoftKeyboard(this, true);
+        startActivity(new Intent(this, RvActivity.class));
     }
 
     public void onClick4(View v) {

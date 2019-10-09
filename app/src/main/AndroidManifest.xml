@@ -31,5 +31,6 @@
         <activity android:name=".activity.TestActivity"/>
         <activity android:name=".activity.Test2Activity"/>
         <activity android:name=".mvp.MvpActivity"/>
+        <activity android:name=".activity.RvActivity"/>
     </application>
 </manifest>

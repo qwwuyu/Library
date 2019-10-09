@@ -8,12 +8,25 @@ import android.support.annotation.ColorInt;
  * Description .
  */
 public class DrawableUtil {
-    public static GradientDrawable getOvalDrawable(int fillColor, int width, @ColorInt int color) {
+    public static GradientDrawable getOval(int fillColor, int strokeWidth, @ColorInt int strokeColor) {
         GradientDrawable gd = new GradientDrawable();
         gd.setShape(GradientDrawable.OVAL);
-        gd.setUseLevel(false);
         gd.setColor(fillColor);
-        gd.setStroke(width, color);
+        if (strokeWidth != 0) gd.setStroke(strokeWidth, strokeColor);
+        return gd;
+    }
+
+    public static GradientDrawable getRectangleRadius(int fillColor, int radius) {
+        return getRectangleRadius(fillColor, radius, 0, 0);
+    }
+
+    public static GradientDrawable getRectangleRadius(int fillColor, int radius,
+                                                      int strokeWidth, @ColorInt int strokeColor) {
+        GradientDrawable gd = new GradientDrawable();
+        gd.setShape(GradientDrawable.RECTANGLE);
+        gd.setColor(fillColor);
+        gd.setCornerRadius(radius);
+        if (strokeWidth != 0) gd.setStroke(strokeWidth, strokeColor);
         return gd;
     }
 }
