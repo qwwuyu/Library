@@ -3,10 +3,8 @@ package com.qwwuyu.example.activity;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Looper;
-import android.support.annotation.NonNull;
 import android.view.View;
 
-import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.google.gson.Gson;
 import com.qwwuyu.example.R;
 import com.qwwuyu.lib.http.body.ProgressResponseBody;
@@ -15,6 +13,7 @@ import com.qwwuyu.lib.mvp.BaseMvpActivity;
 import com.qwwuyu.lib.mvp.BasePresenter;
 import com.qwwuyu.lib.utils.LogUtils;
 import com.qwwuyu.lib.widget.MultipleStateLayout;
+import com.qwwuyu.lib.widget.PercentProgressBar;
 import com.qwwuyu.lib.widget.TitleView;
 import com.qwwuyu.library.BuildConfig;
 
@@ -23,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.TimeUnit;
 
+import androidx.annotation.NonNull;
 import io.reactivex.Observable;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.Observer;
@@ -56,7 +56,7 @@ import retrofit2.http.Query;
 public class HttpActivity extends BaseMvpActivity {
     private Api api;
     private Gson gson = new Gson();
-    private NumberProgressBar bar;
+    private PercentProgressBar bar;
     private OkHttpClient okHttpClient;
     private String host = "http://192.168.20.42/";
     private String token = "eyJhY2MiOiJxd3d1eXUiLCJuaWNrIjoicXd3dXl1IiwiYXV0aCI6NSwiaWQiOjIsInV1aWQiOiI1ZmM4MTcxNy1hMzI3LTQxN2ItYWQ0NC0zZTBhY2IxMzNhNmQifQ==";
@@ -73,8 +73,8 @@ public class HttpActivity extends BaseMvpActivity {
 
     @Override
     protected void init(Bundle bundle, TitleView titleView, MultipleStateLayout stateLayout) {
-        bar = findViewById(R.id.number_progress_bar);
-        bar.setMax(100);
+        bar = findViewById(R.id.progressBar);
+        bar.setProgress(0, 100);
         initHttp();
     }
 

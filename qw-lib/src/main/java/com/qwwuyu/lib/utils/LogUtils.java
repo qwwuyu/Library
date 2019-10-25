@@ -3,7 +3,6 @@ package com.qwwuyu.lib.utils;
 import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.IntDef;
 import android.util.Log;
 
 import com.qwwuyu.library.BuildConfig;
@@ -34,6 +33,8 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
+
+import androidx.annotation.IntDef;
 
 /**
  * Created by qiwei on 2017/7/12
@@ -186,7 +187,7 @@ public class LogUtils {
 
     public static void logError(Throwable e) {
         if (log && logFilter < E) {
-            log(E, "StackTrace", 4, ThrowableUtils.getFullStackTrace(e));
+            log(E, "StackTrace", 4, Log.getStackTraceString(e));
             e.printStackTrace();
         }
     }

@@ -6,7 +6,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Environment;
-import android.support.annotation.RequiresPermission;
 import android.util.Log;
 
 import java.io.BufferedWriter;
@@ -17,12 +16,10 @@ import java.lang.Thread.UncaughtExceptionHandler;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 /**
  * <pre>
@@ -38,7 +35,7 @@ public final class CrashUtils {
     private static String versionName;
     private static int versionCode;
 
-    private static final String FILE_SEP = System.getProperty("file.separator");
+    private static final String FILE_SEP = File.separator;
     @SuppressLint("SimpleDateFormat")
     private static final Format FORMAT = new SimpleDateFormat("MM-dd HH-mm-ss");
 
@@ -74,8 +71,7 @@ public final class CrashUtils {
                         "\nApp VersionName    : " + versionName +
                         "\nApp VersionCode    : " + versionCode +
                         "\n************* Log Head ****************\n\n";
-                sb.append(head)
-                        .append(ThrowableUtils.getFullStackTrace(e));
+                sb.append(head).append(Log.getStackTraceString(e));
                 final String crashInfo = sb.toString();
                 final String fullPath = (dir == null ? defaultDir : dir) + time + ".txt";
                 if (createOrExistsFile(fullPath)) {
@@ -101,7 +97,6 @@ public final class CrashUtils {
 
     /**
      * Initialization.
-     * <p>Must hold {@code <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />}</p>
      */
     @SuppressLint("MissingPermission")
     public static void init(Context context) {
@@ -110,11 +105,9 @@ public final class CrashUtils {
 
     /**
      * Initialization
-     * <p>Must hold {@code <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />}</p>
      * @param crashDirPath    The directory's path of saving crash information.
      * @param onCrashListener The crash listener.
      */
-    @RequiresPermission(WRITE_EXTERNAL_STORAGE)
     public static void init(Context context, final String crashDirPath, final OnCrashListener onCrashListener) {
         try {
             PackageInfo pi = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
@@ -153,25 +146,22 @@ public final class CrashUtils {
     ///////////////////////////////////////////////////////////////////////////
 
     private static void input2File(final String input, final String filePath) {
-        Future<Boolean> submit = Executors.newSingleThreadExecutor().submit(new Callable<Boolean>() {
-            @Override
-            public Boolean call() {
-                BufferedWriter bw = null;
+        Future<Boolean> submit = Executors.newSingleThreadExecutor().submit(() -> {
+            BufferedWriter bw = null;
+            try {
+                bw = new BufferedWriter(new FileWriter(filePath, true));
+                bw.write(input);
+                return true;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            } finally {
                 try {
-                    bw = new BufferedWriter(new FileWriter(filePath, true));
-                    bw.write(input);
-                    return true;
+                    if (bw != null) {
+                        bw.close();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
-                    return false;
-                } finally {
-                    try {
-                        if (bw != null) {
-                            bw.close();
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
                 }
             }
         });

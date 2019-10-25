@@ -4,7 +4,6 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.support.v4.view.ViewCompat;
 import android.util.Base64;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -24,16 +23,12 @@ import com.qwwuyu.widget.gyro.GyroMarkView;
 import com.qwwuyu.widget.gyro.GyroUtil;
 import com.qwwuyu.widget.gyro.GyroView;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import androidx.core.view.ViewCompat;
 
 public class GyroActivity extends BaseMvpActivity {
-    @BindView(R.id.shadowView)
-    View shadowView;
-    @BindView(R.id.gyro_gyroView)
-    GyroView gyroView;
-    @BindView(R.id.gyro_markView)
-    GyroMarkView markView;
+    private View shadowView;
+    private GyroView gyroView;
+    private GyroMarkView markView;
     private PhotoViewAttacher attacher;
     private GyroBean gyroBean = new GyroBean();
     private String map = "H4sIAAAAAAAAAO3TsRGAIBBFQe6IDA0IbUb770mxBQLE2a3g3zwoBQAAAAAAAAAAAAAAAAAAAAAAAPiqreTsCcOyxhGtzp4xLlp77lg+yBURbV++x5nRrd+jvIcs36P/83zMnjEs6w/eVPeDFgAAAAAAAAAAAAAAAAAAAAAAALPdIrgBRkCcAAA=";
@@ -52,7 +47,9 @@ public class GyroActivity extends BaseMvpActivity {
 
     @Override
     protected void init(Bundle bundle, TitleView titleView, MultipleStateLayout stateLayout) {
-        ButterKnife.bind(this);
+        shadowView = findViewById(R.id.shadowView);
+        gyroView = findViewById(R.id.gyro_gyroView);
+        markView = findViewById(R.id.gyro_markView);
         attacher = gyroView.getAttacher();
         attacher.setOnPhotoTapListener(null);
         attacher.clearTouchSlop();

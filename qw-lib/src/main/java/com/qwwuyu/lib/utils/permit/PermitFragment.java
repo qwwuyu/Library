@@ -1,9 +1,9 @@
 package com.qwwuyu.lib.utils.permit;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import android.util.SparseArray;
 
 import com.qwwuyu.lib.utils.LogUtils;

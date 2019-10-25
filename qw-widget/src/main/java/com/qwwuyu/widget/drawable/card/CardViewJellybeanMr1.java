@@ -19,7 +19,7 @@ import android.annotation.TargetApi;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.RequiresApi;
 
 @RequiresApi(17)
 @TargetApi(17)

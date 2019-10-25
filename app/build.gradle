@@ -112,34 +112,28 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-//    lintOptions {
-//        abortOnError false
-//        disable 'MissingTranslation'
-//    }
+    lintOptions {
+        abortOnError false
+        disable 'MissingTranslation'
+    }
 }
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     //test
-    testImplementation 'junit:junit:4.12'
+    testImplementation "${versions.junit}"
     //support
-    implementation "com.android.support.constraint:constraint-layout:$versions.constraint"
-    implementation "com.android.support:support-v4:$versions.support"
-    implementation "com.android.support:appcompat-v7:$versions.support"
-    implementation "com.android.support:support-annotations:$versions.support"
-    implementation "com.android.support:recyclerview-v7:$versions.support"
+    implementation "${versions.appcompat}"
+    implementation "${versions.annotation}"
+    implementation "${versions.recyclerview}"
+    implementation "${versions.constraintlayout}"
     //project
     implementation project(':qw-lib')
     implementation project(':qw-widget')
     //kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    //butterknife
-    implementation "com.jakewharton:butterknife:$versions.butterknife"
-    annotationProcessor "com.jakewharton:butterknife-compiler:$versions.butterknife"
-    //dagger2
-    implementation "com.google.dagger:dagger:$versions.dagger2"
-    annotationProcessor "com.google.dagger:dagger-compiler:$versions.dagger2"
-    //numberprogressbar
-    implementation "com.daimajia.numberprogressbar:library:1.4@aar"
-    implementation "android.arch.lifecycle:extensions:1.1.1"
+    //leakcanary
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-3'
+    //glide
+    annotationProcessor "com.github.bumptech.glide:compiler:$versions.glide"
 }

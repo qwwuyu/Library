@@ -17,7 +17,7 @@ package com.qwwuyu.widget.drawable.card;
 
 import android.annotation.TargetApi;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.RequiresApi;
 import android.view.View;
 
 /**

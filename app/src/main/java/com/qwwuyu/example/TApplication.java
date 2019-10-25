@@ -1,19 +1,14 @@
 package com.qwwuyu.example;
 
-import android.arch.lifecycle.Lifecycle;
-import android.arch.lifecycle.LifecycleObserver;
-import android.arch.lifecycle.OnLifecycleEvent;
-import android.arch.lifecycle.ProcessLifecycleOwner;
-
-import com.bumptech.glide.load.DecodeFormat;
-import com.bumptech.glide.request.RequestOptions;
 import com.qwwuyu.lib.base.BaseApplication;
 import com.qwwuyu.lib.utils.CommUtil;
 import com.qwwuyu.lib.utils.DfrUtil;
 import com.qwwuyu.lib.utils.InitUtil;
 import com.qwwuyu.lib.utils.LogUtils;
-import com.qwwuyu.lib.utils.glide.DefaultGlideModule;
-import com.qwwuyu.lib.utils.glide.GlideConfig;
+
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.OnLifecycleEvent;
 
 /**
  * Created by qiwei on 2017/7/13
@@ -24,15 +19,7 @@ public class TApplication extends BaseApplication {
         super.onCreate();
         if (!CommUtil.isInMainProcess(getApplicationContext())) return;
 
-        DefaultGlideModule.setGlideConfig(new GlideConfig.Builder()
-                .options(new RequestOptions().format(DecodeFormat.PREFER_ARGB_8888)//图片格式
-                        .placeholder(0)//加载中图片
-                        .error(0)//加载失败图片
-                ).build());
-        new LogUtils.Builder()
-                .enableLogHead(true)
-                .setHeadSep(" : ")
-                .setLogTag("qwwuyu");
+        new LogUtils.Builder().enableLogHead(true).setHeadSep(" : ").setLogTag("qwwuyu");
         DfrUtil.getInstance().setEnable(BuildConfig.DEBUG);
         KeepLifecycleCallbacks callbacks = new KeepLifecycleCallbacks() {
             @Override
@@ -41,7 +28,6 @@ public class TApplication extends BaseApplication {
         };
         registerActivityLifecycleCallbacks(callbacks);
         registerComponentCallbacks(callbacks);
-        ProcessLifecycleOwner.get().getLifecycle().addObserver(new MyObserver());
     }
 
     public class MyObserver implements LifecycleObserver {
@@ -58,6 +44,6 @@ public class TApplication extends BaseApplication {
 
     @Override
     protected void modifyConfig(InitUtil.Configuration config) {
-        config.enableLeakCanary();
+
     }
 }

@@ -17,40 +17,16 @@ public class InitUtil {
     public synchronized static void init(Configuration config) {
         if (isInit) return;
         Context context = config.context.getApplicationContext();
-        ToastUtil.init(context, config.toastUtil == null ? ToastUtilImpl.getInstance() : config.toastUtil);
+        ToastUtil.init(context);
         DisplayUtil.init(context);
-        SpUtil.init(context, config.spName);
     }
 
     public static class Configuration {
         Context context;
-        ToastUtilInterface toastUtil;
-        public boolean leakCanary = false, blockCanary = false;
-        String spName;
 
         public Configuration(Context context) {
             if (context == null) throw new NullPointerException("context == null");
             this.context = context.getApplicationContext();
-        }
-
-        public Configuration setToastUtil(ToastUtilInterface toastUtil) {
-            this.toastUtil = toastUtil;
-            return this;
-        }
-
-        public Configuration enableLeakCanary() {
-            this.leakCanary = true;
-            return this;
-        }
-
-        public Configuration enableBlockCanary() {
-            this.blockCanary = true;
-            return this;
-        }
-
-        public Configuration spName(String spName) {
-            this.spName = spName;
-            return this;
         }
     }
 }

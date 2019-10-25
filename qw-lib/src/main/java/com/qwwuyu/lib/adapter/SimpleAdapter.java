@@ -1,8 +1,6 @@
 package com.qwwuyu.lib.adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +8,13 @@ import android.view.ViewGroup;
 import java.util.Collections;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 /**
  * 简单使用RecyclerView的Adapter.
  */
-public abstract class SimpleAdapter<T> extends RecyclerView.Adapter<SimpleViewHolder> implements IMoveItem {
+public abstract class SimpleAdapter<T> extends RecyclerView.Adapter<SimpleViewHolder> {
     /** 上下文 */
     protected final Context context;
     /** 数据 */
@@ -62,7 +63,6 @@ public abstract class SimpleAdapter<T> extends RecyclerView.Adapter<SimpleViewHo
 
     public abstract void onBind(int position, SimpleViewHolder holder, T data);
 
-    @Override
     public void moveItem(int formPosition, int toPosition) {
         int diff = formPosition < toPosition ? 1 : -1;
         for (int index = formPosition; index != toPosition; index += diff) {

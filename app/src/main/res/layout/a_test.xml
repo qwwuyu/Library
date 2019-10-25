@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".activity.TestActivity">
 
-    <com.qwwuyu.widget.LinkageView
-        android:id="@+id/linkageView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/black"
-        app:linkageIndicatorHeight="80dp"
-        app:linkageLineColor="@color/gray"
-        app:linkageLineSpace="1dp"
-        app:linkageVpHeight="560dp"/>
 </LinearLayout>

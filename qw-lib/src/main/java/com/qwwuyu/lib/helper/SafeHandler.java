@@ -1,4 +1,4 @@
-package com.qwwuyu.lib.utils.helper;
+package com.qwwuyu.lib.helper;
 
 import android.os.Handler;
 import android.os.Message;
@@ -9,13 +9,10 @@ import java.lang.ref.WeakReference;
  * Created by qiwei on 2017/8/3
  */
 public class SafeHandler extends Handler {
-    public interface Callback {
-        void handleMessage(Message msg);
-    }
-
     private WeakReference<Callback> wr;
 
     public SafeHandler(Callback t) {
+        super();
         wr = new WeakReference<>(t);
     }
 

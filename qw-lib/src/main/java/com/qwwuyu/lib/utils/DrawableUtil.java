@@ -1,7 +1,7 @@
 package com.qwwuyu.lib.utils;
 
 import android.graphics.drawable.GradientDrawable;
-import android.support.annotation.ColorInt;
+import androidx.annotation.ColorInt;
 
 /**
  * Created by qiwei on 2018/5/4 14:51

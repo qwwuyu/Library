@@ -129,4 +129,12 @@ public class UnitTest {
         BigDecimal m3 = b3.multiply(a3).multiply(a2);
         System.out.println(m1.add(m2).add(m3));
     }
+
+    @Test
+    public void heart() throws Exception {
+        System.out.print(java.util.stream.DoubleStream.iterate(1.5, x -> x - 0.1).limit(30)
+                .mapToObj(x -> java.util.stream.DoubleStream.iterate(1.5, y -> y - 0.05).limit(61)
+                        .mapToObj(y -> Math.pow((x * x + y * y - 1), 3) - x * x * x * y * y <= 0 ? "*" : " ")
+                        .collect(java.util.stream.Collectors.joining())).collect(java.util.stream.Collectors.joining("\n")));
+    }
 }

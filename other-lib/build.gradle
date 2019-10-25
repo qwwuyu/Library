@@ -23,18 +23,9 @@ android {
     }
 }
 
-repositories {
-    flatDir {
-        dirs 'libs'
-    }
-}
-
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     //support
-    implementation "com.android.support:support-v4:$versions.support"
-    implementation "com.android.support:appcompat-v7:$versions.support"
-    implementation "com.android.support:support-annotations:$versions.support"
-    //MagicIndicator
-    api 'com.github.hackware1993:MagicIndicator:1.5.0'
+    implementation "${versions.appcompat}"
+    implementation "${versions.annotation}"
 }

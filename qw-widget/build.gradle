@@ -11,10 +11,11 @@ android {
 }
 
 dependencies {
-    implementation "com.android.support.constraint:constraint-layout:$versions.constraint"
-    implementation "com.android.support:support-v4:$versions.support"
-    implementation "com.android.support:appcompat-v7:$versions.support"
-    implementation "com.android.support:support-annotations:$versions.support"
-    implementation "com.android.support:recyclerview-v7:$versions.support"
+    implementation "${versions.appcompat}"
+    implementation "${versions.annotation}"
+    implementation "${versions.recyclerview}"
+    implementation "${versions.constraintlayout}"
     api project(':other-lib')
+    //MagicIndicator
+    api 'com.github.hackware1993:MagicIndicator:1.5.0'
 }

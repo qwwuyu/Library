@@ -1,4 +1,4 @@
-package com.qwwuyu.lib.utils.helper;
+package com.qwwuyu.lib.helper;
 
 import java.util.ArrayList;
 import java.util.List;

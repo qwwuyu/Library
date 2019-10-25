@@ -63,6 +63,7 @@
 -keepattributes Signature
 -keepattributes Exceptions,InnerClasses,Signature,SourceFile,LineNumberTable
 -keepattributes *Annotation*
+-keepattributes InnerClasses -dontoptimize
 -keep public class com.google.vending.licensing.ILicensingService
 -keep public class com.android.vending.licensing.ILicensingService
 
@@ -76,22 +77,24 @@
 -keepclassmembers class **.R$* {
     public static <fields>;
 }
--keep class android.support.** { *; }
--dontwarn android.support.**
 
--keep class android.support.annotation.Keep
--keep @android.support.annotation.Keep class * {*;}
+# support todo
+-keep class com.google.android.material.** { *; }
+-dontwarn com.google.android.material.**
+-dontnote com.google.android.material.**
+-dontwarn androidx.**
+-keep class androidx.** { *; }
+-keep interface androidx.** { *; }
+-keep class androidx.annotation.Keep
+-keep @androidx.annotation.Keep class * {*;}
 -keepclasseswithmembers class * {
-    @android.support.annotation.Keep <methods>;
+    @androidx.annotation.Keep <methods>;
 }
 -keepclasseswithmembers class * {
-    @android.support.annotation.Keep <fields>;
+    @androidx.annotation.Keep <fields>;
 }
 -keepclasseswithmembers class * {
-    @android.support.annotation.Keep <init>(...);
+    @androidx.annotation.Keep <init>(...);
 }
--keepattributes InnerClasses -dontoptimize
 ################### 以上固定 package:com.qwwuyu.example
-#bugly
--dontwarn com.tencent.bugly.**
--keep public class com.tencent.bugly.**{*;}
+# package todo

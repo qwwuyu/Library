@@ -1,6 +1,6 @@
 package com.qwwuyu.lib.stadyTest;
 
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 
 import com.qwwuyu.lib.utils.permit.PermitUtil;
 import com.qwwuyu.lib.utils.permit.ProceedCallback;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -26,7 +26,7 @@
         android:id="@+id/btn3"
         style="@style/btn"
         android:onClick="onClick3"
-        android:text="Toast"
+        android:text="Test"
         app:layout_constraintTop_toBottomOf="@id/btn2"/>
 
     <Button
@@ -35,20 +35,6 @@
         android:onClick="onClick4"
         android:text="Log"
         app:layout_constraintTop_toBottomOf="@id/btn3"/>
-
-    <Button
-        android:id="@+id/btn5"
-        style="@style/btn"
-        android:onClick="onClick5"
-        android:text="empty"
-        app:layout_constraintTop_toBottomOf="@id/btn4"/>
-
-    <Button
-        android:id="@+id/btn6"
-        style="@style/btn"
-        android:onClick="onClick6"
-        android:text="j8 default"
-        app:layout_constraintTop_toBottomOf="@id/btn5"/>
 
     <TextView
         android:id="@+id/tv"
@@ -59,4 +45,4 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         tools:text="233"/>
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

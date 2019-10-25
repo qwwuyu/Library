@@ -36,7 +36,7 @@ public class ProgressResponseBody extends RequestBody {
     }
 
     @Override
-    public void writeTo(@android.support.annotation.NonNull BufferedSink sink) throws IOException {
+    public void writeTo(@androidx.annotation.NonNull BufferedSink sink) throws IOException {
         try {
             CountingSink countingSink = new CountingSink(sink);
             BufferedSink bufferedSink = Okio.buffer(countingSink);
@@ -57,7 +57,7 @@ public class ProgressResponseBody extends RequestBody {
         }
 
         @Override
-        public void write(@android.support.annotation.NonNull Buffer source, long byteCount) throws IOException {
+        public void write(@androidx.annotation.NonNull Buffer source, long byteCount) throws IOException {
             super.write(source, byteCount);
             written += byteCount;
             if (listener != null) listener.onProgressUpdate(written, contentLength());

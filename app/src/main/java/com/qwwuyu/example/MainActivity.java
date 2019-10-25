@@ -2,7 +2,6 @@ package com.qwwuyu.example;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
 
@@ -10,16 +9,16 @@ import com.qwwuyu.example.activity.ColorActivity;
 import com.qwwuyu.example.activity.ELMActivity;
 import com.qwwuyu.example.activity.GyroActivity;
 import com.qwwuyu.example.activity.HttpActivity;
-import com.qwwuyu.example.activity.TestActivity;
 import com.qwwuyu.example.mvp.MvpActivity;
 import com.qwwuyu.lib.mvp.BaseMvpActivity;
 import com.qwwuyu.lib.mvp.BasePresenter;
 import com.qwwuyu.lib.utils.CommUtil;
 import com.qwwuyu.lib.utils.LogUtils;
 import com.qwwuyu.lib.utils.SystemBarUtil;
-import com.qwwuyu.lib.utils.ToastUtil;
 import com.qwwuyu.lib.widget.MultipleStateLayout;
 import com.qwwuyu.lib.widget.TitleView;
+
+import androidx.core.content.ContextCompat;
 
 public class MainActivity extends BaseMvpActivity {
     private static int[] flag = new int[10];
@@ -63,14 +62,6 @@ public class MainActivity extends BaseMvpActivity {
     }
 
     public void onClick3(View v) {
-        startActivity(new Intent(this, TestActivity.class));
-    }
-
-    public void onClick4(View v) {
-        LogUtils.i(BuildConfig.TEST);
-    }
-
-    public void onClick5(View v) {
         int i = 2, num = 3, index = -1;
         if (flag[i] % num == ++index) {
             startActivity(new Intent(this, HttpActivity.class));
@@ -80,8 +71,8 @@ public class MainActivity extends BaseMvpActivity {
         flag[i]++;
     }
 
-    public void onClick6(View v) {
-        ToastUtil.show(new AJ8().s());
+    public void onClick4(View v) {
+        LogUtils.i(BuildConfig.TEST);
     }
 
     class AJ8 implements J8 {

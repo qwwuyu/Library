@@ -123,7 +123,7 @@ public class CodeView extends LinearLayout implements View.OnClickListener {
     }
 
     /** 监听删除的EditText */
-    private class DelListenerEditText extends android.support.v7.widget.AppCompatEditText {
+    private class DelListenerEditText extends androidx.appcompat.widget.AppCompatEditText {
         public DelListenerEditText(Context context) {
             super(context);
         }
