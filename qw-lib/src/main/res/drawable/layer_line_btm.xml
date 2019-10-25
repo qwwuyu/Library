@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:gravity="bottom">
+        <shape android:shape="rectangle">
+            <size android:height="@dimen/def_view_line"/>
+            <solid android:color="@color/def_view_line"/>
+        </shape>
+    </item>
+</layer-list>

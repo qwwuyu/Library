@@ -1,39 +1,39 @@
 package com.qwwuyu.lib.mvp;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Callback;
 
 /**
- * Created by qiwei on 2019/6/26.
+ *
  */
-public class RxBaseModel implements BaseModel{
-     private CompositeDisposable compositeDisposable;
+public class RxBaseModel implements BaseModel {
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-     public RxBaseModel() {
-          compositeDisposable= new CompositeDisposable();
-     }
+    public RxBaseModel() {
+    }
 
-     public <V extends Void> void subscribe(Flowable<V> flowable, final Callback<V> callback) {
-          if (flowable == null || callback == null) {
-               return;
-          }
-          compositeDisposable.add(flowable
-                  .subscribeOn(Schedulers.io())
-                  .observeOn(AndroidSchedulers.mainThread())
-                  .subscribe(t -> {
-                       t.notify();
-                       t.notify();
-                  }, throwable -> {
-                       throwable.notify();
-                       throwable.notify();
-                  }));
-     }
+    @Override
+    public void destroy() {
+        compositeDisposable.clear();
+    }
 
-     @Override
-     public void destroy() {
-          compositeDisposable.clear();
-     }
+    public <T> void subscribe(final Observable<T> observable, final DisposableObserver<T> callback) {
+        if (observable == null || callback == null) {
+            return;
+        }
+        compositeDisposable.add(toSubscribe(observable, callback));
+    }
+
+    /**
+     * 设置订阅 和 所在的线程环境
+     */
+    public <T> DisposableObserver<T> toSubscribe(Observable<T> o, DisposableObserver<T> s) {
+        return o.subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(s);
+    }
 }

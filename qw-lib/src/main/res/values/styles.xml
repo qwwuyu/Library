@@ -17,51 +17,59 @@
 
     <!-- ======================== Activity ======================== -->
     <!-- 常用Act -->
-    <style name="AppTheme.Default">
-    </style>
+    <style name="AppTheme.Default"/>
     <!-- LauncherStyle -->
     <style name="AppTheme.Launcher">
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowAnimationStyle">@style/LauncherAnimation</item>
+        <item name="android:windowBackground">@drawable/layer_launcher</item>
+        <!--<item name="android:windowDrawsSystemBarBackgrounds">false</item>-->
     </style>
+    <!-- LoginAct -->
+    <style name="AppTheme.Login"/>
     <!-- MainAct -->
-    <style name="AppTheme.Main">
-    </style>
+    <style name="AppTheme.Main"/>
 
-    <style name="LauncherAnimation" parent="@android:style/Animation.Activity">
-        <item name="android:windowEnterAnimation">@anim/anim_no</item>
-        <item name="android:windowExitAnimation">@anim/system_close_exit</item>
-        <item name="android:taskToBackEnterAnimation">@null</item>
-        <item name="android:taskToBackExitAnimation">@null</item>
-    </style>
     <!-- Search -->
     <style name="AppTheme.Search">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowEnterAnimation">@anim/system_open_enter</item>
-        <item name="android:windowExitAnimation">@anim/alpha_no</item>
+        <item name="android:windowEnterAnimation">@anim/alpha_in</item>
+        <item name="android:windowExitAnimation">@anim/alpha_out</item>
     </style>
     <!-- TransStyle -->
     <style name="AppTheme.Trans">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowAnimationStyle">@style/TransAnimation</item>
+        <item name="android:windowAnimationStyle">@style/ActAnimTrans</item>
     </style>
 
-    <style name="TransAnimation" parent="@android:style/Animation.Activity">
-        <item name="android:windowEnterAnimation">@anim/alpha_in</item>
-        <item name="android:windowExitAnimation">@anim/alpha_out</item>
-        <item name="android:taskToBackEnterAnimation">@null</item>
-        <item name="android:taskToBackExitAnimation">@null</item>
+    <style name="ActAnimTrans" parent="@android:style/Animation"/>
+    <!-- ======================== dialog ======================== -->
+    <style name="DialogDef" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
-    <!-- ======================== TitleView ======================== -->
-    <style name="TitleTextView">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:textSize">@dimen/fontNormal</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/def_txt_normal</item>
+    <style name="DialogTrans" parent="DialogDef">
+        <item name="android:backgroundDimEnabled">false</item>
     </style>
+
+    <style name="DialogBtm" parent="DialogDef">
+        <item name="android:windowAnimationStyle">@style/DialogAnimBtm</item>
+    </style>
+
+    <style name="DialogAnimBtm" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/dialog_btm_in</item>
+        <item name="android:windowExitAnimation">@anim/dialog_btm_out</item>
+    </style>
+
+    <style name="ProgressBar" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/layer_progress</item>
+    </style>
+    <!-- ======================== 子模块 ======================== -->
 </resources>

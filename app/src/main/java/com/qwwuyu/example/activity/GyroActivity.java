@@ -11,10 +11,10 @@ import android.view.ViewTreeObserver;
 import com.github.chrisbanes.photoview.OnDoubleTapDefaultListener;
 import com.github.chrisbanes.photoview.PhotoViewAttacher;
 import com.qwwuyu.example.R;
-import com.qwwuyu.lib.mvp.BaseMvpActivity;
+import com.qwwuyu.lib.base.BaseMvpActivity;
 import com.qwwuyu.lib.mvp.BasePresenter;
 import com.qwwuyu.lib.utils.CommUtil;
-import com.qwwuyu.lib.utils.DisplayUtil;
+import com.qwwuyu.lib.utils.DisplayUtils;
 import com.qwwuyu.lib.widget.MultipleStateLayout;
 import com.qwwuyu.lib.widget.TitleView;
 import com.qwwuyu.widget.drawable.card.RoundRectDrawableWithShadow;
@@ -85,7 +85,7 @@ public class GyroActivity extends BaseMvpActivity {
 
 //        ViewCompat.setBackground(shadowView, new ShadowDrawableWrapper(
 //                this, new ColorDrawable(ContextCompat.getColor(this, R.color.colorPrimary)),
-//                DisplayUtil.dp2px(5), DisplayUtil.dp2px(5), DisplayUtil.dp2px(5)));
+//                DisplayUtils.dp2px(5), DisplayUtils.dp2px(5), DisplayUtils.dp2px(5)));
         ColorStateList stateList = new ColorStateList(new int[][]{
                 new int[]{-android.R.attr.state_enabled},
                 new int[]{android.R.attr.state_pressed},
@@ -96,7 +96,7 @@ public class GyroActivity extends BaseMvpActivity {
                 Color.RED,
         });
         ViewCompat.setBackground(shadowView, new RoundRectDrawableWithShadow(getResources(), stateList,
-                DisplayUtil.dp2px(5), DisplayUtil.dp2px(5), DisplayUtil.dp2px(5)));
+                DisplayUtils.dp2px(5), DisplayUtils.dp2px(5), DisplayUtils.dp2px(5)));
         shadowView.setOnClickListener(v -> shadowView.setEnabled(false));
     }
 }

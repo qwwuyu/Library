@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- ======================== 主题color ======================== -->
-    <color name="colorPrimary">#ff343538</color>
-    <color name="colorPrimaryDark">#ff2C2D30</color>
+    <color name="colorPrimary">#ffffffff</color>
+    <color name="colorPrimaryDark">#ffffffff</color>
     <color name="colorAccent">#ff2299ff</color>
-
-    <color name="textColorPrimary">#FDFEFF</color>
     <!-- ======================== 基础color ======================== -->
     <color name="trans">#00000000</color>
     <color name="trans50">#50000000</color>
@@ -40,25 +38,17 @@
     <color name="orange50_bg_def">#55ff9977</color>
     <color name="orange50_bg_pressed">#55e46850</color>
     <color name="orange_bg_enabled">#ffb0b0b0</color>
-    <!-- 蓝色 -->
-    <color name="blue_def">#3F51B5</color>
-    <color name="blue_light">#C5CAE9</color>
-    <color name="blue_dark">#303F9F</color>
-    <!-- 红粉色 -->
-    <color name="red_def">#FF4081</color>
-    <color name="red_light">#FF80AB</color>
-    <color name="red_dark">#F50057</color>
 
     <!-- ======================== 默认color ======================== -->
     <!-- 常用的颜色 -->
-    <color name="comm_color">#ff2299ff</color>
+    <color name="comm_color">@color/colorAccent</color>
     <!-- 默认界面背景色 -->
     <color name="def_content_bg">#ffebebeb</color>
     <!-- 分割线颜色 -->
     <color name="def_view_line">#ffcccccc</color>
     <color name="def_view_line_dark">#ff313236</color>
     <!-- 常用字体白色 -->
-    <color name="def_font_w">#ffffffff</color>
+    <color name="def_font_ff">#ffffffff</color>
     <!-- 常用字体黑色 -->
     <color name="def_font_22">#ff222222</color>
     <color name="def_font_b5">#ffb5b5b5</color>
@@ -72,19 +62,14 @@
     <color name="def_edit_hint">#FFB4B4B4</color>
     <!-- 默认按钮-->
     <color name="def_btn_txt">#ffffffff</color>
-    <color name="def_btn_bg_def">#fffe7252</color>
-    <color name="def_btn_bg_pressed">#e46850</color>
-    <color name="def_btn_bg_enabled">#ffb0b0b0</color>
-    <color name="def_btn_bg_enabled2">#fffe957d</color>
+    <color name="def_btn_bg_def">@color/blue_bg_def</color>
+    <color name="def_btn_bg_pressed">@color/blue_bg_pressed</color>
+    <color name="def_btn_bg_enabled">@color/blue_bg_enabled</color>
     <color name="def_btn_bg_white_pressed">#11ffffff</color>
     <color name="def_btn_bg_black_pressed">#11000000</color>
-    <!-- 默认透明白色Dialog背景色 -->
-    <color name="def_dialog_bg_white">#CCF4F4F4</color>
-    <color name="def_dialog_line">#ffbbbbbb</color>
-    <color name="def_dialog_btn_txt">#ff17a1f0</color>
     <!-- 默认item添加选择色 -->
-    <color name="def_item_black">#22000000</color>
-    <color name="def_item_white">#22ffffff</color>
+    <color name="def_item_black">#11000000</color>
+    <color name="def_item_white">#11ffffff</color>
     <color name="def_item_normal">#ffffffff</color>
     <color name="def_item_pressed">#ffd9d9d9</color>
 </resources>

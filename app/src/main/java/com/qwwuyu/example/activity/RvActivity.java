@@ -7,7 +7,7 @@ import android.view.View;
 import com.qwwuyu.example.R;
 import com.qwwuyu.lib.adapter.SimpleAdapter;
 import com.qwwuyu.lib.adapter.SimpleViewHolder;
-import com.qwwuyu.lib.utils.DrawableUtil;
+import com.qwwuyu.lib.utils.DrawableUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -42,7 +42,7 @@ public class RvActivity extends AppCompatActivity {
             @Override
             public void onBind(int position, SimpleViewHolder holder, String data) {
                 holder.setText(R.id.tv, data);
-                ViewCompat.setBackground(holder.getView(R.id.tv), DrawableUtil.getRectangleRadius(colors.get(position), 40));
+                ViewCompat.setBackground(holder.getView(R.id.tv), DrawableUtils.getRectangleRadius(colors.get(position), 40));
             }
         });
 

@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.qwwuyu.example.R;
-import com.qwwuyu.lib.mvp.BaseMvpActivity;
+import com.qwwuyu.lib.base.BaseMvpActivity;
 import com.qwwuyu.lib.mvp.BasePresenter;
 import com.qwwuyu.lib.utils.ToastUtil;
 import com.qwwuyu.lib.widget.MultipleStateLayout;

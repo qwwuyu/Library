@@ -1,17 +1,23 @@
 package com.qwwuyu.lib.mvp;
 
+import androidx.annotation.Nullable;
+
 /**
- * Created by qiwei on 2019/6/24 17:37.
- * Description .
+ *
  */
 public interface IStateLayout {
+    /** 显示内容 */
     void showContentLayout();
 
-    void showLoadingLayout();
+    /** 显示加载条 */
+    void showLoadingLayout(@Nullable CharSequence text);
 
-    void showEmptyLayout();
+    /** 显示空布局 */
+    void showEmptyLayout(@Nullable CharSequence text);
 
-    void showErrorLayout();
+    /** 显示出错布局 */
+    void showErrorLayout(@Nullable CharSequence text);
 
-    void showNetworkLayout();
+    /** 显示网络问题布局 */
+    void showNetworkLayout(@Nullable CharSequence text);
 }

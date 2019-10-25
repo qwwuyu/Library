@@ -1,13 +1,22 @@
 package com.qwwuyu.lib.mvp;
 
+import android.content.Context;
+
+import androidx.annotation.Nullable;
+
 /**
- * Created by qiwei on 2018/4/19 17:17
- * Description .
+ *
  */
 public interface BaseView extends IStateLayout {
-    void showLoadingDialog(CharSequence message);
+    /** 获取Context */
+    Context getContext();
 
+    /** 显示弹窗dialog */
+    void showLoadingDialog(@Nullable CharSequence message);
+
+    /** 隐藏弹窗dialog */
     void hideLoadingDialog();
 
-    void showError(String code, String msg);
+    /** 显示信息提示(Toast) */
+    void showError(int code, String msg);
 }

@@ -142,7 +142,7 @@ public class ModeView extends RelativeLayout implements View.OnClickListener {
             tv.setTextColor(0xffffffff);
             if (i == 0) {
                 tv.setCompoundDrawablePadding(dip2px(2));
-                Drawable nav_up = getResources().getDrawable(R.drawable.img_del_press);
+                Drawable nav_up = getResources().getDrawable(R.drawable.ic_del_press);
                 nav_up.setBounds(0, 0, nav_up.getMinimumWidth(), nav_up.getMinimumHeight());
                 tv.setCompoundDrawables(null, null, nav_up, null);
             }
@@ -159,9 +159,9 @@ public class ModeView extends RelativeLayout implements View.OnClickListener {
         isOpen = open;
         Drawable nav_up;
         if (isOpen) {
-            nav_up = getResources().getDrawable(R.drawable.img_del);
+            nav_up = getResources().getDrawable(R.drawable.ic_del);
         } else {
-            nav_up = getResources().getDrawable(R.drawable.img_del_press);
+            nav_up = getResources().getDrawable(R.drawable.ic_del_press);
         }
         nav_up.setBounds(0, 0, nav_up.getMinimumWidth(), nav_up.getMinimumHeight());
         tvs[0].setCompoundDrawables(null, null, nav_up, null);

@@ -7,6 +7,11 @@
         <item name="android:layout_height">@dimen/def_view_line</item>
         <item name="android:background">@color/def_view_line</item>
     </style>
+    <!-- 横线 -->
+    <style name="line_mg" parent="line">
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+    </style>
     <!-- 竖线 -->
     <style name="line_h" parent="line">
         <item name="android:layout_width">@dimen/def_view_line</item>
@@ -59,7 +64,6 @@
         <item name="android:layout_height">@dimen/def_item_height</item>
         <item name="android:background">@drawable/select_def_item</item>
     </style>
-    <!-- ======================== md样式 ======================== -->
     <!-- 默认toolBar样式 -->
     <style name="def_toolBar">
         <item name="android:id">@id/tool_bar</item>
@@ -69,7 +73,7 @@
         <item name="android:background">@color/colorPrimary</item>
         <item name="titleTextAppearance">@style/ToolBar_Title</item>
     </style>
-
+    <!-- ======================== md样式 ======================== -->
     <!-- Toolbar样式 -->
     <style name="ToolBar" parent="Widget.AppCompat.Toolbar">
         <item name="contentInsetStart">0dp</item>
@@ -108,7 +112,7 @@
 
     <!-- ActionButtonOverflow样式 Widget.AppCompat.ActionButton.Overflow -->
     <style name="ToolBar_ActionButtonOverflow">
-        <item name="android:src">@drawable/img_more</item>
+        <item name="android:src">@drawable/ic_more</item>
         <item name="android:background">@drawable/select_def_item_white</item>
         <item name="android:minWidth">@dimen/toolBar_abo_w</item>
         <item name="android:minHeight">@dimen/toolBar_height</item>

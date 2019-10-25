@@ -1,9 +1,10 @@
 package com.qwwuyu.example;
 
+import android.content.Context;
+
 import com.qwwuyu.lib.base.BaseApplication;
+import com.qwwuyu.lib.helper.DfrHelper;
 import com.qwwuyu.lib.utils.CommUtil;
-import com.qwwuyu.lib.utils.DfrUtil;
-import com.qwwuyu.lib.utils.InitUtil;
 import com.qwwuyu.lib.utils.LogUtils;
 
 import androidx.lifecycle.Lifecycle;
@@ -14,13 +15,16 @@ import androidx.lifecycle.OnLifecycleEvent;
  * Created by qiwei on 2017/7/13
  */
 public class TApplication extends BaseApplication {
+    public static Context context;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        context = getApplicationContext();
         if (!CommUtil.isInMainProcess(getApplicationContext())) return;
 
         new LogUtils.Builder().enableLogHead(true).setHeadSep(" : ").setLogTag("qwwuyu");
-        DfrUtil.getInstance().setEnable(BuildConfig.DEBUG);
+        DfrHelper.getInstance().setEnable(BuildConfig.DEBUG);
         KeepLifecycleCallbacks callbacks = new KeepLifecycleCallbacks() {
             @Override
             protected void wakeOnce() {
@@ -40,10 +44,5 @@ public class TApplication extends BaseApplication {
         public void onAppForegrounded() {
             LogUtils.i("onAppForegrounded");
         }
-    }
-
-    @Override
-    protected void modifyConfig(InitUtil.Configuration config) {
-
     }
 }

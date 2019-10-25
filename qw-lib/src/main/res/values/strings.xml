@@ -1,4 +1,26 @@
 <resources>
+    <!-- ======================== 默认string ======================== -->
+    <string name="space">\u0020</string>
+    <string name="space2">\u0020\u0020</string>
+    <string name="empty_data">--</string>
+
+    <string name="ok">确认</string>
+    <string name="confirm">确定</string>
+    <string name="setting">设置</string>
+    <string name="setting_long">应用设置</string>
+
+    <string name="dialog_title_hint">温馨提示</string>
+    <string name="dialog_hint_default">加载中&#8230;</string>
+    <string name="dialog_hint_getting">获取中&#8230;</string>
+    <string name="dialog_hint_submitting">提交中&#8230;</string>
+    <string name="dialog_hint_handing">操作中&#8230;</string>
+
+    <string name="toast_error">操作失败</string>
+
+    <string name="state_empty">暂无数据～</string>
+    <string name="state_error">获取数据失败</string>
+    <string name="state_network">当前无网络，请检查您的网络</string>
+
     <!-- contentDescription -->
     <string name="ActionButtonOverflow"/>
 </resources>

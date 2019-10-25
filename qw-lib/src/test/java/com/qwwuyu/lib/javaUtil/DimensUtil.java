@@ -70,9 +70,9 @@ public class DimensUtil {
     }
 
     private enum Size {
+        //LDPI("ldpi", 5, 3, 1, 3, 1, 3),
+        //MDPI("mdpi", 15, 8, 3, 8, 3, 8),
         HDPI("hdpi", 50, 24, 10, 24, 10, 24),
-        LDPI("ldpi", 5, 3, 1, 3, 1, 3),
-        MDPI("mdpi", 15, 8, 3, 8, 3, 8),
         XHDPI("xhdpi", 5, 2, 1, 2, 1, 2),
         XXHDPI("xxhdpi", 5, 2, 1, 2, 1, 2),
         LARGE("large", 380, 100, 44, 100, 2, 3),

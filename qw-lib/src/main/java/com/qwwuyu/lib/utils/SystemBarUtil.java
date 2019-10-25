@@ -74,7 +74,7 @@ public class SystemBarUtil {
         @Override
         public void setStatusBarColor(Activity activity, int color) {
             activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            addFakeStatusBarView(activity, color, DisplayUtil.getStatusBarHeight());
+            addFakeStatusBarView(activity, color, DisplayUtils.getStatusBarHeight());
         }
 
         @Override
@@ -193,10 +193,10 @@ public class SystemBarUtil {
             mTranslucentStatusBar = translucentStatusBar;
             mTranslucentNavBar = translucentNavBar;
             mInPortrait = activity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
-            mSmallestWidthDp = Math.min(DisplayUtil.widthDp(), DisplayUtil.heightDp());
-            mStatusBarHeight = DisplayUtil.getStatusBarHeight();
-            mNavigationBarHeight = DisplayUtil.hasNavBar() ? mInPortrait ? DisplayUtil.getNavBarHeight() : DisplayUtil.getNavBarHeightLand() : 0;
-            mNavigationBarWidth = DisplayUtil.hasNavBar() ? DisplayUtil.getNavBarWidth() : 0;
+            mSmallestWidthDp = Math.min(DisplayUtils.widthDp(), DisplayUtils.heightDp());
+            mStatusBarHeight = DisplayUtils.getStatusBarHeight();
+            mNavigationBarHeight = DisplayUtils.hasNavBar() ? mInPortrait ? DisplayUtils.getNavBarHeight() : DisplayUtils.getNavBarHeightLand() : 0;
+            mNavigationBarWidth = DisplayUtils.hasNavBar() ? DisplayUtils.getNavBarWidth() : 0;
             mHasNavigationBar = mNavigationBarHeight > 0;
         }
 

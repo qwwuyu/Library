@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
+    <integer name="slide_duration">250</integer>
     <!-- ToolBar -->
     <item name="tool_bar" type="id"/>
     <!-- 根布局id -->
     <item name="layout_root" type="id"/>
-    <!-- MultipleStateLayout的重试控件ids -->
-    <item name="retry_empty" type="id"/>
-    <item name="retry_error" type="id"/>
-    <item name="retry_network" type="id"/>
-
-    <item name="body" type="id"/>
-    <item name="message" type="id"/>
-    <item name="progress" type="id"/>
+    <!-- MultipleStateLayout的ids -->
+    <item name="view_retry" type="id"/>
+    <item name="view_text" type="id"/>
 </resources>

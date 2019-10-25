@@ -5,6 +5,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
 
+import com.qwwuyu.lib.base.BaseApplication;
+
 import androidx.annotation.StringRes;
 
 /**
@@ -16,17 +18,9 @@ public final class ToastUtil {
     private static Handler handler = new Handler(Looper.getMainLooper());
     /** 懒加载单例Toast */
     private static Toast toast;
-    /** ApplicationContext */
-    private static Context appContext;
-
-    public static void init(Context context) {
-        if (appContext == null) {
-            appContext = context.getApplicationContext();
-        }
-    }
 
     private static Context getContext() {
-        return appContext;
+        return BaseApplication.context;
     }
 
     public static void show(Object text) {
@@ -38,7 +32,7 @@ public final class ToastUtil {
     }
 
     public static void show(Object text, int duration) {
-        if (text == null) return;
+        if (text == null || text.toString().length() == 0) return;
         showToast(text.toString(), duration);
     }
 

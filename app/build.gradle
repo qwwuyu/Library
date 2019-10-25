@@ -16,14 +16,10 @@ android {
         targetSdkVersion configs.targetSdkVersion
         versionCode configs.versionCode
         versionName configs.versionName
-        // dex突破65535的限制
+
         multiDexEnabled true
-        // 设置支持的SO库架构
         //ndk { abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a', 'x86', 'x86-64' }
-        // 替换manifest属性
-        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "baidu"]
-        // 设置BuildConfig
-        buildConfigField "String", "BASE_URL", "\"https://www.qwwuyu.com\""
+        manifestPlaceholders = [PACKAGE_NAME: "${android.defaultConfig.applicationId}"]
     }
 
     if (signInfo.isSign) {
@@ -41,29 +37,34 @@ android {
         debug {
             if (signInfo.isSign) signingConfig signingConfigs.sign
             versionNameSuffix ".debug"
-            debuggable true
             zipAlignEnabled false
+            shrinkResources false
             minifyEnabled false
             proguardFiles 'proguard-rules.pro'
-            shrinkResources false
-            ndk { abiFilters "armeabi", "x86" }
+            ndk { abiFilters "armeabi-v7a", "x86" }
+            aaptOptions.cruncherEnabled = false
+
+            buildConfigField "String", "BASE_URL", "\"http://localhost:8080\""
             buildConfigField "boolean", "TEST", "$configs.test"
         }
         release {
             if (signInfo.isSign) signingConfig signingConfigs.sign
-            debuggable false
             zipAlignEnabled true
+            shrinkResources true
             minifyEnabled true
             proguardFiles 'proguard-rules.pro'
-            shrinkResources true
-            ndk { abiFilters "armeabi", "x86" }
+            ndk { abiFilters "armeabi-v7a" }
+
+            buildConfigField "String", "BASE_URL", "\"http://www.qwwuyu.com:8080\""
             buildConfigField "boolean", "TEST", "false"
         }
         ts {
-            initWith debug
-            matchingFallbacks = ['debug']
+            initWith release
+            matchingFallbacks = ['release']
             versionNameSuffix ".ts"
-            buildConfigField "String", "BASE_URL", "\"https://old.qwwuyu.com\""
+
+            getBuildConfigFields().remove("BASE_URL")
+            buildConfigField "String", "BASE_URL", "\"http://www.qwwuyu.com:8080\""
         }
     }
 
@@ -77,31 +78,33 @@ android {
             dimension "log"
             buildConfigField "boolean", "LOG", "false"
         }
-        baidu {
+        dev {
             dimension "channel"
         }
-        qq {
+        pub {
             dimension "channel"
         }
     }
     variantFilter { variant ->
         def names = variant.flavors*.name
-        if (names.contains("nolog") && variant.buildType.name != "release") {
+        if (names.contains("nolog") && (!names.contains("pub") || variant.buildType.name != "release")) {
+            setIgnore(true)
+        } else if (names.contains("log") && (names.contains("pub"))) {
             setIgnore(true)
         }
     }
     productFlavors.all { flavor ->
         if ("channel" == flavor.dimension) {
-            flavor.addManifestPlaceholders([UMENG_CHANNEL_VALUE: name])
+            flavor.addManifestPlaceholders([CHANNEL: name])
         }
     }
     android.applicationVariants.all { variant ->
         variant.outputs.all { output ->
-            def name = "v${variant.mergedFlavor.versionName}%s%s%s.apk"
+            def name = "v${variant.mergedFlavor.versionName}_${variant.mergedFlavor.versionCode}%s%s%s.apk"
             def channel = "", log = "", buildType = "_" + variant.buildType.name
             variant.productFlavors.each { flavor ->
-                if (flavor.dimension == "channel") channel = "_" + flavor.name
                 if (flavor.dimension == "log" && flavor.name == "log") log = "_" + flavor.name
+                if (flavor.dimension == "channel") channel = "_" + flavor.name
             }
             outputFileName = String.format(name, channel, log, buildType)
         }

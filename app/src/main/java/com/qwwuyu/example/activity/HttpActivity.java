@@ -9,7 +9,7 @@ import com.google.gson.Gson;
 import com.qwwuyu.example.R;
 import com.qwwuyu.lib.http.body.ProgressResponseBody;
 import com.qwwuyu.lib.http.interceptor.HttpLoggingInterceptor;
-import com.qwwuyu.lib.mvp.BaseMvpActivity;
+import com.qwwuyu.lib.base.BaseMvpActivity;
 import com.qwwuyu.lib.mvp.BasePresenter;
 import com.qwwuyu.lib.utils.LogUtils;
 import com.qwwuyu.lib.widget.MultipleStateLayout;

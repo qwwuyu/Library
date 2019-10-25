@@ -10,7 +10,7 @@ import com.qwwuyu.example.activity.ELMActivity;
 import com.qwwuyu.example.activity.GyroActivity;
 import com.qwwuyu.example.activity.HttpActivity;
 import com.qwwuyu.example.mvp.MvpActivity;
-import com.qwwuyu.lib.mvp.BaseMvpActivity;
+import com.qwwuyu.lib.base.BaseMvpActivity;
 import com.qwwuyu.lib.mvp.BasePresenter;
 import com.qwwuyu.lib.utils.CommUtil;
 import com.qwwuyu.lib.utils.LogUtils;
