@@ -3,14 +3,11 @@ package com.qwwuyu.lib.widget.banner;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
-import android.os.Message;
 import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-
-import com.qwwuyu.lib.helper.SafeHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,7 +22,7 @@ import androidx.viewpager.widget.ViewPager;
  * 轮播图控件
  */
 @SuppressLint("ClickableViewAccessibility")
-public class BannerView extends FrameLayout implements Handler.Callback {
+public class BannerView extends FrameLayout {
     private final int WHAT_LOOP = 100;
     private final ViewPager viewPager;
     private BannerAdapter adapter;
@@ -34,7 +31,7 @@ public class BannerView extends FrameLayout implements Handler.Callback {
     private int offset;
 
     private boolean destroy = true;
-    private SafeHandler handler;
+    private Handler handler;
 
     public BannerView(Context context) {
         this(context, null);
@@ -60,7 +57,13 @@ public class BannerView extends FrameLayout implements Handler.Callback {
         this.adapter = bannerAdapter;
         this.count = adapter.getCount();
         this.offset = 1000 - (1000 % count);
-        handler = new SafeHandler(this);
+        handler = new Handler(msg -> {
+            if (WHAT_LOOP == msg.what) {
+                viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+                handler.sendEmptyMessageDelayed(msg.what, adapter.loopTime());
+            }
+            return true;
+        });
         vpAdapter = new VPAdapter(adapter, offset);
         viewPager.setAdapter(vpAdapter);
         viewPager.setCurrentItem(offset);
@@ -83,7 +86,7 @@ public class BannerView extends FrameLayout implements Handler.Callback {
         if (destroy) return;
         destroy = true;
         if (handler != null) {
-            handler.onDestroy();
+            handler.removeCallbacksAndMessages(null);
             handler = null;
         }
         viewPager.setAdapter(null);
@@ -107,15 +110,6 @@ public class BannerView extends FrameLayout implements Handler.Callback {
         if (handler != null) {
             handler.removeMessages(WHAT_LOOP);
         }
-    }
-
-    @Override
-    public boolean handleMessage(Message msg) {
-        if (WHAT_LOOP == msg.what) {
-            viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
-            handler.sendEmptyMessageDelayed(msg.what, adapter.loopTime());
-        }
-        return true;
     }
 
     private static int position2index(BannerAdapter adapter, int offset, int position) {

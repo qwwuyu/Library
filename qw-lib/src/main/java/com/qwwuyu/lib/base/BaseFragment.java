@@ -2,8 +2,6 @@ package com.qwwuyu.lib.base;
 
 import android.os.Bundle;
 
-import com.qwwuyu.lib.helper.FragmentVisibleHelper;
-
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import io.reactivex.annotations.NonNull;

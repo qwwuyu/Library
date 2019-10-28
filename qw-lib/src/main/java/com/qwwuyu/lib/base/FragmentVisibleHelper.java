@@ -1,4 +1,4 @@
-package com.qwwuyu.lib.helper;
+package com.qwwuyu.lib.base;
 
 import java.util.List;
 

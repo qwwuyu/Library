@@ -12,7 +12,7 @@ import android.provider.MediaStore;
 /**
  * Description 通过uri获取绝对路径.
  */
-public class GetPathUtil {
+public class GetPathHelper {
     /**
      * 专为Android4.4设计的从Uri获取文件绝对路径，以前的方法已不好使
      */

@@ -1,4 +1,4 @@
-package com.qwwuyu.lib.clazz;
+package com.qwwuyu.lib.adapter;
 
 import android.graphics.Rect;
 import android.view.View;

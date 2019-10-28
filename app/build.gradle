@@ -2,6 +2,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'org.greenrobot.greendao'
+greendao {
+    schemaVersion 1
+    daoPackage 'com.qwwuyu.example.database'
+    //targetGenDir 'src/main/java'
+}
+
 apply plugin: 'com.getkeepsafe.dexcount'
 dexcount {
     includeTotalMethodCount = true
@@ -139,4 +146,6 @@ dependencies {
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-3'
     //glide
     annotationProcessor "com.github.bumptech.glide:compiler:$versions.glide"
+    // greendao
+    implementation 'org.greenrobot:greendao:3.2.2'
 }

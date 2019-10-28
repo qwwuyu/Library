@@ -59,7 +59,7 @@ public class LogUtils {
     private static final int    MAX_LEN       = 4000;
     private static final String NULL          = "null";
 
-    public static final boolean log  = BuildConfig.DEBUG;
+    public static final boolean LOG  = BuildConfig.DEBUG;
     private static String  logTag    = null;
     private static boolean logHead   = false;
     private static boolean logBorder = false;
@@ -171,7 +171,7 @@ public class LogUtils {
     }
 
     public static void onError(final Throwable e, int flag) {
-        if (log && logFilter < E) {
+        if (LOG && logFilter < E) {
             logError(e);
             if (onErrorListener != null) {
                 onErrorListener.onError(e, flag);
@@ -180,42 +180,42 @@ public class LogUtils {
     }
 
     public static void printStackTrace(Throwable e) {
-        if (log && logFilter < E) {
+        if (LOG && logFilter < E) {
             e.printStackTrace();
         }
     }
 
     public static void logError(Throwable e) {
-        if (log && logFilter < E) {
-            log(E, "StackTrace", 4, Log.getStackTraceString(e));
+        if (LOG && logFilter < E) {
+            log(E, logHead, "StackTrace", 3, Log.getStackTraceString(e));
             e.printStackTrace();
         }
     }
 
     public static void logThread(String tag) {
-        if (log) {
-            log(I, tag, 4, "isMainThread=%b", Looper.myLooper() == Looper.getMainLooper());
+        if (LOG) {
+            log(I, logHead, tag, 3, "isMainThread=%b", Looper.myLooper() == Looper.getMainLooper());
         }
     }
 
     /** 处理日志 */
     private static void log4(int type, String tag, Object format, Object... args) {
-        log(type, tag, 4, format, args);
+        log(type, logHead, tag, 4, format, args);
     }
 
     /** 处理日志 */
-    public static void log(@TYPE int type, String tag, int stackTrace, Object format, Object... args) {
-        if (!log) return;
+    public static void log(@TYPE int type, boolean logHead, String tag, int stackTrace, Object format, Object... args) {
+        if (!LOG) return;
         int type_low = type & 0x0f, type_high = type & 0xf0;
         if (type_low < logFilter) return;
-        final String[] tagAndHead = processTagAndHead(tag, stackTrace);
+        final String[] tagAndHead = processTagAndHead(logHead, tag, stackTrace);
         String body = processBody(type_high, format, args);
         print2Console(type_low, tagAndHead[0], tagAndHead[1] + body);
         if (dir != null) print2File(type_low, tagAndHead[0], tagAndHead[2] + body);
     }
 
     /** 处理TAG和位子 */
-    private static String[] processTagAndHead(String tag, int stackTrace) {
+    private static String[] processTagAndHead(boolean logHead, String tag, int stackTrace) {
         if (tag == null) tag = logTag;
         if (logHead || tag == null) {
             StackTraceElement targetElement = new Throwable().getStackTrace()[stackTrace];
@@ -300,10 +300,13 @@ public class LogUtils {
                 }
             }
         }
-        executor.execute(() -> {
-            try (BufferedWriter bw = new BufferedWriter(new FileWriter(fullPath, true))) {
-                bw.write(content);
-            } catch (IOException ignored) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                try (BufferedWriter bw = new BufferedWriter(new FileWriter(fullPath, true))) {
+                    bw.write(content);
+                } catch (IOException ignored) {
+                }
             }
         });
     }
@@ -367,9 +370,12 @@ public class LogUtils {
 
     public static class crashErrorListener implements OnErrorListener {
         @Override
-        public void onError(Throwable throwable, int flag) {
-            new Handler(Looper.getMainLooper()).post(() -> {
-                throw new RuntimeException(throwable);
+        public void onError(final Throwable throwable, int flag) {
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    throw new RuntimeException(throwable);
+                }
             });
         }
     }

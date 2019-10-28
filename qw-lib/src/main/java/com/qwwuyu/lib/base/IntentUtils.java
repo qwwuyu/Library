@@ -1,4 +1,4 @@
-package com.qwwuyu.lib.utils;
+package com.qwwuyu.lib.base;
 
 import android.app.Activity;
 import android.content.Context;

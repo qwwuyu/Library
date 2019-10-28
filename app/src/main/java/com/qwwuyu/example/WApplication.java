@@ -14,7 +14,7 @@ import androidx.lifecycle.OnLifecycleEvent;
 /**
  * Created by qiwei on 2017/7/13
  */
-public class TApplication extends BaseApplication {
+public class WApplication extends BaseApplication {
     public static Context context;
 
     @Override

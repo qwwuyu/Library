@@ -36,6 +36,7 @@ dependencies {
     api "com.trello.rxlifecycle2:rxlifecycle-components:$versions.rxlifecycle2"
     //network
     api "com.squareup.okhttp3:okhttp:$versions.okhttp3"
+    api "com.squareup.okhttp3:okhttp-urlconnection:$versions.okhttp3"
     api "com.squareup.retrofit2:retrofit:$versions.retrofit"
     api "com.squareup.retrofit2:converter-gson:$versions.retrofit"
     api "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit"
@@ -43,4 +44,6 @@ dependencies {
     api "com.github.bumptech.glide:glide:$versions.glide"
     api "com.github.bumptech.glide:okhttp3-integration:$versions.glide"
     api "jp.wasabeef:glide-transformations:3.1.1"
+    // greendao
+    implementation 'org.greenrobot:greendao:3.2.2'
 }

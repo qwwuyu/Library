@@ -33,7 +33,7 @@ public class DfrHelper {
         if (enable) {
             long nowTime = System.currentTimeMillis();
             map.put(tag, nowTime);
-            LogUtils.log(LogUtils.I, tag, 4, "begin:" + nowTime);
+            LogUtils.log(LogUtils.I, true, tag, 4, "begin:" + nowTime);
         }
     }
 
@@ -47,9 +47,9 @@ public class DfrHelper {
             long nowTime = System.currentTimeMillis();
             map.put(tag, nowTime);
             if (lastTime != null) {
-                LogUtils.log(LogUtils.I, tag + append, 4, "dfr:" + (nowTime - lastTime));
+                LogUtils.log(LogUtils.I, true, tag + append, 4, "dfr:" + (nowTime - lastTime));
             } else {
-                LogUtils.log(LogUtils.I, tag + append, 4, "no dfr:" + nowTime);
+                LogUtils.log(LogUtils.I, true, tag + append, 4, "no dfr:" + nowTime);
             }
         }
     }

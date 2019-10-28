@@ -2,8 +2,6 @@ package com.qwwuyu.lib.base;
 
 import android.os.Bundle;
 
-import com.qwwuyu.lib.utils.IntentUtils;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import io.reactivex.annotations.NonNull;
@@ -32,7 +30,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         IntentUtils.finish(this);
     }
 
-    public void finishSuper() {
+    void finishSuper() {
         super.finish();
     }
 
