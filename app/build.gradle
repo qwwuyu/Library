@@ -137,6 +137,7 @@ dependencies {
     implementation "${versions.annotation}"
     implementation "${versions.recyclerview}"
     implementation "${versions.constraintlayout}"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
     //project
     implementation project(':qw-lib')
     implementation project(':qw-widget')

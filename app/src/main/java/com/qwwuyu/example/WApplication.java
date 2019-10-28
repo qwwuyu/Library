@@ -10,6 +10,7 @@ import com.qwwuyu.lib.utils.LogUtils;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.OnLifecycleEvent;
+import androidx.lifecycle.ProcessLifecycleOwner;
 
 /**
  * Created by qiwei on 2017/7/13
@@ -32,6 +33,7 @@ public class WApplication extends BaseApplication {
         };
         registerActivityLifecycleCallbacks(callbacks);
         registerComponentCallbacks(callbacks);
+        ProcessLifecycleOwner.get().getLifecycle().addObserver(new MyObserver());
     }
 
     public class MyObserver implements LifecycleObserver {
