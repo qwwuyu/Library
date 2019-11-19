@@ -1,0 +1,12 @@
+//服务器证书
+keytool -genkey -alias qws -keypass 123456 -sigalg SHA256withRSA -keyalg RSA -keysize 2048 -keystore qws.jks -storepass 123456 -dname "C=CN,ST=HN,L=CS,O=qwo,OU=qwou,CN=local.qwwuyu.com"
+keytool -export -alias qws -keystore qws.jks -storepass 123456 -file qws.cer
+//客户端证书
+keytool -genkey -alias qwc -keypass 123456 -sigalg SHA256withRSA -keyalg RSA -keysize 2048 -keystore qwc.jks -storepass 123456 -dname "C=CN,ST=HN,L=CS,O=qwo,OU=qwou,CN=local.qwwuyu.com"
+keytool -export -alias qwc -keystore qwc.jks -storepass 123456 -file qwc.cer
+keytool -import -alias qwc -file qwc.cer -keystore qwc_tom.jks -storepass 123456
+
+
+
+keytool -certreq -alias qws -keystore qws.jks -storepass 123456 -file qws.csr //数字证书申请
+keytool -printcert -rfc -file qws.cer //cer证书字符串

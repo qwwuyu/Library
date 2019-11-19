@@ -15,25 +15,25 @@ public class RxBaseModel implements BaseModel {
     public RxBaseModel() {
     }
 
-    @Override
-    public void destroy() {
-        compositeDisposable.clear();
-    }
-
     public <T> void subscribe(final Observable<T> observable, final DisposableObserver<T> callback) {
         if (observable == null || callback == null) {
             return;
         }
-        compositeDisposable.add(toSubscribe(observable, callback));
-    }
-
-    /**
-     * 设置订阅 和 所在的线程环境
-     */
-    public <T> DisposableObserver<T> toSubscribe(Observable<T> o, DisposableObserver<T> s) {
-        return o.subscribeOn(Schedulers.io())
+        DisposableObserver[] ss = new DisposableObserver[1];
+        DisposableObserver<T> subscribe = observable.subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(s);
+                .doAfterTerminate(() -> {
+                    DisposableObserver s = ss[0];
+                    if (s != null) compositeDisposable.delete(s);
+                })
+                .subscribeWith(callback);
+        ss[0] = subscribe;
+        compositeDisposable.add(subscribe);
+    }
+
+    @Override
+    public void destroy() {
+        compositeDisposable.clear();
     }
 }

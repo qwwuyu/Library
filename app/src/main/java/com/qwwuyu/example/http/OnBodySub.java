@@ -3,16 +3,10 @@ package com.qwwuyu.example.http;
 import android.content.Context;
 import android.content.DialogInterface;
 
-import com.google.gson.JsonSyntaxException;
-import com.google.gson.internal.$Gson$Types;
-import com.google.gson.reflect.TypeToken;
-import com.qwwuyu.example.bean.BaseBean;
 import com.qwwuyu.example.configs.Constant;
-import com.qwwuyu.example.utils.GsonUtils;
 import com.qwwuyu.lib.utils.LogUtils;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.net.ConnectException;
 import java.net.NoRouteToHostException;
 import java.net.SocketTimeoutException;
@@ -26,45 +20,26 @@ import retrofit2.HttpException;
 /**
  * 传递context默认弹dialog,根据cancelRequest取消弹窗并取消请求.
  */
-public abstract class OnResultSub<T> extends OnBaseSub implements DialogInterface.OnDismissListener {
-    public OnResultSub() {
+public abstract class OnBodySub extends OnBaseSub implements DialogInterface.OnDismissListener {
+    public OnBodySub() {
     }
 
-    public OnResultSub(Context context) {
+    public OnBodySub(Context context) {
         super(context);
     }
 
-    public OnResultSub(Context context, boolean cancelRequest) {
+    public OnBodySub(Context context, boolean cancelRequest) {
         super(context, cancelRequest);
     }
 
     @Override
     public void onNext(ResponseBody body) {
-        BaseBean<T> response;
-        boolean isVoid;
         try {
-            String responseStr = body.string();
-            Type resultType = GsonUtils.getActualTypeArgument0(getClass());
-            isVoid = GsonUtils.isTypeVoid(resultType);
-            Type type = TypeToken.getParameterized(BaseBean.class, $Gson$Types.canonicalize(resultType)).getType();
-            response = GsonUtils.getGson().fromJson(responseStr, type);
-        } catch (JsonSyntaxException e) {
-            LogUtils.printStackTrace(e);
-            onFault(Constant.HTTP_DATA_ERR, "数据解析失败");
-            return;
+            onSuccess(body.string());
         } catch (IOException e) {
             onFault(Constant.HTTP_NO_CODE, "获取数据失败");
-            return;
         } catch (Exception e) {
             onFault(Constant.HTTP_DATA_ERR, "数据处理出错");
-            return;
-        }
-        if (Constant.HTTP_SUC == response.state && (response.data != null || isVoid)) {
-            onSuccess(response.data);
-        } else if (Constant.HTTP_SUC == response.state) {
-            onFault(Constant.HTTP_DATA_ERR, "未获取到数据");
-        } else {
-            onFault(response.state, response.info);
         }
     }
 
@@ -95,7 +70,7 @@ public abstract class OnResultSub<T> extends OnBaseSub implements DialogInterfac
         }
     }
 
-    public abstract void onSuccess(T result);
+    public abstract void onSuccess(String result);
 
     public abstract void onFault(int code, String errorMsg);
 }
