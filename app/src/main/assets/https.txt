@@ -10,3 +10,11 @@ keytool -import -alias qwc -file qwc.cer -keystore qwc_tom.jks -storepass 123456
 
 keytool -certreq -alias qws -keystore qws.jks -storepass 123456 -file qws.csr //数字证书申请
 keytool -printcert -rfc -file qws.cer //cer证书字符串
+
+    <!--
+			   clientAuth="true" truststoreFile="D:\develop\tomcat8\https\qwc_tom.jks"
+    <Connector port="443" protocol="org.apache.coyote.http11.Http11NioProtocol" SSLEnabled="true" scheme="https" sslProtocol="TLS"
+               secure="true" disableUploadTimeout="true" enableLookups="false" maxThreads="25" acceptCount="100"
+			   keystoreFile="D:\develop\tomcat8\https\qws.jks" keystorePass="123456"
+			   URIEncoding="UTF-8" connectionTimeout="20000" />
+    -->
