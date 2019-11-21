@@ -242,9 +242,6 @@ public class HttpActivity extends BaseMvpActivity {
         @Multipart
         @POST("test/upload")
         Observable<ResponseBean> upload(@Part MultipartBody.Part file, @Part("fileName") RequestBody fileName, @Query("token") String token);
-
-        @GET("test/download")
-        Call<ResponseBody> download();
     }
 
     public class ResponseBean {

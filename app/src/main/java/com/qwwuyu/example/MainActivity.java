@@ -1,10 +1,12 @@
 package com.qwwuyu.example;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.qwwuyu.example.activity.ColorActivity;
 import com.qwwuyu.example.activity.ELMActivity;
 import com.qwwuyu.example.activity.GyroActivity;
@@ -73,6 +75,13 @@ public class MainActivity extends BaseMvpActivity {
 
     public void onClick4(View v) {
         LogUtils.i(BuildConfig.TEST);
+        final Snackbar snackbar = Snackbar.make(v, "TestSnackbar", Snackbar.LENGTH_SHORT);
+        snackbar.setAction("Close", view -> snackbar.dismiss());
+        View snackbarView = snackbar.getView();
+        ((TextView) snackbarView.findViewById(R.id.snackbar_text)).setTextColor(Color.WHITE);
+        ((TextView) snackbarView.findViewById(R.id.snackbar_action)).setTextColor(Color.BLACK);
+        snackbarView.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        snackbar.show();
     }
 
     class AJ8 implements J8 {
