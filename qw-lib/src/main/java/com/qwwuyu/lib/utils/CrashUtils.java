@@ -115,19 +115,21 @@ public final class CrashUtils {
                 versionName = pi.versionName;
                 versionCode = pi.versionCode;
             }
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
         if (isSpace(crashDirPath)) {
             dir = null;
         } else {
             dir = crashDirPath.endsWith(FILE_SEP) ? crashDirPath : crashDirPath + FILE_SEP;
         }
-        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
-                && context.getExternalCacheDir() != null)
-            defaultDir = context.getExternalCacheDir() + FILE_SEP + "crash" + FILE_SEP;
-        else {
-            defaultDir = context.getCacheDir() + FILE_SEP + "crash" + FILE_SEP;
+        try {
+            if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) && context.getExternalCacheDir() != null) {
+                defaultDir = context.getExternalCacheDir() + FILE_SEP + "logs" + FILE_SEP + "crash" + FILE_SEP;
+            }
+        } catch (Exception ignored) {
+        }
+        if (defaultDir == null) {
+            defaultDir = context.getCacheDir() + FILE_SEP + "logs" + FILE_SEP + "crash" + FILE_SEP;
         }
         sOnCrashListener = onCrashListener;
         Thread.setDefaultUncaughtExceptionHandler(UNCAUGHT_EXCEPTION_HANDLER);

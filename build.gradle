@@ -51,14 +51,13 @@ ext {
             test             : getPropertyByName("APP_TEST_ENABLE", "false"),
     ]
 
-    def storeFile = getPropertyByName("STORE_FILE", null)
     signInfo = [
-            isSign       : storeFile != null,
-            storeFile    : storeFile,
+            storeFile    : getPropertyByName("STORE_FILE", null),
             storePassword: getPropertyByName("STORE_PASSWORD", null),
             keyAlias     : getPropertyByName("KEY_ALIAS", null),
             keyPassword  : getPropertyByName("KEY_PASSWORD", null),
     ]
+    signInfo.isSign = signInfo.storeFile != null && signInfo.keyAlias != null
 
     versions = [
             junit           : "junit:junit:4.12",

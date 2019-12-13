@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.os.Process;
 import android.provider.Settings;
 import androidx.core.content.FileProvider;
@@ -93,6 +94,14 @@ public class CommUtil {
             }
         }
         return null;
+    }
+
+    public static boolean isExternalEnable(Context context) {
+        try {
+            return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) && context.getExternalCacheDir() != null;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     /** 安装apk */
