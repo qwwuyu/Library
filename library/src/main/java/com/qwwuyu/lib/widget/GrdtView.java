@@ -18,7 +18,7 @@ import com.qwwuyu.library.R;
  */
 public class GrdtView extends View {
     private final int TYPE_LT4RB = 0x00, TYPE_RT4LB = 0x01, TYPE_T4B = 0x02, TYPE_L4R = 0x03;
-    private int type = TYPE_LT4RB;
+    private int type;
     private int w, h;
     private final int[] colors = new int[2];
     private final Paint paint = new Paint();

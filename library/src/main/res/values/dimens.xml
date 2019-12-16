@@ -1,47 +1,46 @@
 <resources>
     <!-- ======================== 默认sp ======================== -->
     <!-- 超大号文字 -->
-    <dimen name="fontXLarge">@dimen/txt48</dimen>
-    <!-- 标题、高Btn -->
-    <dimen name="fontLarge">@dimen/txt36</dimen>
+    <dimen name="fontXLarge">@dimen/txt40</dimen>
+    <!-- 标题 -->
+    <dimen name="fontLarge">@dimen/txt32</dimen>
     <!-- 正常文字 -->
-    <dimen name="fontNormal">@dimen/txt32</dimen>
+    <dimen name="fontNormal">@dimen/txt28</dimen>
     <!-- 描叙文字等 -->
     <dimen name="fontSmall">@dimen/txt24</dimen>
 
     <!-- ======================== 默认dp ======================== -->
-    <!-- 线条、空隙尽量保持2dp宽，卡片圆角半径2dp。特殊情况相应调整。 -->
+    <!-- 卡片圆角半径2dp。特殊情况相应调整。 -->
     <!-- 栅格系统的最小单位是8dp，一切距离、尺寸都应该是8dp的整数倍。 -->
     <!-- 卡片间距：8dp；大多元素的留白距离：16dp；屏幕左右对齐基线：16dp；-->
-    <dimen name="title_height">48dp</dimen>
+    <dimen name="distance">@dimen/dim32</dimen>
+    <dimen name="height">@dimen/dim96</dimen>
+    <dimen name="title_height">@dimen/height</dimen>
     <!-- ToolBar -->
-    <dimen name="toolBar_height">@dimen/title_height</dimen>
-    <dimen name="toolBar_ab_w">@dimen/title_height</dimen>
-    <dimen name="toolBar_abo_w">@dimen/title_height</dimen>
+    <dimen name="toolBar_height">@dimen/height</dimen>
+    <dimen name="toolBar_ab_w">@dimen/height</dimen>
+    <dimen name="toolBar_abo_w">@dimen/height</dimen>
+    <!-- 默认文本 -->
+    <dimen name="def_txt_padding">@dimen/dim16</dimen>
+    <!-- 默认按钮 -->
+    <dimen name="def_btn_height">@dimen/height</dimen>
+    <dimen name="def_btn_padding">@dimen/distance</dimen>
+    <dimen name="def_btn_marginLeft">@dimen/distance</dimen>
+    <dimen name="def_btn_marginRight">@dimen/distance</dimen>
+    <!-- 默认输入框 -->
+    <dimen name="def_edit_height">@dimen/height</dimen>
+    <dimen name="def_edit_paddingLeft">@dimen/distance</dimen>
+    <dimen name="def_edit_paddingRight">@dimen/distance</dimen>
+    <!-- 默认item -->
+    <dimen name="def_item_height">@dimen/height</dimen>
+    <dimen name="def_stroke">@dimen/dim2</dimen>
     <!-- 背景圆角度 -->
-    <dimen name="def_radius">5dp</dimen>
+    <dimen name="def_radius">@dimen/dim10</dimen>
     <!-- 阴影范围 -->
-    <dimen name="def_elevation">4dp</dimen>
+    <dimen name="def_elevation">@dimen/dim8</dimen>
     <!-- 分割线 -->
     <dimen name="def_view_line">0.6dp</dimen>
-    <dimen name="def_view_line_margin">16dp</dimen>
-    <!-- 默认按钮 -->
-    <dimen name="def_btn_height">48dp</dimen>
-    <dimen name="def_btn_marginLeft">16dp</dimen>
-    <dimen name="def_btn_marginRight">16dp</dimen>
-    <dimen name="def_btn_top_margin">32dp</dimen>
-    <dimen name="def_btn_w_padding">16dp</dimen>
-    <!-- 默认输入框 -->
-    <dimen name="def_edit_height">48dp</dimen>
-    <dimen name="def_edit_paddingLeft">16dp</dimen>
-    <dimen name="def_edit_paddingRight">16dp</dimen>
-    <!-- 默认文本 -->
-    <dimen name="def_txt_padding">8dp</dimen>
-    <dimen name="def_txt_drawPadding">4dp</dimen>
-    <dimen name="def_txt_link">1dp</dimen>
-    <!-- 默认item -->
-    <dimen name="def_item_height">48dp</dimen>
-    <dimen name="def_stroke">1dp</dimen>
+    <dimen name="def_view_line_margin">@dimen/dim32</dimen>
 
     <!-- ======================== 分模块_控件名/功能名_位子 ======================== -->
     <!-- 自定义Dialog部分 -->

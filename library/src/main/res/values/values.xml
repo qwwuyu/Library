@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
     <integer name="slide_duration">250</integer>
-    <!-- ToolBar -->
-    <item name="tool_bar" type="id"/>
     <!-- 根布局id -->
     <item name="layout_root" type="id"/>
     <!-- MultipleStateLayout的ids -->

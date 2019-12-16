@@ -9,6 +9,6 @@
     <item android:bottom="85dp">
         <bitmap
             android:gravity="bottom|center_horizontal"
-            android:src="@drawable/ic_more"/>
+            android:src="@drawable/ic_trans"/>
     </item>
 </layer-list>

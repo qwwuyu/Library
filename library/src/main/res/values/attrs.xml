@@ -1,4 +1,19 @@
 <resources>
+    <!-- 多状态布局 -->
+    <declare-styleable name="MultipleStateLayout">
+        <attr name="loadingView" format="reference"/>
+        <attr name="emptyView" format="reference"/>
+        <attr name="errorView" format="reference"/>
+        <attr name="networkView" format="reference"/>
+        <attr name="removeState" format="boolean"/>
+    </declare-styleable>
+    <!-- 圆形ImageView -->
+    <declare-styleable name="CircleImageView">
+        <attr name="civ_border_width" format="dimension"/>
+        <attr name="civ_border_color" format="color"/>
+        <attr name="civ_border_overlay" format="boolean"/>
+        <attr name="civ_circle_background_color" format="color"/>
+    </declare-styleable>
     <!-- 自定义渐变布局 -->
     <declare-styleable name="GrdtView">
         <attr name="grl_type">
@@ -9,20 +24,5 @@
         </attr>
         <attr name="grl_color0" format="reference|color"/>
         <attr name="grl_color1" format="reference|color"/>
-    </declare-styleable>
-    <!-- 多状态布局 -->
-    <declare-styleable name="MultipleStateLayout">
-        <attr name="loadingView" format="reference"/>
-        <attr name="emptyView" format="reference"/>
-        <attr name="errorView" format="reference"/>
-        <attr name="networkView" format="reference"/>
-        <attr name="removeState" format="boolean"/>
-    </declare-styleable>
-
-    <declare-styleable name="CircleImageView">
-        <attr name="civ_border_width" format="dimension"/>
-        <attr name="civ_border_color" format="color"/>
-        <attr name="civ_border_overlay" format="boolean"/>
-        <attr name="civ_circle_background_color" format="color"/>
     </declare-styleable>
 </resources>

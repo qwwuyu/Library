@@ -14,7 +14,7 @@
         android:layout_height="@dimen/title_height"
         android:paddingLeft="3dp"
         android:scaleType="center"
-        android:src="@drawable/ic_more"/>
+        android:src="@drawable/ic_trans"/>
 
     <TextView
         android:id="@+id/tv_title"

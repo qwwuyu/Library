@@ -6,13 +6,6 @@
         <item name="colorAccent">@color/colorAccent</item>
 
         <item name="colorControlHighlight">@color/colorAccent</item>
-        <!--<item name="android:textColorPrimary">@color/textColorPrimary</item>-->
-        <!-- ToolBar的默认样式 -->
-        <item name="toolbarStyle">@style/ToolBar</item>
-        <item name="toolbarNavigationButtonStyle">@style/Toolbar_NavigationButton</item>
-        <item name="actionButtonStyle">@style/ToolBar_ActionButton</item>
-        <item name="actionOverflowButtonStyle">@style/ToolBar_ActionButtonOverflow</item>
-        <item name="actionBarDivider">@drawable/shape_bg_divider_dark</item>
     </style>
 
     <!-- ======================== Activity ======================== -->

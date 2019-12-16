@@ -6,7 +6,6 @@
     <color name="colorAccent">#ff2299ff</color>
     <!-- ======================== 基础color ======================== -->
     <color name="trans">#00000000</color>
-    <color name="trans50">#50000000</color>
     <color name="white">#ffffffff</color>
     <color name="red">#ffff0000</color>
     <color name="green">#ff00ff00</color>
@@ -16,28 +15,24 @@
     <color name="black">#ff000000</color>
     <color name="orange">#ff7b2e</color>
 
-    <!-- All黑色[87%普通文字][54%减淡文字][26%禁用状态/提示文字][12%分隔线] -->
-    <color name="blackDD">#dd000000</color>
-    <color name="black89">#89000000</color>
-    <color name="black42">#42000000</color>
-    <color name="black1E">#1e000000</color>
-    <!-- All白色[100%普通文字][70%减淡文字][30%禁用状态/提示文字][12%分隔线] -->
-    <color name="whiteFF">#ffffffff</color>
-    <color name="whiteB2">#b2ffffff</color>
-    <color name="white4C">#4cffffff</color>
-    <color name="white1e">#1effffff</color>
+    <!-- All黑色[87%普通文字][54%减淡文字][26%禁用状态/提示文字] -->
+    <color name="black87">#dd000000</color>
+    <color name="black54">#89000000</color>
+    <color name="black26">#42000000</color>
+    <!-- All白色[100%普通文字][70%减淡文字][30%禁用状态/提示文字] -->
+    <color name="white100">#ffffffff</color>
+    <color name="white70">#b2ffffff</color>
+    <color name="white30">#4cffffff</color>
     <!-- best蓝色 -->
-    <color name="blue_bg_def">#ff2299ff</color>
+    <color name="blue_bg">#ff2299ff</color>
     <color name="blue_bg_pressed">#ff1188ee</color>
-    <color name="blue50_bg_def">#502299ff</color>
-    <color name="blue50_bg_pressed">#501188ee</color>
     <color name="blue_bg_enabled">#ffb0b0b0</color>
+    <color name="blue30_bg">#4C2299ff</color>
     <!-- best橘色 -->
     <color name="orange_bg_def">#ffff9977</color>
     <color name="orange_bg_pressed">#ffe46850</color>
-    <color name="orange50_bg_def">#55ff9977</color>
-    <color name="orange50_bg_pressed">#55e46850</color>
     <color name="orange_bg_enabled">#ffb0b0b0</color>
+    <color name="orange30_bg">#4Cff9977</color>
 
     <!-- ======================== 默认color ======================== -->
     <!-- 常用的颜色 -->
@@ -47,29 +42,21 @@
     <!-- 分割线颜色 -->
     <color name="def_view_line">#ffcccccc</color>
     <color name="def_view_line_dark">#ff313236</color>
-    <!-- 常用字体白色 -->
-    <color name="def_font_ff">#ffffffff</color>
     <!-- 常用字体黑色 -->
     <color name="def_font_22">#ff222222</color>
-    <color name="def_font_b5">#ffb5b5b5</color>
-    <color name="def_font_8b">#ff8b8b8b</color>
-    <color name="def_font_a6">#ffa6a6a6</color>
     <!-- 默认文本-->
-    <color name="def_txt_normal">#ff222222</color>
-    <color name="def_txt_hint">#FFB4B4B4</color>
+    <color name="def_txt_normal">@color/black87</color>
+    <color name="def_txt_hint">@color/black26</color>
     <!-- 默认输入框-->
     <color name="def_edit_normal">#ff1F2120</color>
     <color name="def_edit_hint">#FFB4B4B4</color>
     <!-- 默认按钮-->
-    <color name="def_btn_txt">#ffffffff</color>
-    <color name="def_btn_bg_def">@color/blue_bg_def</color>
+    <color name="def_btn_bg">@color/blue_bg</color>
     <color name="def_btn_bg_pressed">@color/blue_bg_pressed</color>
     <color name="def_btn_bg_enabled">@color/blue_bg_enabled</color>
-    <color name="def_btn_bg_white_pressed">#11ffffff</color>
-    <color name="def_btn_bg_black_pressed">#11000000</color>
     <!-- 默认item添加选择色 -->
-    <color name="def_item_black">#11000000</color>
-    <color name="def_item_white">#11ffffff</color>
-    <color name="def_item_normal">#ffffffff</color>
-    <color name="def_item_pressed">#ffd9d9d9</color>
+    <color name="def_item_bg_black">#11000000</color>
+    <color name="def_item_bg_white">#11ffffff</color>
+    <color name="def_item_bg">#ffffffff</color>
+    <color name="def_item_bg_pressed">#ffd9d9d9</color>
 </resources>
