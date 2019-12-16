@@ -1,1 +1,1 @@
-include ':app', ':qw-lib', ':other-lib', ':qw-widget'
+include ':app', ':library', ':widget'

@@ -17,8 +17,8 @@ import com.qwwuyu.lib.mvp.BasePresenter;
 import com.qwwuyu.lib.utils.CommUtil;
 import com.qwwuyu.lib.utils.LogUtils;
 import com.qwwuyu.lib.utils.SystemBarUtil;
-import com.qwwuyu.lib.widget.MultipleStateLayout;
-import com.qwwuyu.lib.widget.TitleView;
+import com.qwwuyu.lib.base.MultipleStateLayout;
+import com.qwwuyu.lib.base.TitleView;
 
 import androidx.core.content.ContextCompat;
 

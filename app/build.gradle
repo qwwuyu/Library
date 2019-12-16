@@ -132,6 +132,8 @@ dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     //test
     testImplementation "${versions.junit}"
+    //kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     //support
     implementation "${versions.appcompat}"
     implementation "${versions.annotation}"
@@ -140,14 +142,10 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
     implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
     //project
-    implementation project(':qw-lib')
-    implementation project(':qw-widget')
-    //kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation project(':library')
+    implementation project(':widget')
     //leakcanary
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-3'
     //glide
     annotationProcessor "com.github.bumptech.glide:compiler:$versions.glide"
-    // greendao
-    implementation 'org.greenrobot:greendao:3.2.2'
 }

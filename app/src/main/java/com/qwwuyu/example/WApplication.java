@@ -3,6 +3,7 @@ package com.qwwuyu.example;
 import android.content.Context;
 
 import com.qwwuyu.lib.base.BaseApplication;
+import com.qwwuyu.lib.clazz.KeepLifecycleCallbacks;
 import com.qwwuyu.lib.helper.DfrHelper;
 import com.qwwuyu.lib.utils.CommUtil;
 import com.qwwuyu.lib.utils.LogUtils;

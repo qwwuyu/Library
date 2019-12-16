@@ -1,0 +1,45 @@
+apply plugin: 'com.android.library'
+
+def entities = [
+        card       : ['java', 'res'],
+        colorpicker: ['java', 'res'],
+        gyro       : ['java', 'res'],
+        linkage    : ['java', 'res'],
+        photoview  : ['java'],
+]
+def dirs = ["java": [], res: [], assets: []]
+entities.each { key, value ->
+    value.each { name ->
+        dirs[name].add("${key}/${name}")
+    }
+}
+
+android {
+    compileSdkVersion configs.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion configs.minSdkVersion
+        targetSdkVersion configs.targetSdkVersion
+        consumerProguardFiles 'proguard-rules.pro'
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = dirs.java
+            res.srcDirs = dirs.res
+            assets.srcDirs = dirs.assets
+        }
+    }
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    //support
+    implementation "${versions.appcompat}"
+    implementation "${versions.annotation}"
+    implementation "${versions.recyclerview}"
+    implementation "${versions.constraintlayout}"
+    //MagicIndicator
+    api 'com.github.hackware1993:MagicIndicator:1.5.0'
+}

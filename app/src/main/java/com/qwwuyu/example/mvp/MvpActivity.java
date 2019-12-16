@@ -5,8 +5,8 @@ import android.os.Bundle;
 import com.qwwuyu.example.R;
 import com.qwwuyu.lib.base.BaseMvpActivity;
 import com.qwwuyu.lib.utils.ToastUtil;
-import com.qwwuyu.lib.widget.MultipleStateLayout;
-import com.qwwuyu.lib.widget.TitleView;
+import com.qwwuyu.lib.base.MultipleStateLayout;
+import com.qwwuyu.lib.base.TitleView;
 
 /**
  * Created by qiwei on 2018/6/14 14:02
