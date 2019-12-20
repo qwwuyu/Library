@@ -3,7 +3,6 @@ package com.qwwuyu.lib.utils;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
@@ -16,6 +15,7 @@ import java.lang.Thread.UncaughtExceptionHandler;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -35,7 +35,7 @@ public final class CrashUtils {
     private static String versionName;
     private static int versionCode;
 
-    private static final String FILE_SEP = File.separator;
+    public static final String FILE_SEP = File.separator;
     @SuppressLint("SimpleDateFormat")
     private static final Format FORMAT = new SimpleDateFormat("MM-dd HH-mm-ss");
 
@@ -81,10 +81,8 @@ public final class CrashUtils {
                 }
 
                 if (sOnCrashListener != null) {
-                    sOnCrashListener.onCrash(crashInfo, e);
-                }
-
-                if (DEFAULT_UNCAUGHT_EXCEPTION_HANDLER != null) {
+                    sOnCrashListener.onCrash(crashInfo, e, DEFAULT_UNCAUGHT_EXCEPTION_HANDLER);
+                } else if (DEFAULT_UNCAUGHT_EXCEPTION_HANDLER != null) {
                     DEFAULT_UNCAUGHT_EXCEPTION_HANDLER.uncaughtException(t, e);
                 }
             }
@@ -95,12 +93,12 @@ public final class CrashUtils {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 
-    /**
-     * Initialization.
-     */
-    @SuppressLint("MissingPermission")
     public static void init(Context context) {
         init(context, null, null);
+    }
+
+    public static void init(Context context, final String crashDirPath) {
+        init(context, crashDirPath, null);
     }
 
     /**
@@ -140,7 +138,7 @@ public final class CrashUtils {
     ///////////////////////////////////////////////////////////////////////////
 
     public interface OnCrashListener {
-        void onCrash(String crashInfo, Throwable e);
+        void onCrash(String crashInfo, Throwable e , UncaughtExceptionHandler uncaughtExceptionHandler);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -148,22 +146,25 @@ public final class CrashUtils {
     ///////////////////////////////////////////////////////////////////////////
 
     private static void input2File(final String input, final String filePath) {
-        Future<Boolean> submit = Executors.newSingleThreadExecutor().submit(() -> {
-            BufferedWriter bw = null;
-            try {
-                bw = new BufferedWriter(new FileWriter(filePath, true));
-                bw.write(input);
-                return true;
-            } catch (IOException e) {
-                e.printStackTrace();
-                return false;
-            } finally {
+        Future<Boolean> submit = Executors.newSingleThreadExecutor().submit(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                BufferedWriter bw = null;
                 try {
-                    if (bw != null) {
-                        bw.close();
-                    }
+                    bw = new BufferedWriter(new FileWriter(filePath, true));
+                    bw.write(input);
+                    return true;
                 } catch (IOException e) {
                     e.printStackTrace();
+                    return false;
+                } finally {
+                    try {
+                        if (bw != null) {
+                            bw.close();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });

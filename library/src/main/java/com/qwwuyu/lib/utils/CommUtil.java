@@ -105,13 +105,13 @@ public class CommUtil {
     }
 
     /** 安装apk */
-    public static void installApk(Context context, File file) {
+    public static void installApk(Context context, File file, String fileProvider) {
         Intent intent = new Intent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setAction(Intent.ACTION_VIEW);
         Uri uri;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            uri = FileProvider.getUriForFile(context, context.getPackageName() + ".versionProvider", file);
+            uri = FileProvider.getUriForFile(context, fileProvider, file);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         } else {
             uri = Uri.fromFile(file);
