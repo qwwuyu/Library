@@ -2,8 +2,16 @@ package com.qwwuyu.lib.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Base64;
 
 import com.qwwuyu.lib.base.BaseApplication;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 
 /**
@@ -12,105 +20,122 @@ import com.qwwuyu.lib.base.BaseApplication;
 public class SpUtils {
     private static final String SP_NAME = "default";
     private static SpUtils spUtils;
-    private static SharedPreferences sp;
+    private SharedPreferences sp;
 
-    private static Context getContext() {
-        return BaseApplication.context;
-    }
-
-    public static SpUtils getSpUtils() {
+    public static SpUtils getDefault() {
         if (spUtils == null) {
             spUtils = new SpUtils(getContext(), SP_NAME, Context.MODE_PRIVATE);
         }
         return spUtils;
     }
 
+    private static Context getContext() {
+        return BaseApplication.context;
+    }
+
     private SpUtils(Context context, String name, int mode) {
         sp = context.getApplicationContext().getSharedPreferences(name, mode);
     }
 
-    /**
-     * sp保存一个int数据
-     */
-    public void putSPValue(String valueKey, int value) {
+    /* ======================== apply ======================== */
+    public void setValue(String valueKey, int value) {
         sp.edit().putInt(valueKey, value).apply();
     }
 
-    /**
-     * sp保存一个float数据
-     */
-    public void putSPValue(String valueKey, float value) {
+    public void setValue(String valueKey, float value) {
         sp.edit().putFloat(valueKey, value).apply();
     }
 
-    /**
-     * sp保存一个String数据
-     */
-    public void putSPValue(String valueKey, String value) {
+    public void setValue(String valueKey, String value) {
         sp.edit().putString(valueKey, value).apply();
     }
 
-    /**
-     * sp保存一个boolean数据
-     */
-    public void putSPValue(String valueKey, boolean value) {
+    public void setValue(String valueKey, boolean value) {
         sp.edit().putBoolean(valueKey, value).apply();
     }
 
-    /**
-     * sp保存一个long数据
-     */
-    public void putSPValue(String valueKey, long value) {
+    public void setValue(String valueKey, long value) {
         sp.edit().putLong(valueKey, value).apply();
     }
 
-    /**
-     * sp获取一个int数据
-     */
-    public int getSPValue(String valueKey, int value) {
+    public void setValue(String valueKey, Serializable value) {
+        String objectString = objectToString(value);
+        if (objectString != null) sp.edit().putString(valueKey, objectString).apply();
+    }
+
+    /* ======================== commit ======================== */
+    public boolean commitValue(String valueKey, String value) {
+        return sp.edit().putString(valueKey, value).commit();
+    }
+
+    /* ======================== get ======================== */
+    public int getValue(String valueKey, int value) {
         return sp.getInt(valueKey, value);
     }
 
-    /**
-     * sp获取一个float数据
-     */
-    public float getSPValue(String valueKey, float value) {
+    public float getValue(String valueKey, float value) {
         return sp.getFloat(valueKey, value);
     }
 
-    /**
-     * sp获取一个String数据
-     */
-    public String getSPValue(String valueKey, String value) {
+    public String getValue(String valueKey, String value) {
         return sp.getString(valueKey, value);
     }
 
-    /**
-     * sp获取一个boolean数据
-     */
-    public boolean getSPValue(String valueKey, boolean value) {
+    public boolean getValue(String valueKey, boolean value) {
         return sp.getBoolean(valueKey, value);
     }
 
-    /**
-     * sp获取一个long数据
-     */
-    public long getSPValue(String valueKey, long value) {
+    public long getValue(String valueKey, long value) {
         return sp.getLong(valueKey, value);
     }
 
-    /**
-     * 清理sp数据
-     */
+    public <T extends Serializable> T getValue(String key) {
+        String objectString = sp.getString(key, null);
+        try {
+            return (T) stringToObject(objectString);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /* ======================== remove ======================== */
+    public void clearKey(String valueKey) {
+        sp.edit().remove(valueKey).apply();
+    }
+
     public void clear() {
         sp.edit().clear().apply();
     }
 
-    public void clearKey(String valueKey) {
-        sp.edit().putString(valueKey, null).apply();
+    /* ========================  ======================== */
+    private static Object stringToObject(String string) {
+        ObjectInputStream objectInputStream = null;
+        try {
+            byte[] bytes = Base64.decode(string, Base64.NO_WRAP);
+            objectInputStream = new ObjectInputStream(new ByteArrayInputStream(bytes));
+            return objectInputStream.readObject();
+        } catch (Exception ignored) {
+            return null;
+        } finally {
+            if (objectInputStream != null) {
+                try {
+                    objectInputStream.close();
+                } catch (IOException ignored) {
+                }
+            }
+        }
     }
 
-    public boolean commitSPValue(String valueKey, String value) {
-        return sp.edit().putString(valueKey, value).commit();
+    private static String objectToString(Serializable object) {
+        String encoded = null;
+        try {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+            objectOutputStream.writeObject(object);
+            objectOutputStream.close();
+            encoded = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.NO_WRAP);
+        } catch (IOException ignored) {
+        }
+        return encoded;
     }
 }

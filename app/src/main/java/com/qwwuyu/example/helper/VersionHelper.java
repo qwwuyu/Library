@@ -18,19 +18,19 @@ public class VersionHelper {
      */
     public static void checkUpgrade(Application context) {
         int versionCode = BuildConfig.VERSION_CODE;
-        int lastCode = SpUtils.getSpUtils().getSPValue(Constant.SP_APP_VERSION, BuildConfig.VERSION_CODE);
+        int lastCode = SpUtils.getDefault().getValue(Constant.SP_APP_VERSION, BuildConfig.VERSION_CODE);
         if (versionCode != lastCode) {
             LogUtils.i(null, "lastCode=%s versionCode=%s", lastCode, versionCode);
         }
-        SpUtils.getSpUtils().putSPValue(Constant.SP_APP_VERSION, BuildConfig.VERSION_CODE);
+        SpUtils.getDefault().setValue(Constant.SP_APP_VERSION, BuildConfig.VERSION_CODE);
     }
 
     /**
      * @return true 第一次请求权限
      */
     public static boolean isFirstRequestPermit() {
-        if (SpUtils.getSpUtils().getSPValue(Constant.SP_FIRST_PERMIT, true)) {
-            SpUtils.getSpUtils().putSPValue(Constant.SP_FIRST_PERMIT, false);
+        if (SpUtils.getDefault().getValue(Constant.SP_FIRST_PERMIT, true)) {
+            SpUtils.getDefault().setValue(Constant.SP_FIRST_PERMIT, false);
             return true;
         } else {
             return false;

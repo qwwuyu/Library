@@ -8,7 +8,7 @@ import com.qwwuyu.lib.mvp.RxBaseModel;
  */
 public class MvpPresenter extends MvpContract.Presenter<RxBaseModel> {
     public MvpPresenter(MvpContract.View view) {
-        super(view,new RxBaseModel());
+        super(view, new RxBaseModel());
     }
 
     @Override
