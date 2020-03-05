@@ -10,15 +10,15 @@ import com.google.android.material.snackbar.Snackbar;
 import com.qwwuyu.example.activity.ColorActivity;
 import com.qwwuyu.example.activity.ELMActivity;
 import com.qwwuyu.example.activity.GyroActivity;
-import com.qwwuyu.example.activity.HttpActivity;
+import com.qwwuyu.example.activity.TestActivity;
 import com.qwwuyu.example.mvp.MvpActivity;
 import com.qwwuyu.lib.base.BaseMvpActivity;
+import com.qwwuyu.lib.base.MultipleStateLayout;
+import com.qwwuyu.lib.base.TitleView;
 import com.qwwuyu.lib.mvp.BasePresenter;
 import com.qwwuyu.lib.utils.CommUtil;
 import com.qwwuyu.lib.utils.LogUtils;
 import com.qwwuyu.lib.utils.SystemBarUtil;
-import com.qwwuyu.lib.base.MultipleStateLayout;
-import com.qwwuyu.lib.base.TitleView;
 
 import androidx.core.content.ContextCompat;
 
@@ -66,7 +66,7 @@ public class MainActivity extends BaseMvpActivity {
     public void onClick3(View v) {
         int i = 2, num = 3, index = -1;
         if (flag[i] % num == ++index) {
-            startActivity(new Intent(this, HttpActivity.class));
+            startActivity(new Intent(this, TestActivity.class));
         } else if (flag[i] % num == ++index) {
             startActivity(new Intent(this, MvpActivity.class));
         }
