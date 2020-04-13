@@ -288,7 +288,7 @@ public class LogUtils {
         String format = FORMAT.format(new Date(System.currentTimeMillis()));
         String date = format.substring(0, 5);
         String time = format.substring(6);
-        final String fullPath = dir + LINE_SEP + date + ".txt";
+        final String fullPath = dir + "/" + date + ".txt";
         if (!createOrExistsFile(fullPath)) {
             return;
         }
