@@ -11,7 +11,7 @@ import io.reactivex.disposables.Disposable;
 /**
  * 基类Activity
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class LibActivity extends AppCompatActivity {
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Override

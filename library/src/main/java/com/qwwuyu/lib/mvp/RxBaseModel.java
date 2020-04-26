@@ -20,7 +20,8 @@ public class RxBaseModel implements BaseModel {
             return;
         }
         DisposableObserver[] ss = new DisposableObserver[1];
-        DisposableObserver<T> subscribe = observable.subscribeOn(Schedulers.io())
+        DisposableObserver<T> subscribe = observable
+                .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doAfterTerminate(() -> {

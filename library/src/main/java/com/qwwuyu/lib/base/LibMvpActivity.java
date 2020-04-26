@@ -12,49 +12,37 @@ import android.widget.LinearLayout;
 
 import com.qwwuyu.lib.mvp.BasePresenter;
 import com.qwwuyu.lib.mvp.BaseView;
+import com.qwwuyu.lib.utils.SystemBarUtil;
 import com.qwwuyu.lib.utils.ToastUtil;
 import com.qwwuyu.library.R;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 /**
- * mvp Fragment基类view实现
+ * mvp Activity基类view实现
  */
-public abstract class BaseMvpFragment<P extends BasePresenter> extends BaseFragment implements BaseView {
+public abstract class LibMvpActivity<P extends BasePresenter> extends LibActivity implements BaseView {
+    protected Context context = LibMvpActivity.this;
     protected P presenter;
     private TitleView titleView;
-    private View rootView;
-    private View contentView;
-    private View stateContent;
     private MultipleStateLayout stateLayout;
+    private View contentView;
     private ProgressDialog loadingDialog;
+    private int dialogCount = 0;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         presenter = createPresenter();
         super.onCreate(savedInstanceState);
+        initContent(this);
+        SystemBarUtil.setStatusBarColor(this, getResources().getColor(R.color.colorPrimaryDark));
+        SystemBarUtil.setStatusBarDarkMode(this, true);
+        init(savedInstanceState, titleView, stateLayout);
     }
 
     @Override
-    public final View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (rootView == null) {
-            initContent(getContext());
-        } else if (rootView.getParent() != null) {
-            ((ViewGroup) rootView.getParent()).removeView(rootView);
-        }
-        return rootView;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        init(contentView, titleView, stateLayout);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    protected void onDestroy() {
+        super.onDestroy();
         if (presenter != null) presenter.destroy();
     }
 
@@ -65,7 +53,7 @@ public abstract class BaseMvpFragment<P extends BasePresenter> extends BaseFragm
     protected abstract int getContentLayout();
 
     /** 初始化 */
-    protected abstract void init(View contentView, TitleView titleView, MultipleStateLayout stateLayout);
+    protected abstract void init(Bundle bundle, TitleView titleView, MultipleStateLayout stateLayout);
 
     /** TitleView */
     protected boolean useTitleView() {
@@ -79,13 +67,11 @@ public abstract class BaseMvpFragment<P extends BasePresenter> extends BaseFragm
 
     private void initContent(Context context) {
         final int contentId = getContentLayout();
-        final boolean useTitle = useTitleView();
-        final boolean useState = useMultipleStateLayout();
         if (contentId == 0) {
             return;
         }
         ViewGroup rootView = null;
-        if (useTitle) {
+        if (useTitleView()) {
             titleView = new TitleView(context);
             LinearLayout linearLayout = new LinearLayout(context);
             linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -93,7 +79,7 @@ public abstract class BaseMvpFragment<P extends BasePresenter> extends BaseFragm
             rootView = linearLayout;
         }
         contentView = LayoutInflater.from(context).inflate(contentId, null, false);
-        if (useState) {
+        if (useMultipleStateLayout()) {
             FrameLayout frameLayout = new FrameLayout(context);
             stateLayout = new MultipleStateLayout(context);
             frameLayout.addView(stateLayout, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
@@ -106,22 +92,21 @@ public abstract class BaseMvpFragment<P extends BasePresenter> extends BaseFragm
         } else if (rootView != null) {
             rootView.addView(contentView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         }
-        stateContent = contentView;
-        this.rootView = rootView != null ? rootView : contentView;
+        setContentView(rootView != null ? rootView : contentView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
     }
 
     @Override
     public Context getContext() {
-        return super.getContext();
+        return context;
     }
 
     @Override
     public void showLoadingDialog(@Nullable CharSequence message) {
-        if (getActivity() != null && loadingDialog == null) {
-            loadingDialog = new ProgressDialog(getActivity());
-            loadingDialog.setMessage(message == null ? getString(R.string.dialog_hint_default) : message);
-            loadingDialog.show();
-        } else if (getActivity() != null && loadingDialog != null) {
+        if (isFinishing()) return;
+        if (loadingDialog == null) {
+            loadingDialog = new ProgressDialog(context);
+        }
+        if (dialogCount++ == 0) {
             loadingDialog.setMessage(message == null ? getString(R.string.dialog_hint_default) : message);
             loadingDialog.show();
         }
@@ -129,44 +114,40 @@ public abstract class BaseMvpFragment<P extends BasePresenter> extends BaseFragm
 
     @Override
     public void hideLoadingDialog() {
-        if (getActivity() != null && loadingDialog != null) {
+        if (isFinishing()) return;
+        if (--dialogCount == 0) {
             loadingDialog.dismiss();
         }
     }
 
     @Override
-    public void showError(int code, String msg) {
+    public void showMsg(int code, String msg) {
         ToastUtil.show(msg);
     }
 
     @Override
     public void showContentLayout() {
-        stateLayout.showContent(stateContent);
+        if (stateLayout != null) stateLayout.showContent(contentView);
     }
 
     @Override
     public void showLoadingLayout(@Nullable CharSequence text) {
-        stateLayout.showLoading(stateContent, text);
+        if (stateLayout != null) stateLayout.showLoading(contentView, text);
     }
 
     @Override
     public void showEmptyLayout(@Nullable CharSequence text) {
-        stateLayout.showEmpty(stateContent, text);
+        if (stateLayout != null) stateLayout.showEmpty(contentView, text);
     }
 
     @Override
     public void showErrorLayout(@Nullable CharSequence text) {
-        stateLayout.showError(stateContent, text);
+        if (stateLayout != null) stateLayout.showError(contentView, text);
     }
 
     @Override
     public void showNetworkLayout(@Nullable CharSequence text) {
-        stateLayout.showNetwork(stateContent, text);
-    }
-
-    protected void setStateView(MultipleStateLayout stateLayout, View stateContent) {
-        this.stateLayout = stateLayout;
-        this.stateContent = stateContent;
+        if (stateLayout != null) stateLayout.showNetwork(contentView, text);
     }
 
     protected TitleView getTitleView() {

@@ -17,6 +17,6 @@ public interface BaseView extends IStateLayout {
     /** 隐藏弹窗dialog */
     void hideLoadingDialog();
 
-    /** 显示信息提示(Toast) */
-    void showError(int code, String msg);
+    /** 显示信息提示 */
+    void showMsg(int code, String msg);
 }

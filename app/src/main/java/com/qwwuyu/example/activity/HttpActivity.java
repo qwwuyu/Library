@@ -9,7 +9,7 @@ import com.google.gson.Gson;
 import com.qwwuyu.example.R;
 import com.qwwuyu.lib.http.body.ProgressResponseBody;
 import com.qwwuyu.lib.http.interceptor.HttpLoggingInterceptor;
-import com.qwwuyu.lib.base.BaseMvpActivity;
+import com.qwwuyu.lib.base.LibMvpActivity;
 import com.qwwuyu.lib.mvp.BasePresenter;
 import com.qwwuyu.lib.utils.LogUtils;
 import com.qwwuyu.lib.base.MultipleStateLayout;
@@ -52,7 +52,7 @@ import retrofit2.http.Query;
 /**
  * Created by qiwei on 2017/8/12
  */
-public class HttpActivity extends BaseMvpActivity {
+public class HttpActivity extends LibMvpActivity {
     private Api api;
     private Gson gson = new Gson();
     private PercentProgressBar bar;

@@ -11,7 +11,7 @@ import android.view.ViewTreeObserver;
 import com.github.chrisbanes.photoview.OnDoubleTapDefaultListener;
 import com.github.chrisbanes.photoview.PhotoViewAttacher;
 import com.qwwuyu.example.R;
-import com.qwwuyu.lib.base.BaseMvpActivity;
+import com.qwwuyu.lib.base.LibMvpActivity;
 import com.qwwuyu.lib.mvp.BasePresenter;
 import com.qwwuyu.lib.utils.CommUtil;
 import com.qwwuyu.lib.utils.DisplayUtils;
@@ -25,7 +25,7 @@ import com.qwwuyu.widget.gyro.GyroView;
 
 import androidx.core.view.ViewCompat;
 
-public class GyroActivity extends BaseMvpActivity {
+public class GyroActivity extends LibMvpActivity {
     private View shadowView;
     private GyroView gyroView;
     private GyroMarkView markView;

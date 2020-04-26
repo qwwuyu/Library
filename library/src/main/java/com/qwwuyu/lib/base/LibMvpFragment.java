@@ -12,38 +12,64 @@ import android.widget.LinearLayout;
 
 import com.qwwuyu.lib.mvp.BasePresenter;
 import com.qwwuyu.lib.mvp.BaseView;
-import com.qwwuyu.lib.utils.SystemBarUtil;
 import com.qwwuyu.lib.utils.ToastUtil;
 import com.qwwuyu.library.R;
 
+import androidx.annotation.CallSuper;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 /**
- * mvp Activity基类view实现
+ * mvp Fragment基类view实现
  */
-public abstract class BaseMvpActivity<P extends BasePresenter> extends BaseActivity implements BaseView {
-    protected Context context = BaseMvpActivity.this;
+public abstract class LibMvpFragment<P extends BasePresenter> extends LibFragment implements BaseView {
+    protected Context context;
     protected P presenter;
+    protected boolean isLazyStart;
     private TitleView titleView;
+    private View rootView;
     private View contentView;
-    private View stateContent;
     private MultipleStateLayout stateLayout;
     private ProgressDialog loadingDialog;
+    private int dialogCount = 0;
 
     @Override
-    protected final void onCreate(@Nullable Bundle savedInstanceState) {
-        presenter = createPresenter();
-        super.onCreate(savedInstanceState);
-        initContent(this);
-        SystemBarUtil.setStatusBarColor(this, getResources().getColor(R.color.colorPrimaryDark));
-        SystemBarUtil.setStatusBarDarkMode(this, true);
-        init(savedInstanceState, titleView, stateLayout);
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = context;
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        presenter = createPresenter();
+        if (!useLazy()) isLazyStart = true;
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public final View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (rootView == null) {
+            initContent(getContext());
+            if (useLazy() && !isLazyStart) {
+                showLoadingLayout(null);
+            }
+        } else if (rootView.getParent() != null) {
+            ((ViewGroup) rootView.getParent()).removeView(rootView);
+        }
+        return rootView;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        init(contentView, titleView, stateLayout);
+    }
+
+    @Override
+    public void onDestroyView() {
         if (presenter != null) presenter.destroy();
+        dialogCount = 0;
+        super.onDestroyView();
     }
 
     /** 获取Presenter,最先执行,仅调用一次 */
@@ -53,7 +79,7 @@ public abstract class BaseMvpActivity<P extends BasePresenter> extends BaseActiv
     protected abstract int getContentLayout();
 
     /** 初始化 */
-    protected abstract void init(Bundle bundle, TitleView titleView, MultipleStateLayout stateLayout);
+    protected abstract void init(View contentView, TitleView titleView, MultipleStateLayout stateLayout);
 
     /** TitleView */
     protected boolean useTitleView() {
@@ -65,15 +91,32 @@ public abstract class BaseMvpActivity<P extends BasePresenter> extends BaseActiv
         return false;
     }
 
+    /** 使用懒加载 */
+    protected boolean useLazy() {
+        return false;
+    }
+
+    /** 第一次加载 */
+    protected void onLazy() {
+    }
+
+    @CallSuper
+    @Override
+    public void onVisibleChanged(boolean visible, boolean lifecycle, boolean isFirst) {
+        if (useLazy() && visible && !isLazyStart) {
+            isLazyStart = true;
+            showContentLayout();
+            onLazy();
+        }
+    }
+
     private void initContent(Context context) {
         final int contentId = getContentLayout();
-        final boolean useTitle = useTitleView();
-        final boolean useState = useMultipleStateLayout();
         if (contentId == 0) {
             return;
         }
         ViewGroup rootView = null;
-        if (useTitle) {
+        if (useTitleView()) {
             titleView = new TitleView(context);
             LinearLayout linearLayout = new LinearLayout(context);
             linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -81,7 +124,7 @@ public abstract class BaseMvpActivity<P extends BasePresenter> extends BaseActiv
             rootView = linearLayout;
         }
         contentView = LayoutInflater.from(context).inflate(contentId, null, false);
-        if (useState) {
+        if (useMultipleStateLayout() || useLazy()) {
             FrameLayout frameLayout = new FrameLayout(context);
             stateLayout = new MultipleStateLayout(context);
             frameLayout.addView(stateLayout, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
@@ -94,22 +137,21 @@ public abstract class BaseMvpActivity<P extends BasePresenter> extends BaseActiv
         } else if (rootView != null) {
             rootView.addView(contentView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         }
-        stateContent = contentView;
-        setContentView(rootView != null ? rootView : contentView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        this.rootView = rootView != null ? rootView : contentView;
     }
 
     @Override
     public Context getContext() {
-        return context;
+        return super.getContext();
     }
 
     @Override
     public void showLoadingDialog(@Nullable CharSequence message) {
-        if (!isFinishing() && loadingDialog == null && context != null) {
+        if (getActivity() == null || getActivity().isFinishing()) return;
+        if (loadingDialog == null) {
             loadingDialog = new ProgressDialog(context);
-            loadingDialog.setMessage(message == null ? getString(R.string.dialog_hint_default) : message);
-            loadingDialog.show();
-        } else if (!isFinishing() && loadingDialog != null) {
+        }
+        if (dialogCount++ == 0) {
             loadingDialog.setMessage(message == null ? getString(R.string.dialog_hint_default) : message);
             loadingDialog.show();
         }
@@ -117,44 +159,40 @@ public abstract class BaseMvpActivity<P extends BasePresenter> extends BaseActiv
 
     @Override
     public void hideLoadingDialog() {
-        if (!isFinishing() && loadingDialog != null) {
+        if (getActivity() == null || getActivity().isFinishing()) return;
+        if (--dialogCount == 0) {
             loadingDialog.dismiss();
         }
     }
 
     @Override
-    public void showError(int code, String msg) {
+    public void showMsg(int code, String msg) {
         ToastUtil.show(msg);
     }
 
     @Override
     public void showContentLayout() {
-        if (stateLayout != null) stateLayout.showContent(stateContent);
+        stateLayout.showContent(contentView);
     }
 
     @Override
     public void showLoadingLayout(@Nullable CharSequence text) {
-        if (stateLayout != null) stateLayout.showLoading(stateContent, text);
+        stateLayout.showLoading(contentView, text);
     }
 
     @Override
     public void showEmptyLayout(@Nullable CharSequence text) {
-        if (stateLayout != null) stateLayout.showEmpty(stateContent, text);
+        stateLayout.showEmpty(contentView, text);
     }
 
     @Override
     public void showErrorLayout(@Nullable CharSequence text) {
-        if (stateLayout != null) stateLayout.showError(stateContent, text);
+        stateLayout.showError(contentView, text);
     }
 
     @Override
     public void showNetworkLayout(@Nullable CharSequence text) {
-        if (stateLayout != null) stateLayout.showNetwork(stateContent, text);
-    }
-
-    protected void setStateView(MultipleStateLayout stateLayout, View stateContent) {
-        this.stateLayout = stateLayout;
-        this.stateContent = stateContent;
+        stateLayout.showNetwork(contentView, text);
     }
 
     protected TitleView getTitleView() {

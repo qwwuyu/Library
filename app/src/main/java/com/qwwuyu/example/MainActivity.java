@@ -12,7 +12,7 @@ import com.qwwuyu.example.activity.ELMActivity;
 import com.qwwuyu.example.activity.GyroActivity;
 import com.qwwuyu.example.activity.TestActivity;
 import com.qwwuyu.example.mvp.MvpActivity;
-import com.qwwuyu.lib.base.BaseMvpActivity;
+import com.qwwuyu.lib.base.LibMvpActivity;
 import com.qwwuyu.lib.base.MultipleStateLayout;
 import com.qwwuyu.lib.base.TitleView;
 import com.qwwuyu.lib.mvp.BasePresenter;
@@ -22,7 +22,7 @@ import com.qwwuyu.lib.utils.SystemBarUtil;
 
 import androidx.core.content.ContextCompat;
 
-public class MainActivity extends BaseMvpActivity {
+public class MainActivity extends LibMvpActivity {
     private static int[] flag = new int[10];
 
     @Override

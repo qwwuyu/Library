@@ -288,7 +288,7 @@ public class LogUtils {
         String format = FORMAT.format(new Date(System.currentTimeMillis()));
         String date = format.substring(0, 5);
         String time = format.substring(6);
-        final String fullPath = dir + "/" + date + ".txt";
+        final String fullPath = dir + File.separator + date + ".txt";
         if (!createOrExistsFile(fullPath)) {
             return;
         }
@@ -300,13 +300,10 @@ public class LogUtils {
                 }
             }
         }
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                try (BufferedWriter bw = new BufferedWriter(new FileWriter(fullPath, true))) {
-                    bw.write(content);
-                } catch (IOException ignored) {
-                }
+        executor.execute(() -> {
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(fullPath, true))) {
+                bw.write(content);
+            } catch (IOException ignored) {
             }
         });
     }
@@ -368,14 +365,11 @@ public class LogUtils {
         void onError(Throwable throwable, int flag);
     }
 
-    public static class crashErrorListener implements OnErrorListener {
+    public static class CrashErrorListener implements OnErrorListener {
         @Override
         public void onError(final Throwable throwable, int flag) {
-            new Handler(Looper.getMainLooper()).post(new Runnable() {
-                @Override
-                public void run() {
-                    throw new RuntimeException(throwable);
-                }
+            new Handler(Looper.getMainLooper()).post(() -> {
+                throw new RuntimeException(throwable);
             });
         }
     }

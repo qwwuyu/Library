@@ -12,7 +12,7 @@ import io.reactivex.disposables.Disposable;
  * Created by qiwei on 2019/8/5.
  * 基类Fragment
  */
-public class BaseFragment extends Fragment implements FragmentVisibleHelper.UserVisibleCallback {
+public class LibFragment extends Fragment implements FragmentVisibleHelper.UserVisibleCallback {
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private FragmentVisibleHelper controller = new FragmentVisibleHelper(this, this);
 

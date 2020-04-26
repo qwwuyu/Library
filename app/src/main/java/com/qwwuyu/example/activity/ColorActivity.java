@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.qwwuyu.example.R;
-import com.qwwuyu.lib.base.BaseMvpActivity;
+import com.qwwuyu.lib.base.LibMvpActivity;
 import com.qwwuyu.lib.mvp.BasePresenter;
 import com.qwwuyu.lib.utils.ToastUtil;
 import com.qwwuyu.lib.base.MultipleStateLayout;
@@ -19,7 +19,7 @@ import com.rarepebble.colorpicker.ValueView;
 /**
  * Created by qiwei on 2017/8/10
  */
-public class ColorActivity extends BaseMvpActivity implements ObservableColor.ColorObserver {
+public class ColorActivity extends LibMvpActivity implements ObservableColor.ColorObserver {
     private ColorPickerView pickerView;
     private ValueView valueView;
     private AlphaView alphaView;

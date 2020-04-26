@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
-import com.qwwuyu.lib.base.BaseActivity;
 import com.qwwuyu.library.R;
 
 
@@ -12,7 +11,7 @@ import com.qwwuyu.library.R;
  * 统一Activity启动关闭工具类
  */
 public class IntentUtils {
-    public static void finish(BaseActivity activity) {
+    public static void finish(LibActivity activity) {
         if (activity.isTaskRoot()) {
             activity.finishSuper();
         } else {
@@ -21,7 +20,7 @@ public class IntentUtils {
         }
     }
 
-    public static void finishDefault(BaseActivity activity) {
+    public static void finishDefault(LibActivity activity) {
         activity.finishSuper();
     }
 
@@ -37,15 +36,15 @@ public class IntentUtils {
         goActivity(context, intent, requestCode, false, true);
     }
 
-    public static void goActivityAnim(Context context, Intent intent) {
+    public static void goActivityNoAnim(Context context, Intent intent) {
         goActivity(context, intent, -1, false, false);
     }
 
-    public static void goActivityFinishAnim(Context context, Intent intent) {
+    public static void goActivityFinishNoAnim(Context context, Intent intent) {
         goActivity(context, intent, -1, true, false);
     }
 
-    public static void goActivityForResultAnim(Context context, Intent intent, int requestCode) {
+    public static void goActivityForResultNoAnim(Context context, Intent intent, int requestCode) {
         goActivity(context, intent, requestCode, false, false);
     }
 
@@ -53,8 +52,8 @@ public class IntentUtils {
         if (context instanceof Activity) {
             Activity activity = (Activity) context;
             activity.startActivityForResult(intent, requestCode);
-            if (finish && context instanceof BaseActivity) {
-                ((BaseActivity) context).finishSuper();
+            if (finish && context instanceof LibActivity) {
+                ((LibActivity) context).finishSuper();
             } else if (finish) {
                 activity.finish();
             }
