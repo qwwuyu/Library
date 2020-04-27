@@ -1,14 +1,11 @@
-package com.qwwuyu.lib.database.rx2;
+package com.qwwuyu.example.database.rx2;
 
 import org.greenrobot.greendao.query.LazyList;
 import org.greenrobot.greendao.query.Query;
 
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Scheduler;
 import io.reactivex.exceptions.Exceptions;
 
@@ -33,24 +30,14 @@ public class Rx2Query<T> extends Rx2Base {
      * Rx version of {@link Query#list()} returning an Observable.
      */
     public Observable<List<T>> list() {
-        return wrap(new Callable<List<T>>() {
-            @Override
-            public List<T> call() throws Exception {
-                return mQuery.forCurrentThread().list();
-            }
-        });
+        return wrap(() -> mQuery.forCurrentThread().list());
     }
 
     /**
      * Rx version of {@link Query#unique()} returning an Observable.
      */
     public Observable<T> unique() {
-        return wrap(new Callable<T>() {
-            @Override
-            public T call() throws Exception {
-                return mQuery.forCurrentThread().unique();
-            }
-        });
+        return wrap(() -> mQuery.forCurrentThread().unique());
     }
 
     /**
@@ -61,28 +48,22 @@ public class Rx2Query<T> extends Rx2Base {
      * per-entity delivery through Rx.
      */
     public Observable<T> oneByOne() {
-        Observable<T> observable = Observable.create(new ObservableOnSubscribe<T>() {
-            @Override
-            public void subscribe(ObservableEmitter<T> emitter) throws Exception {
-                try {
-                    LazyList<T> lazyList = mQuery.forCurrentThread().listLazyUncached();
-                    try {
-                        for (T entity : lazyList) {
-                            if (emitter.isDisposed()) {
-                                break;
-                            }
-                            emitter.onNext(entity);
+        Observable<T> observable = Observable.create(emitter -> {
+            try {
+                try (LazyList<T> lazyList = mQuery.forCurrentThread().listLazyUncached()) {
+                    for (T entity : lazyList) {
+                        if (emitter.isDisposed()) {
+                            break;
                         }
-                    } finally {
-                        lazyList.close();
+                        emitter.onNext(entity);
                     }
-                    if (!emitter.isDisposed()) {
-                        emitter.onComplete();
-                    }
-                } catch (Throwable t) {
-                    Exceptions.throwIfFatal(t);
-                    emitter.onError(t);
                 }
+                if (!emitter.isDisposed()) {
+                    emitter.onComplete();
+                }
+            } catch (Throwable t) {
+                Exceptions.throwIfFatal(t);
+                emitter.onError(t);
             }
         });
         return wrap(observable);

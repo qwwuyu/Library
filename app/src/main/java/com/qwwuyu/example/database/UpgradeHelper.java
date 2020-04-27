@@ -34,8 +34,10 @@ public class UpgradeHelper extends DaoMaster.OpenHelper {
     @Override
     public void onUpgrade(Database db, int oldVersion, int newVersion) {
         LogUtils.i("onUpgrade:oldVersion=" + oldVersion + " newVersion:" + newVersion);
-        if (oldVersion < 2) {//1~2 :
-            //to do
+        switch (oldVersion) {
+            case 1://v1->v2
+                //no break
+            case 2:
         }
     }
 }

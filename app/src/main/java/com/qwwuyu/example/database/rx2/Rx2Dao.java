@@ -1,9 +1,8 @@
-package com.qwwuyu.lib.database.rx2;
+package com.qwwuyu.example.database.rx2;
 
 import org.greenrobot.greendao.AbstractDao;
 
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
@@ -37,24 +36,14 @@ public class Rx2Dao<T, K> extends Rx2Base {
      * Rx version of {@link AbstractDao#loadAll()} returning an Observable.
      */
     public Observable<List<T>> loadAll() {
-        return wrap(new Callable<List<T>>() {
-            @Override
-            public List<T> call() throws Exception {
-                return mDao.loadAll();
-            }
-        });
+        return wrap(mDao::loadAll);
     }
 
     /**
      * Rx version of {@link AbstractDao#loadAll()} returning an Observable.
      */
     public Observable<T> load(final K key) {
-        return wrap(new Callable<T>() {
-            @Override
-            public T call() throws Exception {
-                return mDao.load(key);
-            }
-        });
+        return wrap(() -> mDao.load(key));
     }
 
     /**
@@ -62,12 +51,9 @@ public class Rx2Dao<T, K> extends Rx2Base {
      * Note that the Observable will emit the given entity back to its subscribers.
      */
     public Observable<T> refresh(final T entity) {
-        return wrap(new Callable<T>() {
-            @Override
-            public T call() throws Exception {
-                mDao.refresh(entity);
-                return entity;
-            }
+        return wrap(() -> {
+            mDao.refresh(entity);
+            return entity;
         });
     }
 
@@ -76,12 +62,7 @@ public class Rx2Dao<T, K> extends Rx2Base {
      * Note that the Observable will emit the given entity back to its subscribers.
      */
     public Observable<Long> insert(final T entity) {
-        return wrap(new Callable<Long>() {
-            @Override
-            public Long call() throws Exception {
-                return mDao.insert(entity);
-            }
-        });
+        return wrap(() -> mDao.insert(entity));
     }
 
     /**
@@ -89,12 +70,9 @@ public class Rx2Dao<T, K> extends Rx2Base {
      * Note that the Observable will emit the given entities back to its subscribers.
      */
     public Observable<Iterable<T>> insertInTx(final Iterable<T> entities) {
-        return wrap(new Callable<Iterable<T>>() {
-            @Override
-            public Iterable<T> call() throws Exception {
-                mDao.insertInTx(entities);
-                return entities;
-            }
+        return wrap(() -> {
+            mDao.insertInTx(entities);
+            return entities;
         });
     }
 
@@ -102,13 +80,10 @@ public class Rx2Dao<T, K> extends Rx2Base {
      * Rx version of {@link AbstractDao#insertInTx(Object[])} returning an Observable.
      * Note that the Observable will emit the given entities back to its subscribers.
      */
-    public Observable<Object[]> insertInTx(final T... entities) {
-        return wrap(new Callable<Object[]>() {
-            @Override
-            public Object[] call() throws Exception {
-                mDao.insertInTx(entities);
-                return entities;
-            }
+    public final Observable<Object[]> insertInTx(final T... entities) {
+        return wrap(() -> {
+            mDao.insertInTx(entities);
+            return entities;
         });
     }
 
@@ -117,12 +92,9 @@ public class Rx2Dao<T, K> extends Rx2Base {
      * Note that the Observable will emit the given entity back to its subscribers.
      */
     public Observable<T> insertOrReplace(final T entity) {
-        return wrap(new Callable<T>() {
-            @Override
-            public T call() throws Exception {
-                mDao.insertOrReplace(entity);
-                return entity;
-            }
+        return wrap(() -> {
+            mDao.insertOrReplace(entity);
+            return entity;
         });
     }
 
@@ -131,12 +103,9 @@ public class Rx2Dao<T, K> extends Rx2Base {
      * Note that the Observable will emit the given entities back to its subscribers.
      */
     public Observable<Iterable<T>> insertOrReplaceInTx(final Iterable<T> entities) {
-        return wrap(new Callable<Iterable<T>>() {
-            @Override
-            public Iterable<T> call() throws Exception {
-                mDao.insertOrReplaceInTx(entities);
-                return entities;
-            }
+        return wrap(() -> {
+            mDao.insertOrReplaceInTx(entities);
+            return entities;
         });
     }
 
@@ -145,12 +114,9 @@ public class Rx2Dao<T, K> extends Rx2Base {
      * Note that the Observable will emit the given entities back to its subscribers.
      */
     public Observable<Object[]> insertOrReplaceInTx(final T... entities) {
-        return wrap(new Callable<Object[]>() {
-            @Override
-            public Object[] call() throws Exception {
-                mDao.insertOrReplaceInTx(entities);
-                return entities;
-            }
+        return wrap(() -> {
+            mDao.insertOrReplaceInTx(entities);
+            return entities;
         });
     }
 
@@ -159,12 +125,9 @@ public class Rx2Dao<T, K> extends Rx2Base {
      * Note that the Observable will emit the given entity back to its subscribers.
      */
     public Observable<T> save(final T entity) {
-        return wrap(new Callable<T>() {
-            @Override
-            public T call() throws Exception {
-                mDao.save(entity);
-                return entity;
-            }
+        return wrap(() -> {
+            mDao.save(entity);
+            return entity;
         });
     }
 
@@ -173,12 +136,9 @@ public class Rx2Dao<T, K> extends Rx2Base {
      * Note that the Observable will emit the given entities back to its subscribers.
      */
     public Observable<Iterable<T>> saveInTx(final Iterable<T> entities) {
-        return wrap(new Callable<Iterable<T>>() {
-            @Override
-            public Iterable<T> call() throws Exception {
-                mDao.saveInTx(entities);
-                return entities;
-            }
+        return wrap(() -> {
+            mDao.saveInTx(entities);
+            return entities;
         });
     }
 
@@ -187,12 +147,9 @@ public class Rx2Dao<T, K> extends Rx2Base {
      * Note that the Observable will emit the given entities back to its subscribers.
      */
     public Observable<Object[]> saveInTx(final T... entities) {
-        return wrap(new Callable<Object[]>() {
-            @Override
-            public Object[] call() throws Exception {
-                mDao.saveInTx(entities);
-                return entities;
-            }
+        return wrap(() -> {
+            mDao.saveInTx(entities);
+            return entities;
         });
     }
 
@@ -201,12 +158,9 @@ public class Rx2Dao<T, K> extends Rx2Base {
      * Note that the Observable will emit the given entity back to its subscribers.
      */
     public Observable<T> update(final T entity) {
-        return wrap(new Callable<T>() {
-            @Override
-            public T call() throws Exception {
-                mDao.update(entity);
-                return entity;
-            }
+        return wrap(() -> {
+            mDao.update(entity);
+            return entity;
         });
     }
 
@@ -215,12 +169,9 @@ public class Rx2Dao<T, K> extends Rx2Base {
      * Note that the Observable will emit the given entities back to its subscribers.
      */
     public Observable<Iterable<T>> updateInTx(final Iterable<T> entities) {
-        return wrap(new Callable<Iterable<T>>() {
-            @Override
-            public Iterable<T> call() throws Exception {
-                mDao.updateInTx(entities);
-                return entities;
-            }
+        return wrap(() -> {
+            mDao.updateInTx(entities);
+            return entities;
         });
     }
 
@@ -229,12 +180,9 @@ public class Rx2Dao<T, K> extends Rx2Base {
      * Note that the Observable will emit the given entities back to its subscribers.
      */
     public Observable<Object[]> updateInTx(final T... entities) {
-        return wrap(new Callable<Object[]>() {
-            @Override
-            public Object[] call() throws Exception {
-                mDao.updateInTx(entities);
-                return entities;
-            }
+        return wrap(() -> {
+            mDao.updateInTx(entities);
+            return entities;
         });
     }
 
@@ -242,91 +190,70 @@ public class Rx2Dao<T, K> extends Rx2Base {
     /**
      * Rx version of {@link AbstractDao#delete(Object)} returning an Observable.
      */
-    public Observable<Void> delete(final T entity) {
-        return wrap(new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                mDao.delete(entity);
-                return null;
-            }
+    public Observable<Boolean> delete(final T entity) {
+        return wrap(() -> {
+            mDao.delete(entity);
+            return true;
         });
     }
 
     /**
      * Rx version of {@link AbstractDao#deleteByKey(Object)} returning an Observable.
      */
-    public Observable<Void> deleteByKey(final K key) {
-        return wrap(new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                mDao.deleteByKey(key);
-                return null;
-            }
+    public Observable<Boolean> deleteByKey(final K key) {
+        return wrap(() -> {
+            mDao.deleteByKey(key);
+            return true;
         });
     }
 
     /**
      * Rx version of {@link AbstractDao#deleteAll()} returning an Observable.
      */
-    public Observable<Void> deleteAll() {
-        return wrap(new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                mDao.deleteAll();
-                return null;
-            }
+    public Observable<Boolean> deleteAll() {
+        return wrap(() -> {
+            mDao.deleteAll();
+            return true;
         });
     }
 
     /**
      * Rx version of {@link AbstractDao#deleteInTx(Iterable)} returning an Observable.
      */
-    public Observable<Void> deleteInTx(final Iterable<T> entities) {
-        return wrap(new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                mDao.deleteInTx(entities);
-                return null;
-            }
+    public Observable<Boolean> deleteInTx(final Iterable<T> entities) {
+        return wrap(() -> {
+            mDao.deleteInTx(entities);
+            return true;
         });
     }
 
     /**
      * Rx version of {@link AbstractDao#deleteInTx(Object[])} returning an Observable.
      */
-    public Observable<Void> deleteInTx(final T... entities) {
-        return wrap(new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                mDao.deleteInTx(entities);
-                return null;
-            }
+    public final Observable<Boolean> deleteInTx(final T... entities) {
+        return wrap(() -> {
+            mDao.deleteInTx(entities);
+            return true;
         });
     }
 
     /**
      * Rx version of {@link AbstractDao#deleteByKeyInTx(Iterable)} returning an Observable.
      */
-    public Observable<Void> deleteByKeyInTx(final Iterable<K> keys) {
-        return wrap(new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                mDao.deleteByKeyInTx(keys);
-                return null;
-            }
+    public Observable<Boolean> deleteByKeyInTx(final Iterable<K> keys) {
+        return wrap(() -> {
+            mDao.deleteByKeyInTx(keys);
+            return true;
         });
     }
 
     /**
      * Rx version of {@link AbstractDao#deleteByKeyInTx(Object[])} returning an Observable.
      */
-    public Observable<Void> deleteByKeyInTx(final K... keys) {
-        return wrap(new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                mDao.deleteByKeyInTx(keys);
-                return null;
-            }
+    public Observable<Boolean> deleteByKeyInTx(final K... keys) {
+        return wrap(() -> {
+            mDao.deleteByKeyInTx(keys);
+            return true;
         });
     }
 
@@ -334,12 +261,7 @@ public class Rx2Dao<T, K> extends Rx2Base {
      * Rx version of {@link AbstractDao#count()} returning an Observable.
      */
     public Observable<Long> count() {
-        return wrap(new Callable<Long>() {
-            @Override
-            public Long call() throws Exception {
-                return mDao.count();
-            }
-        });
+        return wrap(mDao::count);
     }
 
     /**

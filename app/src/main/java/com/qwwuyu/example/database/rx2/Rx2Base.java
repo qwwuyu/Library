@@ -1,4 +1,4 @@
-package com.qwwuyu.lib.database.rx2;
+package com.qwwuyu.example.database.rx2;
 
 import java.util.concurrent.Callable;
 

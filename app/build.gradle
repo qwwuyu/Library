@@ -148,4 +148,8 @@ dependencies {
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-3'
     //glide
     annotationProcessor "com.github.bumptech.glide:compiler:$versions.glide"
+    // greendao
+    api 'org.greenrobot:greendao:3.2.2'
+    //MagicIndicator
+    api 'com.github.hackware1993:MagicIndicator:1.5.0'
 }

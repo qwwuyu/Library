@@ -1,8 +1,8 @@
-package com.qwwuyu.lib.database;
+package com.qwwuyu.example.database;
 
 
-import com.qwwuyu.lib.database.rx2.Rx2Dao;
-import com.qwwuyu.lib.database.rx2.Rx2Query;
+import com.qwwuyu.example.database.rx2.Rx2Dao;
+import com.qwwuyu.example.database.rx2.Rx2Query;
 
 import org.greenrobot.greendao.AbstractDao;
 import org.greenrobot.greendao.query.Query;
@@ -35,5 +35,10 @@ public class DaoHelper {
 
     public static <T, K> Rx2Dao<T, K> dao(AbstractDao<T, K> dao) {
         return new Rx2Dao<>(dao, getDbScheduler());
+    }
+
+    /** 清除内存缓存 */
+    public static void clearDaoSession(DaoSession session) {
+        getDbScheduler().scheduleDirect(session::clear);
     }
 }
