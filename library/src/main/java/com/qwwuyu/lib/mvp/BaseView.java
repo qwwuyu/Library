@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
  */
 public interface BaseView extends IStateLayout {
     /** 获取Context */
-    Context getContext();
+    Context context();
 
     /** 显示弹窗dialog */
     void showLoadingDialog(@Nullable CharSequence message);

@@ -13,9 +13,7 @@ import com.qwwuyu.example.activity.GyroActivity;
 import com.qwwuyu.example.activity.TestActivity;
 import com.qwwuyu.example.mvp.MvpActivity;
 import com.qwwuyu.lib.base.LibMvpActivity;
-import com.qwwuyu.lib.base.MultipleStateLayout;
-import com.qwwuyu.lib.base.TitleView;
-import com.qwwuyu.lib.mvp.BasePresenter;
+import com.qwwuyu.lib.base.MvpConfig;
 import com.qwwuyu.lib.utils.CommUtil;
 import com.qwwuyu.lib.utils.LogUtils;
 import com.qwwuyu.lib.utils.SystemBarUtil;
@@ -26,17 +24,12 @@ public class MainActivity extends LibMvpActivity {
     private static int[] flag = new int[10];
 
     @Override
-    protected BasePresenter createPresenter() {
-        return null;
+    protected void initMvpConfig(MvpConfig mvpConfig) {
+        mvpConfig.layoutResID(R.layout.a_main);
     }
 
     @Override
-    protected int getContentLayout() {
-        return R.layout.a_main;
-    }
-
-    @Override
-    protected void init(Bundle bundle, TitleView titleView, MultipleStateLayout stateLayout) {
+    protected void init(Bundle savedInstanceState) {
         TextView tv = findViewById(R.id.tv);
         tv.setText(CommUtil.getVersionName(context));
     }
@@ -82,14 +75,5 @@ public class MainActivity extends LibMvpActivity {
         ((TextView) snackbarView.findViewById(R.id.snackbar_action)).setTextColor(Color.BLACK);
         snackbarView.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         snackbar.show();
-    }
-
-    class AJ8 implements J8 {
-    }
-
-    interface J8 {
-        default boolean s() {
-            return true;
-        }
     }
 }

@@ -10,25 +10,73 @@
 
     <ImageView
         android:id="@+id/iv_back"
-        android:layout_width="46dp"
+        android:layout_width="36dp"
         android:layout_height="@dimen/title_height"
-        android:paddingLeft="3dp"
+        android:background="@drawable/select_def_item_black"
         android:scaleType="center"
-        android:src="@drawable/ic_trans"/>
+        android:src="@drawable/ic_trans"
+        tools:ignore="ContentDescription" />
+
+    <LinearLayout
+        android:id="@+id/ll_ctrl"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/title_height"
+        android:orientation="horizontal"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <TextView
+            android:id="@+id/tv_ctrl_right"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/title_height"
+            android:background="@drawable/select_def_item_black"
+            android:gravity="center_vertical"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:textColor="#e5000000"
+            android:textSize="16sp"
+            android:visibility="gone"
+            tools:text="相册"
+            tools:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/iv_ctrl_right2"
+            android:layout_width="@dimen/title_height"
+            android:layout_height="@dimen/title_height"
+            android:background="@drawable/select_def_item_black"
+            android:scaleType="center"
+            android:visibility="gone"
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/ic_trans"
+            tools:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/iv_ctrl_right"
+            android:layout_width="@dimen/title_height"
+            android:layout_height="@dimen/title_height"
+            android:background="@drawable/select_def_item_black"
+            android:scaleType="center"
+            android:visibility="gone"
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/ic_trans"
+            tools:visibility="visible" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:textColor="#333"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@id/iv_back"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/title_height"
+        android:gravity="center_vertical"
+        android:paddingRight="16dp"
+        android:singleLine="true"
+        android:textColor="#e5000000"
+        android:textSize="16sp"
         app:layout_constraintLeft_toRightOf="@id/iv_back"
-        app:layout_constraintTop_toTopOf="@id/iv_back"
-        tools:text="title"/>
+        app:layout_constraintRight_toLeftOf="@id/ll_ctrl"
+        tools:text="返回返回返回返回返回返回返回返回返回返回返回返回返回返回返回返回返回返回返回" />
 
     <View
         android:id="@+id/view_line"
         style="@style/line"
-        app:layout_constraintTop_toBottomOf="@id/iv_back"/>
+        android:layout_marginTop="@dimen/title_height"
+        app:layout_constraintTop_toTopOf="parent" />
 </merge>

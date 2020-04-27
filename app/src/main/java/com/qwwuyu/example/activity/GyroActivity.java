@@ -12,18 +12,16 @@ import com.github.chrisbanes.photoview.OnDoubleTapDefaultListener;
 import com.github.chrisbanes.photoview.PhotoViewAttacher;
 import com.qwwuyu.example.R;
 import com.qwwuyu.lib.base.LibMvpActivity;
-import com.qwwuyu.lib.mvp.BasePresenter;
+import com.qwwuyu.lib.base.MvpConfig;
 import com.qwwuyu.lib.utils.CommUtil;
 import com.qwwuyu.lib.utils.DisplayUtils;
-import com.qwwuyu.lib.base.MultipleStateLayout;
-import com.qwwuyu.lib.base.TitleView;
-import cardview.widget.RoundRectDrawableWithShadow;
 import com.qwwuyu.widget.gyro.GyroBean;
 import com.qwwuyu.widget.gyro.GyroMarkView;
 import com.qwwuyu.widget.gyro.GyroUtil;
 import com.qwwuyu.widget.gyro.GyroView;
 
 import androidx.core.view.ViewCompat;
+import cardview.widget.RoundRectDrawableWithShadow;
 
 public class GyroActivity extends LibMvpActivity {
     private View shadowView;
@@ -36,17 +34,12 @@ public class GyroActivity extends LibMvpActivity {
             {5.5f, 4.5f}, {5.5f, 4.5f}, {5.5f, 5.5f}, {5.5f, 5.5f}, {6, 6.5f}, {6, 9f}, {7, 10f}, {7, 1}, {7, 2}, {8, 3}, {8, 10},};
 
     @Override
-    protected BasePresenter createPresenter() {
-        return null;
+    protected void initMvpConfig(MvpConfig mvpConfig) {
+        mvpConfig.layoutResID(R.layout.a_gyro);
     }
 
     @Override
-    protected int getContentLayout() {
-        return R.layout.a_gyro;
-    }
-
-    @Override
-    protected void init(Bundle bundle, TitleView titleView, MultipleStateLayout stateLayout) {
+    protected void init(Bundle savedInstanceState) {
         shadowView = findViewById(R.id.shadowView);
         gyroView = findViewById(R.id.gyro_gyroView);
         markView = findViewById(R.id.gyro_markView);

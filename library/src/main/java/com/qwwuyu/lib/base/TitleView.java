@@ -8,8 +8,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.qwwuyu.lib.utils.CommUtil;
 import com.qwwuyu.library.R;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.StringRes;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -19,8 +21,11 @@ import androidx.constraintlayout.widget.ConstraintLayout;
  * Description 标题控件.
  */
 public class TitleView extends ConstraintLayout {
-    private TextView tvTitle;
     private ImageView ivBack;
+    private TextView tvTitle;
+    private TextView tvCtrlRight;
+    private ImageView ivCtrlRight;
+    private ImageView ivCtrlRight2;
     private View viewLine;
 
     public TitleView(Context context) {
@@ -34,10 +39,38 @@ public class TitleView extends ConstraintLayout {
     public TitleView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         inflate(context, R.layout.layout_title, this);
-        tvTitle = findViewById(R.id.tv_title);
         ivBack = findViewById(R.id.iv_back);
+        tvTitle = findViewById(R.id.tv_title);
+        tvCtrlRight = findViewById(R.id.tv_ctrl_right);
+        ivCtrlRight = findViewById(R.id.iv_ctrl_right);
+        ivCtrlRight2 = findViewById(R.id.iv_ctrl_right2);
         viewLine = findViewById(R.id.view_line);
+
         setBackgroundColor(0xffffffff);
+        ivBack.setOnClickListener(v -> {
+            Activity activity = CommUtil.getActivity(getContext());
+            if (activity != null) activity.finish();
+        });
+    }
+
+    public ImageView getBackView() {
+        return ivBack;
+    }
+
+    public TextView getTitleView() {
+        return tvTitle;
+    }
+
+    public TextView getRightTvView() {
+        return tvCtrlRight;
+    }
+
+    public ImageView getRightIvView() {
+        return ivCtrlRight;
+    }
+
+    public ImageView getRightIvView2() {
+        return ivCtrlRight2;
     }
 
     public void setTitle(String title) {
@@ -48,23 +81,22 @@ public class TitleView extends ConstraintLayout {
         tvTitle.setText(title);
     }
 
-    public void setBackBtn() {
-        ivBack.setOnClickListener(v -> {
-            Context context = getContext();
-            if (context instanceof Activity) ((Activity) context).finish();
-        });
+    public void setRightTxtClick(String txt, View.OnClickListener listener) {
+        tvCtrlRight.setVisibility(VISIBLE);
+        tvCtrlRight.setText(txt);
+        tvCtrlRight.setOnClickListener(listener);
     }
 
-    public void setBackBtn(Activity activity) {
-        ivBack.setOnClickListener(v -> activity.finish());
+    public void setRightIvClick(@DrawableRes int res, View.OnClickListener listener) {
+        ivCtrlRight.setVisibility(VISIBLE);
+        ivCtrlRight.setImageResource(res);
+        ivCtrlRight.setOnClickListener(listener);
     }
 
-    public ImageView getBackImageView() {
-        return ivBack;
-    }
-
-    public TextView getTitleTextView() {
-        return tvTitle;
+    public void setRightIvClick2(@DrawableRes int res2, View.OnClickListener listener2) {
+        ivCtrlRight2.setVisibility(VISIBLE);
+        ivCtrlRight2.setImageResource(res2);
+        ivCtrlRight2.setOnClickListener(listener2);
     }
 
     public void hintLine() {

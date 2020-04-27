@@ -15,44 +15,42 @@ import com.qwwuyu.lib.mvp.BaseView;
 import com.qwwuyu.lib.utils.ToastUtil;
 import com.qwwuyu.library.R;
 
-import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 /**
  * mvp Fragment基类view实现
+ * ViewPager use {@link androidx.fragment.app.FragmentPagerAdapter#BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT}
  */
 public abstract class LibMvpFragment<P extends BasePresenter> extends LibFragment implements BaseView {
     protected Context context;
     protected P presenter;
     protected boolean isLazyStart;
+
+    private MvpConfig<P> mvpConfig;
     private TitleView titleView;
+    private MultipleStateLayout stateLayout;
     private View rootView;
     private View contentView;
-    private MultipleStateLayout stateLayout;
     private ProgressDialog loadingDialog;
     private int dialogCount = 0;
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         this.context = context;
+        if (mvpConfig == null) {
+            mvpConfig = new MvpConfig<>();
+            initMvpConfig(mvpConfig);
+            presenter = mvpConfig.presenter;
+        }
     }
 
+    @Nullable
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        presenter = createPresenter();
-        if (!useLazy()) isLazyStart = true;
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public final View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public final View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (rootView == null) {
-            initContent(getContext());
-            if (useLazy() && !isLazyStart) {
-                showLoadingLayout(null);
-            }
+            initContent(context);
         } else if (rootView.getParent() != null) {
             ((ViewGroup) rootView.getParent()).removeView(rootView);
         }
@@ -62,7 +60,23 @@ public abstract class LibMvpFragment<P extends BasePresenter> extends LibFragmen
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        init(contentView, titleView, stateLayout);
+        if (mvpConfig.lazyCallBack != null) {
+            isLazyStart = false;
+            showLoadingLayout(null);
+        }
+        if (mvpConfig.titleCallBack != null) mvpConfig.titleCallBack.call(titleView);
+        if (mvpConfig.stateCallBack != null) mvpConfig.stateCallBack.call(stateLayout);
+        init(savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mvpConfig.lazyCallBack != null && !isLazyStart) {
+            isLazyStart = true;
+            showContentLayout();
+            mvpConfig.lazyCallBack.call();
+        }
     }
 
     @Override
@@ -72,51 +86,19 @@ public abstract class LibMvpFragment<P extends BasePresenter> extends LibFragmen
         super.onDestroyView();
     }
 
-    /** 获取Presenter,最先执行,仅调用一次 */
-    protected abstract P createPresenter();
-
-    /** 获取布局resId */
-    protected abstract int getContentLayout();
+    /** MVP配置 */
+    protected abstract void initMvpConfig(MvpConfig<P> mvpConfig);
 
     /** 初始化 */
-    protected abstract void init(View contentView, TitleView titleView, MultipleStateLayout stateLayout);
-
-    /** TitleView */
-    protected boolean useTitleView() {
-        return false;
-    }
-
-    /** 使用多状态布局 */
-    protected boolean useMultipleStateLayout() {
-        return false;
-    }
-
-    /** 使用懒加载 */
-    protected boolean useLazy() {
-        return false;
-    }
-
-    /** 第一次加载 */
-    protected void onLazy() {
-    }
-
-    @CallSuper
-    @Override
-    public void onVisibleChanged(boolean visible, boolean lifecycle, boolean isFirst) {
-        if (useLazy() && visible && !isLazyStart) {
-            isLazyStart = true;
-            showContentLayout();
-            onLazy();
-        }
-    }
+    protected abstract void init(@Nullable Bundle savedInstanceState);
 
     private void initContent(Context context) {
-        final int contentId = getContentLayout();
+        final int contentId = mvpConfig.layoutResID;
         if (contentId == 0) {
             return;
         }
         ViewGroup rootView = null;
-        if (useTitleView()) {
+        if (mvpConfig.titleCallBack != null) {
             titleView = new TitleView(context);
             LinearLayout linearLayout = new LinearLayout(context);
             linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -124,7 +106,7 @@ public abstract class LibMvpFragment<P extends BasePresenter> extends LibFragmen
             rootView = linearLayout;
         }
         contentView = LayoutInflater.from(context).inflate(contentId, null, false);
-        if (useMultipleStateLayout() || useLazy()) {
+        if (mvpConfig.stateCallBack != null || mvpConfig.lazyCallBack != null) {
             FrameLayout frameLayout = new FrameLayout(context);
             stateLayout = new MultipleStateLayout(context);
             frameLayout.addView(stateLayout, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
@@ -141,8 +123,8 @@ public abstract class LibMvpFragment<P extends BasePresenter> extends LibFragmen
     }
 
     @Override
-    public Context getContext() {
-        return super.getContext();
+    public Context context() {
+        return context;
     }
 
     @Override
@@ -193,13 +175,5 @@ public abstract class LibMvpFragment<P extends BasePresenter> extends LibFragmen
     @Override
     public void showNetworkLayout(@Nullable CharSequence text) {
         stateLayout.showNetwork(contentView, text);
-    }
-
-    protected TitleView getTitleView() {
-        return titleView;
-    }
-
-    protected MultipleStateLayout getStateLayout() {
-        return stateLayout;
     }
 }

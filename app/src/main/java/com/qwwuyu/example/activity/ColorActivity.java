@@ -7,10 +7,8 @@ import android.widget.ImageView;
 
 import com.qwwuyu.example.R;
 import com.qwwuyu.lib.base.LibMvpActivity;
-import com.qwwuyu.lib.mvp.BasePresenter;
+import com.qwwuyu.lib.base.MvpConfig;
 import com.qwwuyu.lib.utils.ToastUtil;
-import com.qwwuyu.lib.base.MultipleStateLayout;
-import com.qwwuyu.lib.base.TitleView;
 import com.rarepebble.colorpicker.AlphaView;
 import com.rarepebble.colorpicker.ColorPickerView;
 import com.rarepebble.colorpicker.ObservableColor;
@@ -27,17 +25,12 @@ public class ColorActivity extends LibMvpActivity implements ObservableColor.Col
     private ObservableColor observableColor = new ObservableColor();
 
     @Override
-    protected BasePresenter createPresenter() {
-        return null;
+    protected void initMvpConfig(MvpConfig mvpConfig) {
+        mvpConfig.layoutResID(R.layout.a_color);
     }
 
     @Override
-    protected int getContentLayout() {
-        return R.layout.a_color;
-    }
-
-    @Override
-    protected void init(Bundle bundle, TitleView titleView, MultipleStateLayout stateLayout) {
+    protected void init(Bundle savedInstanceState) {
         pickerView = findViewById(R.id.pickerView);
         valueView = findViewById(R.id.valueView);
         alphaView = findViewById(R.id.alphaView);

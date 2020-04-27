@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -11,6 +12,8 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Process;
 import android.provider.Settings;
+
+import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import android.view.inputmethod.InputMethodManager;
 
@@ -34,6 +37,19 @@ public class CommUtil {
 
     public static boolean isExist(CharSequence s) {
         return s != null && s.length() != 0;
+    }
+
+
+    @Nullable
+    public static Activity getActivity(Context context) {
+        if (context == null) {
+            return null;
+        } else if (context instanceof Activity) {
+            return (Activity) context;
+        } else if (context instanceof ContextWrapper) {
+            return getActivity(((ContextWrapper) context).getBaseContext());
+        }
+        return null;
     }
 
     public static String getVersionName(Context context) {

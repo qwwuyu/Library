@@ -1,31 +1,28 @@
 package com.qwwuyu.example.mvp;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.qwwuyu.example.R;
 import com.qwwuyu.lib.base.LibMvpActivity;
+import com.qwwuyu.lib.base.MvpConfig;
 import com.qwwuyu.lib.utils.ToastUtil;
-import com.qwwuyu.lib.base.MultipleStateLayout;
-import com.qwwuyu.lib.base.TitleView;
 
 /**
  * Created by qiwei on 2018/6/14 14:02
  * Description .
  */
 public class MvpActivity extends LibMvpActivity<MvpContract.Presenter> implements MvpContract.View {
-
     @Override
-    protected int getContentLayout() {
-        return R.layout.a_mvp;
+    protected void initMvpConfig(MvpConfig<MvpContract.Presenter> mvpConfig) {
+        mvpConfig.presenter(new MvpPresenter(this))
+                .layoutResID(R.layout.a_mvp)
+                .useTitle(titleView -> titleView.setTitle("返回"))
+                .useState(stateLayout -> stateLayout.setAllListener(v -> showMsg(0, "state click")));
     }
 
     @Override
-    protected MvpContract.Presenter createPresenter() {
-        return new MvpPresenter(this);
-    }
-
-    @Override
-    protected void init(Bundle bundle, TitleView titleView, MultipleStateLayout stateLayout) {
+    protected void init(Bundle savedInstanceState) {
 
     }
 

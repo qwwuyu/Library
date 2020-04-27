@@ -24,6 +24,8 @@ import androidx.annotation.Nullable;
 public abstract class LibMvpActivity<P extends BasePresenter> extends LibActivity implements BaseView {
     protected Context context = LibMvpActivity.this;
     protected P presenter;
+
+    private MvpConfig<P> mvpConfig = new MvpConfig<>();
     private TitleView titleView;
     private MultipleStateLayout stateLayout;
     private View contentView;
@@ -32,12 +34,15 @@ public abstract class LibMvpActivity<P extends BasePresenter> extends LibActivit
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        presenter = createPresenter();
         super.onCreate(savedInstanceState);
-        initContent(this);
+        initMvpConfig(mvpConfig);
+        presenter = mvpConfig.presenter;
+        initContent(context);
         SystemBarUtil.setStatusBarColor(this, getResources().getColor(R.color.colorPrimaryDark));
         SystemBarUtil.setStatusBarDarkMode(this, true);
-        init(savedInstanceState, titleView, stateLayout);
+        if (mvpConfig.titleCallBack != null) mvpConfig.titleCallBack.call(titleView);
+        if (mvpConfig.stateCallBack != null) mvpConfig.stateCallBack.call(stateLayout);
+        init(savedInstanceState);
     }
 
     @Override
@@ -46,32 +51,19 @@ public abstract class LibMvpActivity<P extends BasePresenter> extends LibActivit
         if (presenter != null) presenter.destroy();
     }
 
-    /** 获取Presenter,最先执行,仅调用一次 */
-    protected abstract P createPresenter();
-
-    /** 获取布局resId */
-    protected abstract int getContentLayout();
+    /** MVP配置 */
+    protected abstract void initMvpConfig(MvpConfig<P> mvpConfig);
 
     /** 初始化 */
-    protected abstract void init(Bundle bundle, TitleView titleView, MultipleStateLayout stateLayout);
-
-    /** TitleView */
-    protected boolean useTitleView() {
-        return false;
-    }
-
-    /** 使用多状态布局 */
-    protected boolean useMultipleStateLayout() {
-        return false;
-    }
+    protected abstract void init(Bundle savedInstanceState);
 
     private void initContent(Context context) {
-        final int contentId = getContentLayout();
+        final int contentId = mvpConfig.layoutResID;
         if (contentId == 0) {
             return;
         }
         ViewGroup rootView = null;
-        if (useTitleView()) {
+        if (mvpConfig.titleCallBack != null) {
             titleView = new TitleView(context);
             LinearLayout linearLayout = new LinearLayout(context);
             linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -79,7 +71,7 @@ public abstract class LibMvpActivity<P extends BasePresenter> extends LibActivit
             rootView = linearLayout;
         }
         contentView = LayoutInflater.from(context).inflate(contentId, null, false);
-        if (useMultipleStateLayout()) {
+        if (mvpConfig.stateCallBack != null) {
             FrameLayout frameLayout = new FrameLayout(context);
             stateLayout = new MultipleStateLayout(context);
             frameLayout.addView(stateLayout, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
@@ -96,7 +88,7 @@ public abstract class LibMvpActivity<P extends BasePresenter> extends LibActivit
     }
 
     @Override
-    public Context getContext() {
+    public Context context() {
         return context;
     }
 
@@ -148,13 +140,5 @@ public abstract class LibMvpActivity<P extends BasePresenter> extends LibActivit
     @Override
     public void showNetworkLayout(@Nullable CharSequence text) {
         if (stateLayout != null) stateLayout.showNetwork(contentView, text);
-    }
-
-    protected TitleView getTitleView() {
-        return titleView;
-    }
-
-    protected MultipleStateLayout getStateLayout() {
-        return stateLayout;
     }
 }

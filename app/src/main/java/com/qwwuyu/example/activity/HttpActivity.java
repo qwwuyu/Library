@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.google.gson.Gson;
 import com.qwwuyu.example.R;
+import com.qwwuyu.lib.base.MvpConfig;
 import com.qwwuyu.lib.http.body.ProgressResponseBody;
 import com.qwwuyu.lib.http.interceptor.HttpLoggingInterceptor;
 import com.qwwuyu.lib.base.LibMvpActivity;
@@ -61,17 +62,12 @@ public class HttpActivity extends LibMvpActivity {
     private String token = "eyJhY2MiOiJxd3d1eXUiLCJuaWNrIjoicXd3dXl1IiwiYXV0aCI6NSwiaWQiOjIsInV1aWQiOiI1ZmM4MTcxNy1hMzI3LTQxN2ItYWQ0NC0zZTBhY2IxMzNhNmQifQ==";
 
     @Override
-    protected BasePresenter createPresenter() {
-        return null;
+    protected void initMvpConfig(MvpConfig mvpConfig) {
+        mvpConfig.layoutResID(R.layout.a_http);
     }
 
     @Override
-    protected int getContentLayout() {
-        return R.layout.a_http;
-    }
-
-    @Override
-    protected void init(Bundle bundle, TitleView titleView, MultipleStateLayout stateLayout) {
+    protected void init(Bundle savedInstanceState) {
         bar = findViewById(R.id.progressBar);
         bar.setProgress(0, 100);
         initHttp();
