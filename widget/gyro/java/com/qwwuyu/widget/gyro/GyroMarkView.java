@@ -62,6 +62,8 @@ public class GyroMarkView extends View implements OnMatrixChangedListener {
         routePaint.setStrokeWidth(0.1f);
         routePaint.setStyle(Paint.Style.STROKE);
         routePaint.setStrokeJoin(Paint.Join.ROUND);
+
+        mapPaint.setFilterBitmap(false);
     }
 
     public void setData(GyroBean gyroBean) {

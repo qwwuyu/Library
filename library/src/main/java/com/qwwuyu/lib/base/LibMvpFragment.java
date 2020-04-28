@@ -51,22 +51,15 @@ public abstract class LibMvpFragment<P extends BasePresenter> extends LibFragmen
     public final View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (rootView == null) {
             initContent(context);
-        } else if (rootView.getParent() != null) {
-            ((ViewGroup) rootView.getParent()).removeView(rootView);
+            if (mvpConfig.lazyCallBack != null) {
+                isLazyStart = false;
+                showLoadingLayout(null);
+            }
+            if (mvpConfig.titleCallBack != null) mvpConfig.titleCallBack.call(titleView);
+            if (mvpConfig.stateCallBack != null) mvpConfig.stateCallBack.call(stateLayout);
+            init(savedInstanceState);
         }
         return rootView;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        if (mvpConfig.lazyCallBack != null) {
-            isLazyStart = false;
-            showLoadingLayout(null);
-        }
-        if (mvpConfig.titleCallBack != null) mvpConfig.titleCallBack.call(titleView);
-        if (mvpConfig.stateCallBack != null) mvpConfig.stateCallBack.call(stateLayout);
-        init(savedInstanceState);
     }
 
     @Override
@@ -80,10 +73,10 @@ public abstract class LibMvpFragment<P extends BasePresenter> extends LibFragmen
     }
 
     @Override
-    public void onDestroyView() {
+    public void onDestroy() {
+        super.onDestroy();
         if (presenter != null) presenter.destroy();
         dialogCount = 0;
-        super.onDestroyView();
     }
 
     /** MVP配置 */
