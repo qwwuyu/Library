@@ -4,7 +4,6 @@ def entities = [
         card       : ['java', 'res'],
         colorpicker: ['java', 'res'],
         gyro       : ['java', 'res'],
-        linkage    : ['java', 'res'],
         photoview  : ['java'],
 ]
 def dirs = ["java": [], res: [], assets: []]
@@ -30,6 +29,10 @@ android {
             res.srcDirs = dirs.res
             assets.srcDirs = dirs.assets
         }
+    }
+
+    lintOptions {
+        abortOnError false
     }
 }
 

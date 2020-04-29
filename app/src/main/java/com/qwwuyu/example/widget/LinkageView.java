@@ -15,6 +15,8 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.qwwuyu.example.R;
+
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
 import net.lucode.hackware.magicindicator.buildins.UIUtil;
@@ -51,14 +53,14 @@ public class LinkageView extends LinearLayout {
     public LinkageView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setOrientation(VERTICAL);
-        TypedArray a = context.obtainStyledAttributes(attrs, com.qwwuyu.widget.R.styleable.LinkageView);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.LinkageView);
         MagicIndicator magicIndicator = new MagicIndicator(context);
-        addView(magicIndicator, new LayoutParams(LayoutParams.MATCH_PARENT, a.getDimensionPixelSize(com.qwwuyu.widget.R.styleable.LinkageView_linkageIndicatorHeight, 0)));
+        addView(magicIndicator, new LayoutParams(LayoutParams.MATCH_PARENT, a.getDimensionPixelSize(R.styleable.LinkageView_linkageIndicatorHeight, 0)));
         View line = new View(context);
-        line.setBackgroundColor(a.getColor(com.qwwuyu.widget.R.styleable.LinkageView_linkageLineColor, 0));
-        addView(line, new LayoutParams(LayoutParams.MATCH_PARENT, a.getDimensionPixelSize(com.qwwuyu.widget.R.styleable.LinkageView_linkageLineSpace, 0)));
+        line.setBackgroundColor(a.getColor(R.styleable.LinkageView_linkageLineColor, 0));
+        addView(line, new LayoutParams(LayoutParams.MATCH_PARENT, a.getDimensionPixelSize(R.styleable.LinkageView_linkageLineSpace, 0)));
         vp = new ViewPager(context);
-        addView(vp, new LayoutParams(LayoutParams.MATCH_PARENT, a.getDimensionPixelSize(com.qwwuyu.widget.R.styleable.LinkageView_linkageVpHeight, 0)));
+        addView(vp, new LayoutParams(LayoutParams.MATCH_PARENT, a.getDimensionPixelSize(R.styleable.LinkageView_linkageVpHeight, 0)));
         a.recycle();
 
         pagerAdapter = new LinkagePagerAdapter(getContext(), vp);

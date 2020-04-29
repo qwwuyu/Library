@@ -1,0 +1,79 @@
+apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.bintray'
+
+def repoDefined = "tr"
+def nameDefined = "test"
+def vcsUrlDefined = "https://github.com/qwwuyu/Library.git"
+
+def versionDefined = "0.0.1"
+def groupIdDefined = "com.qwwuyu.test"
+def artifactIdDefined = "test"
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+task javadoc(type: Javadoc) {
+    failOnError false
+    source = android.sourceSets.main.java.srcDirs
+    classpath += configurations.compile
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+javadoc {
+    options {
+        encoding "UTF-8"
+        charSet 'UTF-8'
+        author true
+        version "$versionDefined"
+        links "http://docs.oracle.com/javase/7/docs/api"
+        title "TestLib"
+    }
+}
+
+bintray {
+    user = getPropertyByName("BINTRAY_USER", null)
+    key = getPropertyByName("BINTRAY_KEY", null)
+    publications = ['MyPublication']
+    publish = false
+    pkg {
+        repo = "${repoDefined}"
+        name = "${nameDefined}"
+        licenses = ['Apache-2.0']
+        vcsUrl = "${vcsUrlDefined}"
+        version {
+            name = "${versionDefined}"
+        }
+    }
+}
+
+publishing {
+    publications {
+        MyPublication(MavenPublication) {
+            artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
+            artifact sourcesJar
+            artifact javadocJar
+            groupId "$groupIdDefined"
+            artifactId "$artifactIdDefined"
+            version "$versionDefined"
+            pom.withXml {
+                def dependenciesNode = asNode().getAt('dependencies')[0] ?: asNode().appendNode('dependencies')
+                configurations.implementation.allDependencies.each {
+                    if (it.name != 'unspecified') {
+                        def dependencyNode = dependenciesNode.appendNode('dependency')
+                        dependencyNode.appendNode('groupId', it.group)
+                        dependencyNode.appendNode('artifactId', it.name)
+                        dependencyNode.appendNode('version', it.version)
+                    }
+                }
+            }
+        }
+    }
+}

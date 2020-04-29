@@ -7,11 +7,18 @@ android {
         minSdkVersion configs.minSdkVersion
         targetSdkVersion configs.targetSdkVersion
         consumerProguardFiles 'proguard-rules.pro'
+
+        versionCode configs.versionCode
+        versionName configs.versionName
     }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        abortOnError false
     }
 }
 
@@ -29,9 +36,6 @@ dependencies {
     //rx
     api "io.reactivex.rxjava2:rxjava:$versions.rxjava2"
     api "io.reactivex.rxjava2:rxandroid:$versions.rxandroid2"
-    api "com.trello.rxlifecycle2:rxlifecycle:$versions.rxlifecycle2"
-    api "com.trello.rxlifecycle2:rxlifecycle-android:$versions.rxlifecycle2"
-    api "com.trello.rxlifecycle2:rxlifecycle-components:$versions.rxlifecycle2"
     //network
     api "com.squareup.okhttp3:okhttp:$versions.okhttp3"
     api "com.squareup.okhttp3:okhttp-urlconnection:$versions.okhttp3"
@@ -43,3 +47,5 @@ dependencies {
     api "com.github.bumptech.glide:okhttp3-integration:$versions.glide"
     api "jp.wasabeef:glide-transformations:3.1.1"
 }
+
+apply from: 'bintrayUpload.gradle'

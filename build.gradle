@@ -10,6 +10,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.8.6'
         classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
     }
 }
 
@@ -68,7 +69,6 @@ ext {
 
             rxjava2         : "2.2.7",
             rxandroid2      : "2.1.1",
-            rxlifecycle2    : "2.2.1",
             okhttp3         : "3.10.0",
             retrofit        : "2.4.0",
             glide           : "4.10.0",
