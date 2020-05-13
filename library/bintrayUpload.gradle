@@ -2,12 +2,12 @@ apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
 def repoDefined = "tr"
-def nameDefined = "test"
+def nameDefined = "ts"
 def vcsUrlDefined = "https://github.com/qwwuyu/Library.git"
 
 def versionDefined = "0.0.1"
 def groupIdDefined = "com.qwwuyu.test"
-def artifactIdDefined = "test"
+def artifactIdDefined = "ts"
 
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
@@ -64,6 +64,9 @@ publishing {
             artifactId "$artifactIdDefined"
             version "$versionDefined"
             pom.withXml {
+                asNode().appendNode('name', 'test')
+                asNode().appendNode('description', 'qwwuyu test')
+                asNode().appendNode('url', "${vcsUrlDefined}")
                 def dependenciesNode = asNode().getAt('dependencies')[0] ?: asNode().appendNode('dependencies')
                 configurations.implementation.allDependencies.each {
                     if (it.name != 'unspecified') {
@@ -73,6 +76,13 @@ publishing {
                         dependencyNode.appendNode('version', it.version)
                     }
                 }
+                def license = asNode().appendNode('licenses').appendNode('license')
+                license.appendNode('name', 'The Apache Software License, Version 2.0')
+                license.appendNode('url', 'http://www.apache.org/licenses/LICENSE-2.0.txt')
+                license.appendNode('distribution', 'repo')
+                def scm = asNode().appendNode('scm')
+                scm.appendNode('connection', "${vcsUrlDefined}")
+                scm.appendNode('url', "${vcsUrlDefined}")
             }
         }
     }
