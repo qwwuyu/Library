@@ -2,18 +2,26 @@ package com.qwwuyu.lib.widget.banner;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.SparseArray;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
+
+import com.qwwuyu.library.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.ViewCompat;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -24,7 +32,17 @@ import androidx.viewpager.widget.ViewPager;
 @SuppressLint("ClickableViewAccessibility")
 public class BannerView extends FrameLayout {
     private final int WHAT_LOOP = 100;
+    private final int[] GRAVITY_LIST = {Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, Gravity.BOTTOM | Gravity.LEFT, Gravity.BOTTOM | Gravity.RIGHT};
+
+    private final int loopTime;
     private final ViewPager viewPager;
+    private RelativeLayout circleGroup;
+    private int circleRadius;
+    private int circleMargin;
+    private Drawable circleEnableDrawable;
+    private Drawable circleDisableDrawable;
+
+    private ViewPager.OnPageChangeListener onPageChangeListener;
     private BannerAdapter adapter;
     private VPAdapter vpAdapter;
     private int count;
@@ -43,9 +61,31 @@ public class BannerView extends FrameLayout {
 
     public BannerView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+
+        LayoutParams radiusLayoutParams = null;
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.BannerView, defStyleAttr, 0);
+        loopTime = a.getInt(R.styleable.BannerView_bvLoopTime, 5000);
+        boolean circleEnable = a.getBoolean(R.styleable.BannerView_bvCircleEnable, true);
+        if (circleEnable) {
+            radiusLayoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+            radiusLayoutParams.gravity = GRAVITY_LIST[a.getInt(R.styleable.BannerView_bvCircleGravity, 0)];
+            radiusLayoutParams.bottomMargin = a.getDimensionPixelSize(R.styleable.BannerView_bvCircleMarginBottom, dp2px(5));
+            radiusLayoutParams.leftMargin = a.getDimensionPixelSize(R.styleable.BannerView_bvCircleMarginLeft, 0);
+            radiusLayoutParams.rightMargin = a.getDimensionPixelSize(R.styleable.BannerView_bvCircleMarginRight, 0);
+            circleRadius = a.getDimensionPixelSize(R.styleable.BannerView_bvCircleRadius, dp2px(5));
+            circleMargin = a.getDimensionPixelSize(R.styleable.BannerView_bvCircleMargin, dp2px(5));
+            circleEnableDrawable = getOval(a.getColor(R.styleable.BannerView_bvCircleEnableColor, 0xffff0000));
+            circleDisableDrawable = getOval(a.getColor(R.styleable.BannerView_bvCircleDisableColor, 0xffcccccc));
+        }
+        a.recycle();
+
         viewPager = new ViewPager(context);
         viewPager.setOnTouchListener(new ClickListener(viewPager, listener));
         addView(viewPager, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        if (circleEnable) {
+            circleGroup = new RelativeLayout(context);
+            addView(circleGroup, radiusLayoutParams);
+        }
     }
 
     /** 设置适配器 */
@@ -60,12 +100,36 @@ public class BannerView extends FrameLayout {
         handler = new Handler(msg -> {
             if (WHAT_LOOP == msg.what) {
                 viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
-                handler.sendEmptyMessageDelayed(msg.what, adapter.loopTime());
+                handler.sendEmptyMessageDelayed(msg.what, loopTime);
             }
             return true;
         });
         vpAdapter = new VPAdapter(adapter, offset);
         viewPager.setAdapter(vpAdapter);
+        if (circleGroup != null) {
+            circleGroup.removeAllViews();
+            int count = bannerAdapter.getCount();
+            for (int i = 0; i < count; i++) {
+                View view = new View(getContext());
+                RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(circleRadius, circleRadius);
+                lp.leftMargin = i * (circleMargin + circleRadius);
+                ViewCompat.setBackground(view, circleDisableDrawable);
+                circleGroup.addView(view, lp);
+            }
+            View enableView = new View(getContext());
+            ViewCompat.setBackground(enableView, circleEnableDrawable);
+            circleGroup.addView(enableView, new RelativeLayout.LayoutParams(circleRadius, circleRadius));
+            if (onPageChangeListener != null) viewPager.removeOnPageChangeListener(onPageChangeListener);
+            viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                    RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) enableView.getLayoutParams();
+                    float offset = Math.min(count - 1, (position % count + positionOffset));
+                    lp.leftMargin = (int) (offset * (circleMargin + circleRadius));
+                    enableView.setLayoutParams(lp);
+                }
+            });
+        }
         viewPager.setCurrentItem(offset);
         startLoop();
     }
@@ -102,7 +166,7 @@ public class BannerView extends FrameLayout {
     private void startLoop() {
         if (handler != null && count > 1) {
             handler.removeMessages(WHAT_LOOP);
-            handler.sendEmptyMessageDelayed(WHAT_LOOP, adapter.loopTime());
+            handler.sendEmptyMessageDelayed(WHAT_LOOP, loopTime);
         }
     }
 
@@ -199,4 +263,15 @@ public class BannerView extends FrameLayout {
             startLoop();
         }
     };
+
+    private GradientDrawable getOval(int fillColor) {
+        GradientDrawable gd = new GradientDrawable();
+        gd.setShape(GradientDrawable.OVAL);
+        gd.setColor(fillColor);
+        return gd;
+    }
+
+    private int dp2px(float dpValue) {
+        return (int) (dpValue * getResources().getDisplayMetrics().density + 0.5f);
+    }
 }

@@ -16,6 +16,4 @@ public abstract class BannerAdapter {
     public abstract void initView(View view, int index);
 
     public abstract void onClick(int index);
-
-    public abstract long loopTime();
 }

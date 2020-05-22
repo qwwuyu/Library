@@ -25,4 +25,21 @@
         <attr name="grl_color0" format="reference|color"/>
         <attr name="grl_color1" format="reference|color"/>
     </declare-styleable>
+    <!-- 轮播图属性 -->
+    <declare-styleable name="BannerView">
+        <attr name="bvLoopTime" format="integer" />
+        <attr name="bvCircleEnable" format="boolean" />
+        <attr name="bvCircleGravity">
+            <flag name="bottom_center" value="0" />
+            <flag name="bottom_left" value="1" />
+            <flag name="bottom_right" value="2" />
+        </attr>
+        <attr name="bvCircleMarginBottom" format="dimension" />
+        <attr name="bvCircleMarginLeft" format="dimension" />
+        <attr name="bvCircleMarginRight" format="dimension" />
+        <attr name="bvCircleRadius" format="dimension" />
+        <attr name="bvCircleMargin" format="dimension" />
+        <attr name="bvCircleEnableColor" format="color" />
+        <attr name="bvCircleDisableColor" format="color" />
+    </declare-styleable>
 </resources>
