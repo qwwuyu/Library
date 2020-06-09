@@ -22,7 +22,6 @@ import androidx.annotation.Nullable;
  * mvp Activity基类view实现
  */
 public abstract class LibMvpActivity<P extends BasePresenter> extends LibActivity implements BaseView {
-    protected Context context = LibMvpActivity.this;
     protected P presenter;
 
     private MvpConfig<P> mvpConfig = new MvpConfig<>();

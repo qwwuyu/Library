@@ -8,7 +8,7 @@ import com.google.gson.internal.$Gson$Types;
 import com.google.gson.reflect.TypeToken;
 import com.qwwuyu.example.bean.BaseBean;
 import com.qwwuyu.example.configs.Constant;
-import com.qwwuyu.example.utils.GsonUtils;
+import com.qwwuyu.example.utils.gson.GsonUtils;
 import com.qwwuyu.lib.utils.LogUtils;
 
 import java.io.IOException;

@@ -23,7 +23,6 @@ import androidx.annotation.Nullable;
  * ViewPager use {@link androidx.fragment.app.FragmentPagerAdapter#BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT}
  */
 public abstract class LibMvpFragment<P extends BasePresenter> extends LibFragment implements BaseView {
-    protected Context context;
     protected P presenter;
     protected boolean isLazyStart;
 
@@ -38,7 +37,6 @@ public abstract class LibMvpFragment<P extends BasePresenter> extends LibFragmen
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        this.context = context;
         if (mvpConfig == null) {
             mvpConfig = new MvpConfig<>();
             initMvpConfig(mvpConfig);

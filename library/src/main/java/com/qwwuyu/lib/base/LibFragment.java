@@ -1,5 +1,8 @@
 package com.qwwuyu.lib.base;
 
+import android.content.Context;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 /**
@@ -7,4 +10,11 @@ import androidx.fragment.app.Fragment;
  * 基类Fragment
  */
 public class LibFragment extends Fragment {
+    protected Context context;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
 }
