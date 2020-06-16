@@ -43,9 +43,9 @@ ext.getPropertyByName = { key, defValue ->
 ext {
     int major = 0, minor = 0, revision = 1
     configs = [
-            compileSdkVersion: 28,
+            compileSdkVersion: 29,
             minSdkVersion    : 15,
-            targetSdkVersion : 28,
+            targetSdkVersion : 29,
             versionCode      : major * 10000 + minor * 100 + revision,//max=2147483647
             versionName      : major + "." + minor + "." + revision,
             currentDate      : new Date().format('yyMMdd-HH'),
